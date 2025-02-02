@@ -1,0 +1,646 @@
+{% extends "base.html" %}
+{% block title %}Shopping Cart{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/guest/checkout.min.css')}}?version=1.8">
+{% endblock %}
+{% block content %}
+{% set domain_name = "https://tmpmc.aitanmall.com" %}
+<!-- Announcement -->
+{% set announcement_link = "/user/membership" %}
+{% if session.language == "my" %}
+    {% set header = "Troli Belanja" %}
+    {% set sub_total_text = "Jumlah Keseluruhan: Rm" %}
+    <!-- Announcement -->
+    {% set announcement = "Dapatkan Voucher 50% Diskaun Semasa Anda Mendaftar!" %}
+    {% include 'announcement.html' %}
+    {% set official_tag_text = "Rasmi" %}
+    {% set verified_tag_text = "Disahkan" %}
+    {% set shipping_text = "Syarikat Penghantaran: " %}
+    {% set shipping_delivery_days = "1-5 hari bekerja" %}
+    {% set shipping_fees_text = "Yuran Penghantaran: " %}
+    {% set place_order_text = "Tempah Pesanan" %}
+    {% set shipping_address_not_filled_msg = "Sila isi semua butiran penghantaran sebelum meneruskan." %}
+    {% set confirm_cart_item_text = "Sahkan Item Troli" %}
+    {% set details_text = "Maklumat perhubungan" %}
+    {% set payment_method_text = "Kaedah Pembayaran" %}
+    {% set cart_subtotal_text = "Subtotal Troli" %}
+    {% set cart_total_text = "Jumlah Troli" %}
+    {% set continue_btn_text = "Teruskan" %}
+    {% set go_back_btn_text = "Kembali" %}
+    {% set unit_number_text = "Nombor Unit" %}
+    {% set street_text = "Jalan" %}
+    {% set city_text = "Bandar" %}
+    {% set zipcode_text = "Poskod" %}
+    {% set state_text = "Negeri" %}
+    {% set country_text = "Negara" %}
+    {% set name_text = "Nama" %}
+    {% set phone_number_text = "Nombor Telefon" %}
+    {% set email_text = "E-mel" %}
+    {% set cod_name_text = "Barang Sampai Baru Bayar" %}
+{% elif session.language == "cn" %}
+    {% set header = "购物车" %}
+    {% set sub_total_text = "小计: Rm" %}
+    <!-- Announcement -->
+    {% set announcement = "注册并获得50%优惠!" %}
+    {% include 'announcement.html' %}
+    {% set official_tag_text = "官方" %}
+    {% set verified_tag_text = "已验证" %}
+    {% set shipping_text = "运输公司: " %}
+    {% set shipping_delivery_days = "1-5个工作日" %}
+    {% set shipping_fees_text = "运费: " %}
+    {% set place_order_text = "下订单" %}
+    {% set shipping_address_not_filled_msg = "请在继续之前填写所有的送货详情。" %}
+    {% set confirm_cart_item_text = "确认购物车项目" %}
+    {% set details_text = "联系信息" %}
+    {% set payment_method_text = "付款方式" %}
+    {% set cart_subtotal_text = "购物车小计" %}
+    {% set cart_total_text = "购物车总计" %}
+    {% set continue_btn_text = "继续" %}
+    {% set go_back_btn_text = "返回" %}
+    {% set unit_number_text = "单元号" %}
+    {% set street_text = "街道" %}
+    {% set city_text = "城市" %}
+    {% set zipcode_text = "邮政编码" %}
+    {% set state_text = "省份" %}
+    {% set country_text = "国家" %}
+    {% set name_text = "姓名" %}
+    {% set phone_number_text = "电话号码" %}
+    {% set email_text = "电子邮件" %}   
+    {% set cod_name_text = "货到付款" %}
+{% else %}
+    {% set header = "Shopping Cart" %}
+    {% set sub_total_text = "Sub Total: Rm" %}
+    <!-- Announcement -->
+    {% set announcement = "Sign up & Get 50% OFF Voucher!" %}
+    {% include 'announcement.html' %}
+    {% set official_tag_text = "Official" %}
+    {% set verified_tag_text = "Verified" %}
+    {% set shipping_text = "Shipping Company: " %}
+    {% set shipping_delivery_days = "1-5 business days" %}
+    {% set shipping_fees_text = "Shipping Fees: " %}
+    {% set place_order_text = "Place Order" %}
+    {% set shipping_address_not_filled_msg = "Please fill in all the shipping details before proceeding." %}
+    {% set confirm_cart_item_text = "Confirm Cart Item" %}
+    {% set details_text = "Contact Information" %}
+    {% set payment_method_text = "Payment Method" %}
+    {% set cart_subtotal_text = "Cart Subtotal" %}
+    {% set cart_total_text = "Cart Total" %}
+    {% set continue_btn_text = "Continue" %}
+    {% set go_back_btn_text = "Go Back" %}
+    {% set name_text = "Name" %}
+    {% set phone_number_text = "Phone Number" %}
+    {% set email_text = "Email" %}
+    {% set unit_number_text = "Unit Number" %}
+    {% set street_text = "Street" %}
+    {% set city_text = "City" %}
+    {% set zipcode_text = "Zip Code" %}
+    {% set state_text = "State" %}
+    {% set country_text = "Country" %}
+    {% set please_choose_once = "Please choose one" %}
+    {% set cod_name_text = "Cash On Delivery" %}
+{% endif %}
+<div id="guest-checkout-wrapper" class="container guest-checkout-wrapper">
+    <h1 class="guest-cart-title py-2 text-center">{{header}}</h1>
+    <div class="checkout">
+        <div class="checkout-steps d-flex align-items-center">
+          <div id="step1" class="checkout-step">
+            <div class="circle">1</div>
+            <div class="step-title">{{confirm_cart_item_text}}</div>
+          </div>
+          <div id="step2" class="checkout-step">
+            <div class="circle">2</div>
+            <div class="step-title">{{details_text}}</div>
+          </div>
+          <div id="step3" class="checkout-step">
+            <div class="circle">3</div>
+            <div class="step-title">{{payment_method_text}}</div>
+          </div>
+        </div>
+        <!-- Page 1 -->
+        <div id="page1" class="checkout-page active-page">
+            <h2>{{confirm_cart_item_text}}</h2>
+            <div class="cart-container my-3" id="cart-container">
+                <div class="cart-summary">
+                  <div class="summary-item">
+                    <span class="summary-title">{{cart_subtotal_text}}</span>
+                    <span class="summary-price">Rm<span class="cart-subtotal-text">{{guest_cart_sub_total}}</span></span>
+                  </div>
+                  <div class="summary-item">
+                    <span class="summary-title">{{shipping_fees_text}}</span>
+                    <span class="summary-price">Rm<span class="cart-shipping-fees-text">0</span> Free!</span>
+                  </div>
+                  <div class="summary-item">
+                    <span class="summary-title">{{cart_total_text}}</span>
+                    <span class="summary-price">Rm<span class="cart-total-text">{{(guest_cart_sub_total + guest_cart_shipping_fees) | round(2, 'ceil')}}</span></span>
+                  </div>
+                </div>
+              </div>
+            <div class="cart-container">
+                {% if guest_cart_items is defined and guest_cart_items | length > 0 %}
+                {% set ns = namespace(previous_merchant_id=None, merchant_shipping=None, merchant_name = None) %}
+                    {% for guest_cart_item in guest_cart_items %}
+                        {% set guest_cart_item_id = guest_cart_item.id %}
+                        {% set prd_id = guest_cart_item.prd_id %}
+                        {% set prd_name = guest_cart_item.prd_name %}
+                        {% set prd_img = guest_cart_item.prd_img %}
+                        {% set quantity = guest_cart_item.quantity %}
+                        {% set prd_price = guest_cart_item.prd_price %}
+                        {% set prd_var_id = guest_cart_item.prd_var_id %}
+                        {% set prd_var_name = guest_cart_item.prd_var_name %}
+                        {% set prd_sku = guest_cart_item.prd_sku %}
+                        {% set prd_var_img = guest_cart_item.prd_var_img %}
+                        {% set sub_total = guest_cart_item.sub_total %}
+                        {% set total = guest_cart_item.total %}
+                        {% set merchant_id = guest_cart_item.merchant_id %}
+                        <!-- Product warranty-->
+                        {% set prd_warranty = product_warranties.get(merchant_id).get(prd_id)[1] %}
+                        <!-- Language Settings -->
+                        {% if session.language == "my" %}
+                            {% set product_warranty_text = "Jaminan: "+prd_warranty|string+" Hari" %}
+                            {% set product_quantity_text = "Kuantiti: "+quantity|string %}
+                        {% elif session.language == "cn" %}
+                            {% set product_warranty_text = "保家: "+prd_warranty|string+" 天" %}
+                            {% set product_quantity_text = "数量: "+quantity|string %}
+                        {% else %}
+                            {% set product_warranty_text = "Warranty: "+prd_warranty|string+" Days" %}
+                            {% set product_quantity_text = "Quantity: "+quantity|string %}
+                        {% endif %}
+                        {% if ns.previous_merchant_id != merchant_id %}
+                            {% set ns.merchant_shipping = merchant_shipping_details.get(merchant_id) %}
+                            {% set ns.merchant_name = merchant_names.get(merchant_id) %}
+                            {% if ns.merchant_name %}
+                                {% set id = ns.merchant_name[0] %}
+                                {% set business_profile_name = ns.merchant_name[1] %}
+                                {% set business_profile_location = ns.merchant_name[2] %}
+                                {% set business_profile_address = ns.merchant_name[3] %}
+                                {% set business_profile_email = ns.merchant_name[4] %}
+                                {% set business_profile_phone_country_code = ns.merchant_name[5] %}
+                                {% set business_profile_phone_number = ns.merchant_name[6] %}
+                                {% set business_profile_shoppage = ns.merchant_name[7] %}
+                                {% set business_profile_shoptype = ns.merchant_name[8] %}
+                                {% set business_profile_shopimg = ns.merchant_name[9] %}
+                                {% set business_profile_shopdes = ns.merchant_name[10] %}
+                            {% endif %}
+                            {% if ns.previous_merchant_id != None %}
+                                </div> <!-- Close previous guest-cart-seller-body and guest-cart-seller -->
+                            {% endif %}
+                            <div class="guest-cart-seller card">
+                                <div class="guest-cart-seller-header card-header">
+                                    <h2>{{ business_profile_name }}
+                                    {% if business_profile_name|lower == "aitanmall" %}
+                                    <span class="verified-badge">Official</span></h2>
+                                    {% else %}
+                                    <span class="verified-badge">Verified</span></h2>
+                                    {% endif %}
+                                </div>
+                                <div class="guest-cart-seller-body card-body">
+                        {% endif %}
+                            <!-- Your item display code here -->
+                            <div class="row mb-3">
+                                <div class="guest-cart-product-img col-4 col-md-3 col-lg-2">
+                                    <img src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_img}}" class="img-fluid" alt="Product Image">
+                                </div>
+                                <div class="col-8 col-md-9 col-lg-10">
+                                    <h5>{{prd_name}}</h5>
+                                    <p class="my-0"><small>{{prd_var_name}}</small></p>
+                                    <small>
+                                        <strong>{{product_warranty_text}}</strong>
+                                    </small><br>
+                                    <small>{{product_quantity_text}}</small><br>
+                                    <small><strong>Rm{{total}}</strong></small><br>
+                                </div>
+                            </div>
+                        {% set ns.previous_merchant_id = merchant_id %}
+                    {% endfor %}
+                    {% if ns.previous_merchant_id != None %}
+                            {% if ns.merchant_shipping %}
+                                {% set merchant_shipping_option_id = ns.merchant_shipping[1] %}
+                                {% set merchant_shipping_option_name = ns.merchant_shipping[2] %}
+                                {% set merchant_shipping_option_nku = ns.merchant_shipping[3] %}
+                                {% set merchant_shipping_option_image = ns.merchant_shipping[4] %}
+                                {% set merchant_shipping_option_charge_fixed = ns.merchant_shipping[5] %}
+                                {% set merchant_shipping_option_charge_percent = ns.merchant_shipping[6] %}
+                                {% set merchant_shipping_option_status = ns.merchant_shipping[7] %}
+                            {% endif %}
+                            <div class="card-footer bg-transparent">
+                                <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p>{{shipping_text}}<strong>{{merchant_shipping_option_name}}</strong></p>
+                                    <p>{{shipping_delivery_days}}</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- Close last guest-cart-seller-body and guest-cart-seller -->
+                    {% endif %}
+                {% else %}
+                <div class="guest-cart-seller card">
+                    <div class="guest-cart-seller-header card-header">
+                        <h2>{{nothing_in_cart_text}}</h2>
+                    </div>
+                    <div class="guest-cart-seller-body card-body">
+                        <div class="row mb-3">
+                            <h2>{{nothing_in_cart_text1}}</h2>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            <button class="button button-blue continueBtn">{{continue_btn_text}}</button>
+        </div>
+        <div id="page2" class="checkout-page">
+            <h2>{{details_text}}</h2>
+            <form id="shippingForm">
+              <label for="name">{{name_text}}:</label>
+              <input class="full-w-input" type="text" id="name" name="name" required>
+              
+              <label for="phone_number">{{phone_number_text}}:</label>
+              <div class="input-group d-flex align-items-center">
+                <span class="input-group-prepend">
+                    <span class="input-group-text">+60</span>
+                </span>
+                <input type="number" step="1" id="phone_number" name="phone_number" required style="padding: 6px 0px;margin-bottom: 0;">
+              </div>
+              
+              <label for="email">{{email_text}}:</label>
+              <input class="full-w-input" type="text" id="email" name="email" required>
+
+              <label for="street">{{street_text}}:</label>
+              <input class="full-w-input" type="text" id="street" name="street" required>
+              
+              <!-- <label for="unitNumber">{{unit_number_text}}:</label> -->
+              <input class="full-w-input" type="text" id="unitNumber" name="unitNumber" hidden>
+              
+              <label for="zip">{{zipcode_text}}:</label>
+              <input class="full-w-input" type="text" id="zip" name="zip" required>
+
+              <label for="city">{{city_text}}:</label>
+              <input class="full-w-input" type="text" id="city" name="city" required>
+              
+              <label for="state">{{state_text}}:</label>
+              <select class="full-w-select" name="state" id="state" required>
+                <option value="" selected disabled>{{please_choose_once}}</option>
+                <option value="negeri sembilan">Negeri Sembilan</option>
+                <option value="kedah">Kedah</option>
+                <option value="johor">Johor</option>
+                <option value="malaka">Malaka</option>
+                <option value="kuala lumpur">Kuala Lumpur</option>
+                <option value="kelantan">Kelantan</option>
+                <option value="terengganu">Terengganu</option>
+                <option value="perak">Perak</option>
+                <option value="pahang">Pahang</option>
+                <option value="penang">Penang</option>
+                <option value="perlis">Perlis</option>
+                <option value="sarawak">Sarawak</option>
+                <option value="selangor">Selangor</option>
+                <option value="sabah">Sabah</option>
+              </select>
+              
+              <label for="country">{{country_text}}:</label>
+              <select class="full-w-select" name="country" id="country" required>
+                <option value="malaysia" selected>Malaysia</option>
+              </select>
+            </form>
+
+            <button id="submitShippingAddressBtn" class="button button-blue continueBtn">{{continue_btn_text}}</button>
+            <button class="button goBackBtn">{{go_back_btn_text}}</button>
+        </div>
+        <div id="page3" class="checkout-page final-checkout-page">
+            <h2>{{payment_method_text}}</h2>
+            <form id="paymentForm" action="" method="POST">
+                <ul class="payment-methods">
+                    <li class="payment-method">
+                      <img src="data:image/jpeg;base64,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" alt="FPX Icon" class="payment-icon">
+                      <label for="onlinebanking">Online Banking (Toyyibpay)</label>
+                      <input type="radio" id="onlinebanking" name="payment_method" value="onlinebanking" required>
+                    </li>
+                    <li class="payment-method">
+                      <img src="https://support.sitegiant.com/wp-content/uploads/2022/08/cash-on-delivery-banner.png" alt="COD Icon" class="payment-icon">
+                      <label for="cod">{{cod_name_text}}</label>
+                      <input type="radio" id="cod" name="payment_method" value="cod">
+                    </li>
+                    <input type="text" name="name" required hidden>
+                    <input type="text" name="email" required hidden>
+                    <input type="text" name="phone_number" required hidden>
+                    <input type="text" name="street" required hidden>
+                    <input type="text" name="unitNumber" hidden>
+                    <input type="text" name="city" required hidden>
+                    <input type="text" name="zip" required hidden>
+                    <input type="text" name="state" required hidden>
+                    <input type="text" name="country" required hidden>
+                </ul>
+                <div class="cart-summary">
+                    <div class="summary-item">
+                      <span class="summary-title">Cart Total</span>
+                      <span class="summary-price cart-total-text">Rm{{(guest_cart_sub_total + guest_cart_shipping_fees) | round(2, 'ceil')}}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Name:</span>
+                        <span class="summary-name-text">Amah</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Phone Number:</span>
+                        <span class="summary-phone-number-text"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Email:</span>
+                        <span class="summary-email-text"></span>
+                    </div>
+                    <div class="summary-address">
+                        <span class="summary-title">Address:</span>
+                        <span class="summary-address-text"></span>
+                    </div>
+                </div>
+                <button type="submit" class="button button-blue">{{continue_btn_text}}</button>
+                <button type="button" class="button goBackBtn">{{go_back_btn_text}}</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% block modal %}
+{% if session.language == "my" %}
+    {% set title_text = "OTP telah dihantar ke" %}
+    {% set otp_input_placeholder_text = "Masukkan OTP anda di sini" %}
+    {% set verify_text = "Sahkan" %}
+{% elif session.language == "cn" %}
+    {% set title_text = "以把OTP发送至" %}
+    {% set otp_input_placeholder_text = "在这里填入您的OTP" %}
+    {% set verify_text = "验证" %}
+{% else %}
+    {% set title_text = "An OTP has been sent to" %}
+    {% set otp_input_placeholder_text = "Enter your OTP here" %}
+    {% set verify_text = "Verify" %}
+{% endif %}
+<div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="otpModal">{{title_text}} <span class="otp-sent-to-display"></span></h5>
+          <!-- <button type="button" class="btn-close" data-dismiss="modal">Close</button> -->
+        </div>
+        <div class="modal-body">
+            <form id="otpForm">
+                <div class="mb-3">
+                  <input type="number" class="form-control" id="otpInput" placeholder="{{otp_input_placeholder_text}}">
+                </div>
+                <button type="submit" class="btn btn-primary">{{verify_text}}</button>
+                <input type="text" name="phone_number" hidden required>
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+{% endblock %}
+{% block script %}
+{% if session.language == "my" %}
+    {% set shipping_address_not_filled_msg = "Sila isi semua butiran penghantaran sebelum meneruskan." %}
+{% elif session.language == "cn" %}
+    {% set shipping_address_not_filled_msg = "请在继续之前填写所有的送货详情。" %}
+{% else %}
+    {% set shipping_address_not_filled_msg = "Please fill in all the shipping details before proceeding." %}
+{% endif %}
+<!-- <script defer>
+    try {
+        $(document).ready(function(){
+        
+            var checkoutValue = "100"
+            checkoutValue = parseFloat(checkoutValue).toFixed(2)
+            //tiktok pixel
+            ttq.track('InitiateCheckout', {
+                "contents": [{
+                    "content_id": "1782389123", // string. ID of the product. Example: "1077218".
+                }],
+                "value": checkoutValue, // number. Value of the order or items sold. Example: 100.
+                "currency": "MYR", // string. The 4217 currency code. Example: "USD".
+            });
+
+            //facebook pixel
+            fbq('track', 'InitiateCheckout', {
+                content_name: 'Initiate Checkout',
+                value: checkoutValue,
+                currency: "MYR" 
+            });  
+        })
+    } catch (error) {
+        // handle or report the error
+        console.error("An error occurred: ", error);
+    }
+</script> -->
+<script defer>
+$(document).ready(function(){
+    let alertHTML = $('<div class="alert alert-dismissible fade show text-center" role="alert" style="width: 100%;">\
+        <strong>Success:</strong> <span class="alert-text"></span>\
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
+            <span aria-hidden="true">&times;</span>\
+        </button>\
+    </div>');
+    let currentStep = 1;
+    
+    let shippingAddressNotFilledErrorMsg = '{{shipping_address_not_filled_msg}}'
+
+    $(document).on("shown.bs.modal", ".modal", function(){
+        openMaskOverlay();
+    })
+
+    $(document).on("hide.bs.modal", ".modal", function(){
+        closeMaskOverlay();
+    })
+
+    $(document).on('click', '.continueBtn', function() {
+        if($(this).attr("id") == "submitShippingAddressBtn"){
+            var name = $('#name').val();
+            var phone_number = $('#phone_number').val();
+            var email = $('#email').val();
+            var street = $('#street').val();
+            var unitNumber = $('#unitNumber').val();
+            var city = $('#city').val();
+            var zip = $('#zip').val();
+            var state = $('#state').val();
+            var country = $('#country').val();
+
+                // Check if all required fields are filled
+            if (name === '' || phone_number === '' || email === '' || street === '' || city === '' || zip === '' || state === '' || country === '') {
+                alert(shippingAddressNotFilledErrorMsg);
+                return;
+            } else {
+                // If everything is filled, clone the values to the form in page3
+                $('.final-checkout-page input[name="name"]').val(name);
+                $('.final-checkout-page input[name="phone_number"]').val(phone_number);
+                $('.final-checkout-page input[name="email"]').val(email);
+                $('.final-checkout-page input[name="street"]').val(street);
+                $('.final-checkout-page input[name="unitNumber"]').val(unitNumber);
+                $('.final-checkout-page input[name="city"]').val(city);
+                $('.final-checkout-page input[name="zip"]').val(zip);
+                $('.final-checkout-page input[name="state"]').val(state);
+                $('.final-checkout-page input[name="country"]').val(country);
+                //Display what user input
+                var shippingDetails = street;
+
+                // Add unit number if it's not empty
+                if (unitNumber != '') {
+                    shippingDetails = unitNumber + ', ' + shippingDetails;
+                }
+
+                // Add the rest of the details
+                shippingDetails += ', ' + city + ' ' + zip + ', ' + state + ', ' + country;
+                $(".summary-name-text").text(name);
+                $(".summary-phone-number-text").text(phone_number);
+                $(".summary-email-text").text(email);
+                $(".summary-address-text").text(shippingDetails);
+            }
+        }
+
+        if (currentStep < 3) {
+            document.getElementById(`page${currentStep}`).classList.remove('active-page');
+            document.getElementById(`step${currentStep}`).classList.add('complete-step');
+            $("#step"+currentStep+" .circle").addClass("tick")
+            currentStep++;
+            document.getElementById(`page${currentStep}`).classList.add('active-page');
+        }
+    });
+    
+    $(document).on('click', '.goBackBtn', function() {
+        if (currentStep > 1) {
+            document.getElementById(`page${currentStep}`).classList.remove('active-page');
+            currentStep--;
+            document.getElementById(`step${currentStep}`).classList.remove('complete-step');
+            document.getElementById(`page${currentStep}`).classList.add('active-page');
+        }
+    });
+
+    $(document).on("submit", "#paymentForm", function(e){
+        e.preventDefault();
+        var thisForm = $(this);
+
+        var fd = new FormData(thisForm[0]);
+        var thisFormPhoneNumber = thisForm.find("input[name='phone_number']").val()
+        fd.append("action", "guest_request_otp_for_checkout")
+
+        if(thisForm.data("requestRunning")){
+            return false;
+        }
+        showLoader();
+        thisForm.data("requestRunning", true);
+        $.ajax({
+            url: '/api/guest_request_otp_for_checkout',
+            type: 'POST',
+            data: fd,
+            processData: false,  // Important!
+            contentType: false,  // Important!
+            dataType: "json",
+            success: function(result) {
+                if(result.passcheck == 1){
+                    $("#otpModal").find(".otp-sent-to-display").text("+60"+thisFormPhoneNumber)
+                    $("#otpForm").find("input[name='phone_number']").val(thisFormPhoneNumber)
+                    $("#otpModal").modal("show");
+                }else if(result.passcheck == 4){
+                    alert(result.msg);
+                    window.location.href = result.redirect;
+                }else{
+                    var alertHtmlClone = alertHTML.clone()
+                    alertHtmlClone.addClass("alert-warning");
+                    alertHtmlClone.find(".alert-text").text(result.msg);
+                    $(".after-nav").prepend(alertHtmlClone);
+                }
+                
+            },
+            error: function(error) {
+                alert(error);
+            },
+            complete: function () {
+                thisForm.data("requestRunning", false);
+                hideLoader();
+            }
+        });
+    })
+
+    $(document).on('submit', '#otpForm', function(e) {
+        var thisForm = $(this)
+        var thisModal = thisForm.closest(".modal")
+        e.preventDefault();
+        showLoader();
+        if(thisForm.data("requestRunning")){
+            return false;
+        }
+        thisForm.data("requestRunning", true);
+        let otp = $('#otpInput').val();
+        var fd = new FormData(thisForm[0]);
+        fd.append("action", "guest_verify_otp_for_checkout")
+        fd.append("otp", otp)
+        $.ajax({
+            url: '/api/guest_verify_otp_for_checkout',
+            type: 'POST',
+            data: fd,
+            processData: false,  // Important!
+            contentType: false,  // Important!
+            dataType: "json",
+            success: function(result) {
+                thisModal.modal("hide");
+                hideLoader();
+                if(result.passcheck == 1){
+                    $("#paymentForm").trigger("readyToSubmit");
+                }else if(result.passcheck == 4){
+                    alert(result.msg);
+                    window.location.href = result.redirect;
+                }else{
+                    var alertHtmlClone = alertHTML.clone()
+                    alertHtmlClone.addClass("alert-warning");
+                    alertHtmlClone.find(".alert-text").text(result.msg);
+                    $(".after-nav").prepend(alertHtmlClone);
+                }
+            },
+            error: function(error) {
+                alert(error);
+            },
+            complete: function () {
+                thisForm.data("requestRunning", false);
+            }
+        });
+    });
+
+    $(document).on("readyToSubmit", "#paymentForm", function(){
+        var thisForm = $(this);
+
+        var fd = new FormData(thisForm[0]);
+        var thisFormPhoneNumber = thisForm.find("input[name='phone_number']").val()
+        fd.append("action", "guest_place_order")
+        fd.append("phone_number", thisFormPhoneNumber)
+
+        if(thisForm.data("requestRunning")){
+            return false;
+        }
+        showLoader();
+        thisForm.data("requestRunning", true);
+        $.ajax({
+            url: '/api/guest_place_order',
+            type: 'POST',
+            data: fd,
+            processData: false,  // Important!
+            contentType: false,  // Important!
+            dataType: "json",
+            success: function(result) {
+                if(result.passcheck == 1){
+                    window.location.href = "/user/checkout_complete"
+                }else if(result.passcheck == 4){
+                    alert(result.msg);
+                    window.location.href = result.redirect;
+                }else{
+                    var alertHtmlClone = alertHTML.clone()
+                    alertHtmlClone.addClass("alert-warning");
+                    alertHtmlClone.find(".alert-text").text(result.msg);
+                    $(".after-nav").prepend(alertHtmlClone);
+                }
+            },
+            error: function(error) {
+                alert(error);
+            },
+            complete: function () {
+                thisForm.data("requestRunning", false);
+                hideLoader();
+            }
+        });
+    })
+})
+</script>
+{% endblock %}

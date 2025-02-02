@@ -1,0 +1,109 @@
+{% if session.language == "my" %}
+  {% set recommended_text = "Disyorkan untuk anda" %}
+  {% set recommendation_modal_header_text = "Kami rasa anda mungkin juga suka:" %}
+  {% set close_text = "Tutup" %}
+{% elif session.language == "cn" %}
+  {% set recommended_text = "为您推荐" %}
+  {% set recommendation_modal_header_text = "我们认为您可能也会喜欢:" %}
+  {% set close_text = "关闭" %}
+{% else %}
+  {% set recommended_text = "Recommended for you" %}
+  {% set recommendation_modal_header_text = "We think you might also like:" %}
+  {% set close_text = "Close" %}
+{% endif %}
+<div class="modal fade" id="productRecommendModal" tabindex="-1" role="dialog" aria-labelledby="productRecommendModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="productRecommendModalLabel">{{recommended_text}}</h1>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body overflow-auto">
+        <p>{{recommendation_modal_header_text}}</p>
+        <div class="d-flex flex-row recommendedProducts">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{close_text}}</button>
+        <!-- <button type="button" class="btn btn-primary">Add All to Cart</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<script defer>
+$(document).ready(function(){
+  var currentPrdId = "{{prd_id}}"
+  //Load the orders to the div
+  var fd = new FormData();
+  fd.append("action", "get_recommendation_products")
+  fd.append("current_product_id", currentPrdId)
+  $.ajax({
+      url: '/api/get_recommendation_products',
+      type: 'POST',
+      data: fd,
+      processData: false,
+      contentType: false,
+      crossDomain: true,
+      dataType: "json",
+      success: function (response) {
+          if (Array.isArray(response)) { // check if products is an array
+              $("#productRecommendModal .recommendedProducts").text("");
+              for (var i = 0; i < response.length; i++) {
+                  if (typeof response[i] === 'object' && response[i] !== null && !Array.isArray(response[i])) { // check if each item is an object
+                      var id = response[i].id;
+                      var productId = response[i].prd_id;
+                      var productName = response[i].prd_name;
+                      var productPrice = response[i].prd_offer_price;
+                      var prdImage = response[i].prd_image;
+                      var merchantId = response[i].merchant_id;
+                      var prdVariations = response[i].product_variations
+                      var html = $('<div class="mx-1 flex-shrink-0" style="min-width: 18rem;">\
+                          <form id="recommendedProduct'+productId+'Form" class="card" style="width: 18rem;" data-prdid="'+productId+'" data-merchantid="'+merchantId+'">\
+                              <img class="card-img-top" src="https://tmpmc.aitanmall.com/static/assets/merchant/'+merchantId+'/product/'+productId+'/'+prdImage+'" alt="Card image cap">\
+                              <div class="card-body">\
+                                  <h5 class="card-title">'+productName+'</h5>\
+                                  <p class="card-text">ONLY Rm'+productPrice+'!</p>\
+                                  <a href="#" class="btn btn-primary add-to-cart" data-target="#recommendedProduct'+productId+'Form" data-targettype="recommendedModal">Add to Cart</a>\
+                              </div>\
+                              <input type="text" name="prd_id" data-name="Product ID" value="'+productId+'" required hidden>\
+                              <input type="text" name="merchant_id" data-name="Merchant ID" value="'+merchantId+'" required hidden>\
+                              <input type="text" name="action" value="add_to_cart" required hidden>\
+                        </form>\
+                      </div>')
+                      //variation div
+                      if(prdVariations.length == 0){
+                        var variationHTML = $('')
+                      }else{
+                        var variationHTML = $('<div class="my-1 form-group productVariationWrapper">\
+                            <select class="form-control productVariation" name="prd_var_id" data-name="Product Variation" required>\
+                              <option selected value="">Pilihkan Satu</option>\
+                            </select>\
+                          </div>')
+                        //append each variation to it
+                        for (var i2 = 0; i2 < prdVariations.length; i2++) {
+                          var prdVariationIndex = prdVariations[i2].id
+                          var prdVariationName = prdVariations[i2].prd_var
+                          variationHTML.find("select").append('<option value="'+prdVariationIndex+'">'+prdVariationName+'</option>')
+                        }
+                      }
+                      html.find(".card-body p").after(variationHTML);
+                      $("#productRecommendModal .recommendedProducts").append(html);
+                      // if (i == response.length - 1) {
+                      //     $("#productRecommendModal .recommendedProducts").append(html);
+                      // }
+                  }
+              }
+              if(response.length == 0){
+                  $("#productRecommendModal").remove();
+              }
+          }
+              
+      },
+      error: function (jqXHR, textStatus, errorMessage) {
+          alert(errorMessage);
+      }
+  });
+})
+</script>

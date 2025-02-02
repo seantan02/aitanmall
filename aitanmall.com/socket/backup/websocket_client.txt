@@ -1,0 +1,10 @@
+import asyncio
+import websockets
+
+async def hello():
+    uri = "wss://socket.stage-aitanmall.tech:59001"
+    async with websockets.connect(uri) as websocket:
+        await websocket.send("Hellow World")
+        await websocket.recv()
+
+asyncio.get_event_loop().run_until_complete(hello())

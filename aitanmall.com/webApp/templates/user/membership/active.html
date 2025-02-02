@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-5">Your Membership Status</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Membership Details</h5>
+            <p class="card-text">
+                <strong>Status:</strong>  Active <i class="fa-solid fa-check" style="color: #0c6506;"></i> <br>
+                <strong>Start Date:</strong> {{ session["user_membership_start_date"] }} <i class="fa-solid fa-calendar-days"></i> <br>
+                <strong>End Date:</strong> {{ session["user_membership_end_date"] }} <i class="fa-solid fa-calendar-days"></i> <br>
+            </p>
+            <a class="btn btn-primary btn-lg" href="#" role="button" id="manageMembership">Manage Membership</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script defer>
+$(document).ready(function(){
+    //ajax for membership confirmation
+    $(document).on("click", "#manageMembership",function(e){
+    e.preventDefault();
+    var thisBtn = $(this);
+    //check if this form is processing
+    if(thisBtn.data("requestRunning")){
+        return false;
+    }
+    thisBtn.data("requestRunning", true);
+    showLoader();
+
+    var fd = new FormData()
+    fd.append("action", "create_portal_session");
+        
+    $.ajax({
+    contentType: false,
+    processData: false,
+    type: "POST",
+    url: "/api/user_create_stripe_portal_session",
+    dataType: "json",
+    data: fd,
+    success: function(data){
+        var result = data;
+        if(result.passcheck == 1){
+        swal({
+            title: "Success",
+            text: result.msg,
+            icon: "success",
+            buttons: true,
+        })
+        }else if(result.passcheck == 4){
+                swal({
+                title: "Attention",
+                text: result.msg,
+                icon: "info",
+                buttons: true,
+                }).then(function(){
+                window.location.href = result.redirect;
+                })
+            }
+        },error:function(){
+        }
+    })
+    hideLoader();
+    thisBtn.data("requestRunning", false);
+    })
+})
+</script>
+{% endblock %}

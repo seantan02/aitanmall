@@ -1,0 +1,23 @@
+/*carousel settings customization*/
+/*arrow icon*/
+.after-nav .carousel .carousel-control-prev .carousel-control-prev-icon{
+    background-image: url("/static/assets/aitanmall/images/index/left_arrow.svg");
+}
+.after-nav .carousel .carousel-control-next .carousel-control-next-icon{
+    background-image: url("/static/assets/aitanmall/images/index/right_arrow.svg");
+}
+/*indicator color*/
+.after-nav .carousel .carousel-indicators li{
+    background-image:linear-gradient(to right, rgb(181, 181, 181) 0%, rgba(2,0,36,1) 100%);
+}
+.after-nav .carousel .carousel-indicators li.active{
+    background-image:linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(158, 158, 160) 100%);
+}
+/*caption color*/
+.after-nav .carousel .carousel-inner .carousel-caption h5{
+    text-shadow: 1px 1px 2px black;
+}
+.after-nav .carousel .carousel-inner .carousel-caption p{
+    text-shadow: 1px 1px 2px black;
+}
+/*END OF carousel settings customization*/

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Membership{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/membership/index.min.css')}}?version=1.2">
+{% endblock %}
+{% block content %}
+{% if session.language == "my" %}
+  {% set vip_intro_header = "Keahlian VIP" %}
+  {% set vip_intro_text1 = "Percubaan Percuma 20 Hari" %}
+  {% set vip_intro_text2 = "Penghantaran Percuma, Hadiah Percuma, Jaminan Pulangan & Bayaran Balik 30 Hari" %}
+  {% set vip_intro_text3 = "Cuba VIP Sekarang" %}
+  {% set vip_intro_text4 = "Hanya Rm17.83/sebulan selepas percubaan! Boleh batal bila-bila masa!" %}
+  {% set vip_intro_text5 = "Manfaat" %}
+  {% set vip_intro_text6 = "Jaminan Pulangan Percuma Selama 30 Hari!" %}
+  {% set vip_intro_text7 = "Produk apa saja yang dijual oleh penjual yang disahkan ATAU rasmi layak untuk pulangan & bayaran balik SEGERA selama 30 hari 100%!" %}
+  {% set vip_intro_text8 = "Penghantaran Express Percuma!" %}
+  {% set vip_intro_text9 = "Penghantaran express yang biasanya tiba dalam masa 1-2 hari bekerja!" %}
+  {% set vip_intro_text10 = "Hadiah Rawak Percuma sehingga Rm999!" %}
+  {% set vip_intro_text11 = "Setiap pesanan yang anda buat datang dengan hadiah rawak dari kami! Mencakupi dari Rm1 - Rm999!" %}
+{% elif session.language == "cn" %}
+  {% set vip_intro_header = "VIP会员" %}
+  {% set vip_intro_text1 = "免费试用20天" %}
+  {% set vip_intro_text2 = "免费送货，免费礼物，30天退货和退款保证" %}
+  {% set vip_intro_text3 = "现在就试试VIP" %}
+  {% set vip_intro_text4 = "试用后，每月仅需Rm17.83！随时随地取消！" %}
+  {% set vip_intro_text5 = "优惠" %}
+  {% set vip_intro_text6 = "保证30天免费退货！" %}
+  {% set vip_intro_text7 = "任何由认证或官方卖家售出的产品都有30天立即退货和100%退款的权利！" %}
+  {% set vip_intro_text8 = "免费快递送货！" %}
+  {% set vip_intro_text9 = "快递通常在1-2个工作日内到达！" %}
+  {% set vip_intro_text10 = "免费随机礼物，价值高达Rm999！" %}
+  {% set vip_intro_text11 = "您每下一个订单都将收到我们的随机礼物！价值范围从Rm1到Rm999！" %}
+{% else %}
+  {% set vip_intro_header = "VIP Membership" %}
+  {% set vip_intro_text1 = "Free Trial 20 Days" %}
+  {% set vip_intro_text2 = "Free Delivery, Free Gift, 30 Days Return & Refund Guarantee" %}
+  {% set vip_intro_text3 = "Try VIP Now" %}
+  {% set vip_intro_text4 = "Lowest at Rm17.83/month after trial only! Cancel anytime anywhere!" %}
+  {% set vip_intro_text5 = "Benefits" %}
+  {% set vip_intro_text6 = "30 Days Free Return GUARANTEED!" %}
+  {% set vip_intro_text7 = "Any products sold by verified OR official sellers are eligible for 30 Days INSTANT return & refund 100%!" %}
+  {% set vip_intro_text8 = "Free Express Delivery!" %}
+  {% set vip_intro_text9 = "Express delivery that arrives normally within 1-2 business days!" %}
+  {% set vip_intro_text10 = "Free Random Gifts up to Rm999!" %}
+  {% set vip_intro_text11 = "Every order you make comes with a random gift from us! Ranging from Rm1 - Rm999!" %}
+{% endif %}
+<!-- Content of VIP -->
+<div class="membership-wrapper">
+    <div class="membership-board">
+        <div class="membership-introduction">
+            <div class="membership-logo">
+                <picture>
+                  <img class="lazyload" data-src="/static/assets/aitanmall/images/membership/logo.svg" alt="Logo Here">
+                </picture>
+            </div>
+            <div class="membership-introduction-line">
+                <h1>{{vip_intro_header}}</h1>
+                <h3>{{vip_intro_text1}}</h3><br>
+                <h5>{{vip_intro_text2}}</h5>
+            </div>
+            <div class="membership-introduction-btn">
+                <a target="blank" rel="noopener noreferrer" href="/user/membership"><button>{{vip_intro_text3}}</button></a>
+            </div>
+            <div class="membership-introduction-line">
+                <p>{{vip_intro_text4}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="membership-board">
+      <div class="membership-summary-wrapper">
+        <div class="membership-summary-header">
+          <h1>{{vip_intro_text5}}</h1>
+        </div>
+        <div class="membership-summary">
+          <div class="membership-summary-logo">
+            <picture>
+              <img src="/static/assets/aitanmall/images/membership/free_return.png" alt="">
+            </picture>
+          </div>
+          <div class="membership-summary-title">
+            <label>{{vip_intro_text6}}</label>
+          </div>
+          <div class="membership-summary-body">
+            <p>{{vip_intro_text7}}</p>
+          </div>
+        </div>
+        <div class="membership-summary">
+          <div class="membership-summary-logo">
+            <picture>
+              <img src="/static/assets/aitanmall/images/membership/free_shipping.png" alt="">
+            </picture>
+          </div>
+          <div class="membership-summary-title">
+            <label>{{vip_intro_text8}}</label>
+          </div>
+          <div class="membership-summary-body">
+            <p>{{vip_intro_text9}}</p>
+          </div>
+        </div>
+        <div class="membership-summary">
+          <div class="membership-summary-logo">
+            <picture>
+              <img src="/static/assets/aitanmall/images/membership/free_gifts.png" alt="">
+            </picture>
+          </div>
+          <div class="membership-summary-title">
+            <label>{{vip_intro_text10}}</label>
+          </div>
+          <div class="membership-summary-body">
+            <p>{{vip_intro_text11}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

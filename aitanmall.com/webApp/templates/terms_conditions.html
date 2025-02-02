@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    {% set lang = session["language"] %}
+    {% if lang == "eng" %}
+    <div class="my-4">
+      <h1>AiTan SDN. BHD. Terms and Conditions</h1>
+      <p>Last updated: May 24, 2023</p>
+    </div>
+    <ol style="list-style-type: upper-roman;">
+        <li>
+            <h2>Acceptance of Terms</h2>
+            <p>By accessing and using our Service, you agree to be bound by these Terms.</p>
+        </li>
+        <li>
+            <h2>Purchases</h2>
+            <p>If you wish to purchase any product or service made available through the Service...</p>
+        </li>
+        <li>
+            <h2>Shipping</h2>
+            <p>Shipping of any Purchase is subject to the handling company we partner with...</p>
+        </li>
+        <li>
+            <h2>Cancellations and Appeals</h2>
+            <p>Once a payment has been made, you may not cancel your Purchase. However, we understand that exceptional circumstances may occur. In such cases, you are allowed to submit an appeal for consideration. Please note that the submission of an appeal does not guarantee the approval of the cancellation request.</p>
+            <p>All appeals are subject to review by AiTan SDN. BHD. We reserve the right to make the final decision on all cancellation requests, and this decision is final and binding. Our decision will be made based on a number of factors, including but not limited to the status of your order, the nature of the product or service, and the circumstances leading to the appea</p>
+        </li>
+        <li>
+            <h2>Return and Refund Policy</h2>
+            <p>The return and refund of a Purchase is at the discretion of the seller. If a dispute arises between you and the seller, AiTan SDN. BHD. reserves the right to step in and make a decision in accordance with our internal policies and applicable laws.</p>
+        </li>
+        <li>
+            <h2>Governing Law</h2>
+            <p>These Terms shall be governed and construed in accordance with the laws of Malaysia, without regard to its conflict of law provisions.</p>
+        </li>
+        <li>
+            <h2>Changes</h2>
+            <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time.</p>
+        </li>
+        <li>
+            <h2>Contact Us</h2>
+            <p>If you have any questions about these Terms, please contact us.</p>
+        </li>
+    </ol>
+    {% elif lang == "cn" %}
+    <div class="my-4">
+        <h1>AiTan SDN. BHD. 使用条款</h1>
+        <p>最后更新：2023年5月24日</p>
+        <p>欢迎使用 AiTan SDN. BHD.。在使用我们的网站（“服务”）之前，请仔细阅读这些使用条款（“条款”，“使用条款”），此服务由 AiTan SDN. BHD.（“我们”）运营。</p>
+      </div>
+      <ol style="list-style-type: upper-roman;">
+          <li>
+              <h2>接受条款</h2>
+              <p>通过访问和使用我们的服务，即表示您同意遵守这些条款。如果您不同意任何条款的部分，那么您可能无法访问服务。</p>
+          </li>
+          <li>
+              <h2>购买</h2>
+              <p>如果您希望购买通过服务提供的任何产品或服务（“购买”），您可能需要提供与您的购买相关的某些信息。</p>
+          </li>
+          <li>
+              <h2>运送</h2>
+              <p>任何购买的运送均由我们合作的处理公司负责。 AiTan SDN. BHD. 对运送过程中遇到的任何延迟或问题不承担责任</p>
+          </li>
+          <li>
+              <h2>取消和上诉</h2>
+              <p>一旦付款，您将无法取消您的购买。然而，我们理解可能会发生特殊情况。在这样的情况下，您有权提交申诉供我们考虑。请注意，提交申诉并不保证取消请求的批准。</p>
+              <p>所有的申诉都将由 AiTan SDN. BHD. 审查。我们保留对所有取消请求做出最终决定的权利，这个决定是最终的并具有约束力。我们的决定将基于多种因素，包括但不限于您的订单状态，产品或服务的性质，以及导致申诉的情况。</p>
+          </li>
+          <li>
+              <h2>退货和退款政策</h2>
+              <p>购买的退货和退款由卖家自行决定。如果您和卖家之间发生争议， AiTan SDN. BHD. 保留介入并根据我们的内部政策和适用法律做出决定的权利。</p>
+          </li>
+          <li>
+              <h2>管辖法律</h2>
+              <p>这些条款应根据马来西亚法律解释和执行，不考虑其法律冲突规定。</p>
+          </li>
+          <li>
+              <h2>变更</h2>
+              <p>我们保留在任何时候自行决定修改或替换这些条款的权利。</p>
+          </li>
+          <li>
+              <h2>联系我们</h2>
+              <p>如果您对这些条款有任何疑问，请与我们联系。</p>
+          </li>
+      </ol>
+    {% elif lang == "my" %}
+    <div class="my-4">
+        <h1>Terma dan Syarat AiTan SDN. BHD.</h1>
+        <p>Kemaskini terakhir: 24 Mei, 2023</p>
+        <p>Selamat datang ke AiTan SDN. BHD. Sila baca Terma dan Syarat ("Terma", "Terma dan Syarat") ini dengan teliti sebelum menggunakan laman web kami ( "Perkhidmatan") yang dioperasikan oleh AiTan SDN. BHD. ("kami", "kita", "milik kami").</p>
+      </div>
+      <ol style="list-style-type: upper-roman;">
+          <li>
+              <h2>Penerimaan Terma</h2>
+              <p>Dengan mengakses dan menggunakan Perkhidmatan kami, anda bersetuju untuk terikat dengan Terma ini. Jika anda tidak bersetuju dengan sebahagian daripada terma, maka anda mungkin tidak boleh mengakses Perkhidmatan.</p>
+          </li>
+          <li>
+              <h2>Pembelian</h2>
+              <p>Jika anda ingin membeli mana-mana produk atau perkhidmatan yang dibuat tersedia melalui Perkhidmatan ("Pembelian"), anda mungkin perlu memberikan maklumat tertentu yang relevan dengan Pembelian anda.</p>
+          </li>
+          <li>
+              <h2>Penghantaran</h2>
+              <p>Penghantaran mana-mana Pembelian adalah tertakluk kepada syarikat pengendalian yang kami bekerjasama dengannya. AiTan SDN. BHD. tidak bertanggungjawab atas sebarang kelewatan atau masalah yang dihadapi semasa proses penghantaran.</p>
+          </li>
+          <li>
+              <h2>Pembatalan dan Rayuan</h2>
+              <p>Setelah pembayaran dibuat, anda tidak boleh membatalkan Pembelian anda. Walau bagaimanapun, kami memahami bahawa keadaan luar biasa mungkin berlaku. Dalam kes-kes seperti itu, anda dibenarkan menghantar rayuan untuk pertimbangan. Sila ambil perhatian bahawa penghantaran rayuan tidak menjamin kelulusan permohonan pembatalan.</p>
+              <p>Semua rayuan akan dikaji oleh AiTan SDN. BHD. Kami berhak membuat keputusan akhir mengenai semua permintaan pembatalan, dan keputusan ini adalah muktamad dan mengikat. Keputusan kami akan dibuat berdasarkan beberapa faktor, termasuk tetapi tidak terhad kepada status pesanan anda, sifat produk atau perkhidmatan, dan keadaan yang membawa kepada rayuan.</p>
+          </li>
+          <li>
+              <h2>Polisi Pemulangan dan Bayaran Balik</h2>
+              <p>Pemulangan dan bayaran balik bagi mana-mana Pembelian adalah atas budi bicara penjual. Jika terdapat pertikaian antara anda dan penjual, AiTan SDN. BHD. berhak untuk campur tangan dan membuat keputusan mengikut dasar-dasar kami dan undang-undang yang berkenaan.</p>
+          </li>
+          <li>
+              <h2>Undang-undang yang Mentadbir</h2>
+              <p>Terma ini akan ditadbir dan ditafsirkan mengikut undang-undang Malaysia, tanpa menghiraukan peruntukan konflik undang-undangnya.</p>
+          </li>
+          <li>
+              <h2>Perubahan</h2>
+              <p>Kami berhak, atas budi bicara kami sendiri, untuk mengubah atau menggantikan Terma ini pada bila-bila masa.</p>
+          </li>
+          <li>
+              <h2>Hubungi Kami</h2>
+              <p>Jika anda mempunyai sebarang pertanyaan mengenai Terma ini, sila hubungi kami.</p>
+          </li>
+      </ol>
+    {% endif %}
+    <!-- Rest of your sections go here -->
+</div>
+{% endblock %}

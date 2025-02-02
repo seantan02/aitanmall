@@ -1,0 +1,437 @@
+{% set logo_svg_url = '/static/assets/aitanmall/images/logo.svg' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="google-site-verification" content="9DnYnkZRNMpjJiyL6h8C5lsV0RBiMyPn09SMnh6W-IU" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+	<meta name="keywords" content="aitan, aitanmall, electronics, gadgets, ecommerce, e commerce, online shopping">
+	<meta name="description" content="{% block meta_description %}{% endblock %}">
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="icon" href="{{ logo_svg_url }}">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-5.0.2.min.css') }}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loader.min.css')}}?version=1.6">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.min.css')}}?version=2.4">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/navbar.css')}}?version=1.3">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/shopcart.min.css')}}?version=1.4">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/announcement.min.css')}}?version=1.3">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/whatsapp-widget.min.css')}}?version=1.1">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/modal.min.css')}}?version=1.0">
+	{% block stylesheets %}{% endblock %}
+	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<!-- Meta Pixel Code -->
+	<script defer>
+		!function(f,b,e,v,n,t,s)
+		{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+		if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+		n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t,s)}(window, document,'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '965768598164725');
+		fbq('track', 'PageView');
+	</script>
+	<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=965768598164725&ev=PageView&noscript=1"
+	/></noscript>
+	<!-- End Meta Pixel Code -->
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-BNK4T4DX8L" defer></script>
+	<script defer>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-BNK4T4DX8L');
+	</script>
+	<!-- Tiktok Pixel -->
+	<script>
+		!function (w, d, t) {
+		  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+		
+		  ttq.load('CJKPNFJC77UDO39776PG');
+		  ttq.page();
+		}(window, document, 'ttq');
+	</script>
+	<script src="//code.tidio.co/fbuzhwuhx9ibkbs6ujrf2coynm63kz3h.js" async></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.5.0.2.bundle.min.js') }}" defer></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/poppersjs.2.5.4.min.js') }}" defer></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.4.5.2.min.js') }}" defer></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/lazysizes.min.js') }}" defer></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/nav-effects.min.js') }}?version=1.5" defer></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/sweetalert.min.js')}}?version=1.1" defer></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/important.min.js') }}?version=2.9" defer></script> 
+	<script type="text/javascript" src="{{ url_for('static', filename='js/announcement.js')}}?version=1.5" defer></script>
+</head>
+<body>
+	<!-- If user has no script -->
+	<noscript>
+        <style type="text/css">
+            .display { display: none; }
+        </style>
+        <div style="display:block; margin: 50px;">JavaScript is not enabled! Please enable JavaScript to continue using this site.</div><br>
+		<p><strong>iPhone: Settings -> Safari -> Advanced -> Javascript (enable)</strong></p>
+		<p><strong>Android: Browser -> "Menu icon" -> Settings -> Advanced -> Javascript (enable)</strong></p>
+    </noscript>
+	{% set searchFormActionUrl = '/search_product' %}
+	{% set searchFormMethod = 'POST' %}
+	{% set searchFormKeyName = 'searched_key' %}
+	
+	{% if session.language == "my" %}
+		{% set closeText = 'Tutup' %}
+	{% elif session.language == "cn" %}
+		{% set closeText = '关闭' %}
+	{% else %}
+		{% set closeText = 'Close' %}
+	{% endif %}
+
+	{% if session["user_logged_in"] == True %}
+		{% set user_id = session["user_id"] %}
+		{% set userLoggedIn = True %}
+		{% set userFirstName = session["user_first_name"] %}
+		{% set userProfileLink = '/user/profile' %}
+		{% set userMembershipLink = '/user/membership' %}
+		{% set userCartLink = '/user/cart' %}
+		{% set userLogOutLink = '/user/log_out' %}
+
+		{% if session.language == "my" %}
+			{% set userProfileText = 'Saya' %}
+			{% set userMembershipText = 'VIP Member' %}
+			{% set userLogOutText = 'Log Keluar' %}
+			{% set userCartText = 'Troli' %}
+			{% set newUserTutorialImageUrl = 'https://aitanmall.com/static/assets/aitanmall/images/new_user_tutorial_my.jpg' %}
+		{% elif session.language == "cn" %}
+			{% set userProfileText = '我' %}
+			{% set userMembershipText = 'VIP会员' %}
+			{% set userLogOutText = '登出' %}
+			{% set userCartText = '购物车' %}
+			{% set newUserTutorialImageUrl = 'https://aitanmall.com/static/assets/aitanmall/images/new_user_tutorial_cn.jpg' %}
+		{% else %}
+			{% set userProfileText = 'Profile' %}
+			{% set userMembershipText = 'Membership' %}
+			{% set userLogOutText = 'Log Out' %}
+			{% set userCartText = 'Cart' %}
+			{% set newUserTutorialImageUrl = 'https://aitanmall.com/static/assets/aitanmall/images/new_user_tutorial.jpg' %}
+		{% endif %}
+	{% else %}
+		{% set userSignInLink = '/user/login' %}
+		{% set userCreateAccountLink = '/guest/createAccount' %}
+		{% set userMembershipLink = '/membership' %}
+		{% if session.language == "my" %}
+			{% set userSignInText = 'Log Masuk' %}
+			{% set userCreateAccountText = 'Daftaran' %}
+			{% set userMembershipText = 'Keahlian VIP' %}
+		{% elif session.language == "cn" %}
+			{% set userSignInText = '登录' %}
+			{% set userCreateAccountText = '创建账户' %}
+			{% set userMembershipText = 'VIP会员' %}
+		{% else %}
+			{% set userSignInText = 'Sign In' %}
+			{% set userCreateAccountText = 'Create Account' %}
+			{% set userMembershipText = 'Membership' %}
+		{% endif %}
+	{% endif %}
+	<div class="display">
+		<div class="loader-wrapper pre-loader" id="loader-wrapper">
+			<div class="loader">Loading...</div>
+			<div class="loader-sub"><span>Our Webpage Workers Are Working Hard...</span></div>
+		</div>
+		<div id="mask-overlay" class="mask-overlay"></div>
+        <div id="pagebody" class="pagebody hide">
+			<div id="nav-wrapper" class="nav-wrapper fixed-top">
+				<nav id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark">
+					<a class="navbar-brand" href="/">
+						<img src="{{ logo_svg_url }}" alt="AiTan" width="75" height="45">
+					</a>
+					<div class="d-flex" style="align-items: center;">
+						<div class="nav-item dropdown d-lg-none">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								{% if userLoggedIn == True %}
+									{% if session.language == "my" %}
+									<span>Saya</span>
+									{% elif session.language == "cn" %}
+									<span>我</span>
+									{% else %}
+									<span>Profile</span>
+									{% endif %}
+								{% else %}
+									<span>{{userCreateAccountText}}</span>
+								{% endif %}
+							</a>
+							{% if userLoggedIn == True %}
+							{% include '/user/nav_dropdown.html' %}
+							{% else %}
+							{% include '/guest/nav_dropdown.html' %}
+							{% endif %}
+						</div>
+						<div class="nav-item d-lg-none" style="margin-right: 10px;">
+							<a class="cartBtn" href="#"><i class="fa fa-shopping-cart"></i></a>
+						</div>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+						  <span class="navbar-toggler-icon"></span>
+						</button>
+					</div>
+					<div class="collapse navbar-collapse" id="navbarNav">
+					  <ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							{% if session.language == "my" %}
+							<a class="nav-link cartBtn">Troli</a>
+							{% elif session.language == "cn" %}
+							<a class="nav-link cartBtn">购物车</a>
+							{% else %}
+							<a class="nav-link cartBtn">Cart</a>
+							{% endif %}
+						</li>
+						{% if userLoggedIn != True %}
+							<li class="nav-item">
+								<a class="nav-link" href="{{userSignInLink}}">{{ userSignInText }}</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{userCreateAccountLink}}">{{ userCreateAccountText }}</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{{userMembershipLink}}">{{ userMembershipText }}</a>
+							</li>
+						{% endif %}
+					  </ul>
+					  <ul class="navbar-nav d-none d-lg-block d-xl-block d-xxl-block">
+						<li class="nav-item">
+						  <a class="nav-link cartBtn" href="#"><i class="fa fa-shopping-cart"></i></a>
+						</li>
+					  </ul>
+					  <ul class="navbar-nav d-none d-lg-block d-xl-block d-xxl-block">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								{% if userLoggedIn == True %}
+									{% if session.language == "my" %}
+									<span>Saya</span>
+									{% elif session.language == "cn" %}
+									<span>我</span>
+									{% else %}
+									<span>Profile</span>
+									{% endif %}
+								{% else %}
+									<span>{{userCreateAccountText}}</span>
+								{% endif %}
+							</a>
+							{% if userLoggedIn == True %}
+							{% include '/user/nav_dropdown.html' %}
+							{% else %}
+							{% include '/guest/nav_dropdown.html' %}
+							{% endif %}
+						</li>
+					  </ul>
+					</div>
+					<div class="d-none d-lg-block d-xl-block d-xxl-block">
+						<form action="{{searchFormActionUrl}}" method="{{searchFormMethod}}" class="search-form d-flex">
+							{% if session.language == "my" %}
+							<input class="form-control pr-2" type="search" name="{{searchFormKeyName}}" placeholder="Cari Barang" aria-label="Search">
+							<button class="btn btn-outline-success" type="submit">Cari</button>
+							{% elif session.language == "cn" %}
+							<input class="form-control pr-2" type="search" name="{{searchFormKeyName}}" placeholder="查找商品" aria-label="Search">
+							<button class="btn btn-outline-success" type="submit">查找商品</button>
+							{% else %}
+							<input class="form-control pr-2" type="search" name="{{searchFormKeyName}}" placeholder="Search Product" aria-label="Search">
+							<button class="btn btn-outline-success" type="submit">Search</button>
+							{% endif %}
+						</form>
+					</div>
+				</nav>
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none d-xl-none" style="border: 0;-webkit-box-shadow: none;box-shadow: none;">
+					<form action="{{searchFormActionUrl}}" method="{{searchFormMethod}}" class="search-form d-flex mx-auto d-lg-none">
+						{% if session.language == "my" %}
+						<input class="form-control pr-2" type="search" name="{{searchFormKeyName}}" placeholder="Cari Barang" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Cari</button>
+						{% elif session.language == "cn" %}
+						<input class="form-control pr-2" type="search" name="{{searchFormKeyName}}" placeholder="查找商品" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">查找商品</button>
+						{% else %}
+						<input class="form-control pr-2" type="search" name="{{searchFormKeyName}}" placeholder="Search Product" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+						{% endif %}
+					</form>
+				</nav>
+			</div>
+			{% if userLoggedIn == True %}
+			{% include 'user/shop_cart.html' %}
+			{% else %}
+			{% include 'guest/shop_cart.html' %}
+			{% endif %}
+			<section class="after-nav" style="position: relative;">
+				{% block content %}
+				{% endblock %}
+				<!-- Modal -->
+				<div class="modal fade" id="chooseLanguageModal" tabindex="-1" aria-labelledby="chooseLanguageModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <h5 class="modal-title" id="chooseLanguageModalLabel">Choose your language</h5>
+						  <!-- <button type="button" class="btn-close" data-dismiss="modal">Close</button> -->
+						</div>
+						<div class="modal-body">
+						  <div class="list-group">
+							<span href="#" class="list-group-item list-group-item-action choose-language-btn" data-language="eng">English</span>
+							<span href="#" class="list-group-item list-group-item-action choose-language-btn" data-language="my">Bahasa Melayu</span>
+							<span href="#" class="list-group-item list-group-item-action choose-language-btn" data-language="cn">Chinese</span>
+							<!-- More languages as needed -->
+						  </div>
+						</div>
+					  </div>
+					</div>
+				</div>
+				{% if session["user_logged_in"] == True %}
+				<!-- Tutorial Modal -->
+				<div class="modal fade new-user-tutorial-modal" id="new-user-tutorial-modal">
+					<div class="modal-dialog modal-dialog-centered modal-lg">
+						<div class="modal-content" style="height: 100%;">
+						  <!-- Modal header -->
+							<div class="modal-header p-2">
+								<div></div>
+								<button type="button" class="close ml-auto" data-dismiss="modal">{{closeText}}</button>
+							</div>
+
+						  <!-- Modal body -->
+						  <div class="modal-body p-0">
+							<img src="{{newUserTutorialImageUrl}}" class="img-fluid" style="height:100vh; object-fit: contain;">
+						  </div>
+
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">{{closeText}}</button>
+						  </div>
+
+						</div>
+					  </div>
+				</div>
+				{% endif %}
+				{% block modals %}
+				{% endblock %}
+				<footer class="bg-dark text-white py-5">
+					<div class="container">
+					<div class="row">
+						<div class="col-12 text-center mb-3">
+							<img src="{{ logo_svg_url }}" width="120" height="120" alt="Your Logo" class="img-fluid">
+						</div>
+						<div class="col-md-6">
+							<h5>About Us</h5>
+							<p>We are registered online shopping platform. Powered by AiTan SDN. BHD.</p>
+						</div>
+						<div class="col-md-6">
+							<h5>Contact Us</h5>
+							<ul class="list-unstyled">
+								<li><i class="fa fa-map-marker"></i> Shah Alam, Malaysia</li>
+								<li><i class="fa fa-phone"></i> (+60)11 5775-3587</li>
+								<li><i class="fa fa-envelope"></i> aitansdnbhd_support@gmail.com</li>
+							</ul>
+						</div>
+						<div class="col-md-6">
+							<h5>Important Disclosure</h5>
+							<ul class="list-unstyled">
+								<a href="/terms_and_conditions"><li>Terms and Conditions</li></a>
+								<a href="/privacy_policy"><li>Privacy Policy</li></a>
+							</ul>
+						</div>
+					</div>
+					<hr>
+					<p class="text-muted small">&copy; AiTan SDN. BHD. All Rights Reserved.</p>
+					</div>
+				</footer>
+			</section>
+			{% block bottom_bar %}
+			{% endblock %}
+			{% if session.language == "my" %}
+				{% set whatsapp_number = "601157753538" %}
+				{% set whatsapp_text = "Salam. Saya dari page : " %}
+			{% elif session.language == "cn" %}
+				{% set whatsapp_number = "601157753587" %}
+				{% set whatsapp_text = "你好. 我来自你们Website的这个页面: " %}
+			{% else %}
+				{% set whatsapp_number = "601157753538" %}
+				{% set whatsapp_text = "Hi. I am from this page of your website : " %}
+			{% endif %}
+			<!-- Widgets -->
+			<div class="whatsapp-icon">
+				<a href="https://api.whatsapp.com/send/?phone={{whatsapp_number}}&text={{whatsapp_text}}{{ self.title() }}" rel="noopener noreferrer" target="_blank">
+					<i class="fa-brands fa-whatsapp"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<script defer>
+		$(document).ready(function(){
+			ttq.track('ViewContent');
+			$(document).on("click", ".lead-btn", function(){
+				fbq('track', 'Lead');
+			})
+		})
+	</script>
+	{% if show_new_user_tutorial is defined and show_new_user_tutorial == True %}
+	<script defer>
+		$(document).ready(function(){
+			$("#new-user-tutorial-modal").modal("show");
+		})
+	</script>
+	{% endif %}
+	{% if session.language is not defined %}
+	<script type="text/javascript" defer>
+		$(document).ready(function(){
+			$("#chooseLanguageModal").modal("show");
+
+			$(document).on("click", ".choose-language-btn", function(){
+				var thisBtn = $(this);
+				var thisModal = thisBtn.closest(".modal")
+				var thisLanguage = thisBtn.data("language");
+
+				showLoader();
+				
+				var fd = new FormData()
+				fd.append("language", thisLanguage);
+
+				$.ajax({
+					contentType: false,
+					processData: false,
+					type: "POST",
+					url: "/api/guest_change_language",
+					dataType: "json",
+					data: fd,
+					success: function(data){
+						var result = data;
+						if(result.passcheck == 1){
+							location.reload();
+						}else{
+							alert("System failed to update your language preference. Please reload webpage.")
+						}
+					},error:function(){
+					}
+				}).then(function(){
+					thisModal.modal("hide")
+					hideLoader();
+				})
+			})
+		})
+	</script>
+	{% endif %}
+	<!-- Live chat welcome message -->
+	<noscript>
+		var userLanguage = "{{session.language}}"
+		var message = ""
+		if(userLanguage == "my"){
+			message = "Salam. Selamat datang ke AiTanMall. User baru dapat 50% voucher diskaun tau. Mendaftar dini sini https://aitanmall.com/guest/create_account segera!"
+		}else if(userLanguage == "cn"){
+			message = "您好。欢迎来到 AiTanMall。新用户可以获得 50% 的折扣券。如果感兴趣，您可以在 https://aitanmall.com/guest/create_account 注册。"
+		}else{
+			message = "Hello. Welcome to AiTanMall. New users can get a 50% discount voucher. Register now at https://aitanmall.com/guest/create_account"
+		}
+
+		$(document).ready(function(){
+			tidioChatApi.on('ready', function(){
+				tidioChatApi.messageFromOperator(message);
+			});
+		})
+	</noscript>
+	{% block script %}{% endblock %}
+</body>
+</html>

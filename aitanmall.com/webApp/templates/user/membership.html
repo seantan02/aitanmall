@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% block title %}Membership{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/membership.min.css')}}?version=1.2">
+{% endblock %}
+{% block content %}
+  {% if email_verified != True %}
+    {% set announcement_link = resend_email_verification_link %}
+    {% set announcement = "Verify your email now"%}
+    {% include 'announcement.html' %}
+  {% endif %}
+{% set vip_membership_logo = "/static/assets/aitanmall/images/membership/logo.svg" %}
+{% if session.language == "my" %}
+    {% set membership_vip_header = "Percubaan Percuma 20 Hari untuk Pengguna Baru!" %}
+    {% set membership_vip_btn_text1 = "Cuba Sekarang" %}
+    {% set membership_vip_intro_text1 = "Serendah Rm0.60/hari selepas percubaan. Batalkan bila-bila masa!" %}
+    {% set membership_vip_benefits_text1 = "Jaminan Pulangan Percuma Selama 30 Hari!" %}
+    {% set membership_vip_benefits_text2 = "Sebarang produk yang dijual oleh penjual yang disahkan ATAU rasmi layak untuk pengembalian & bayaran balik SEGERA selama 30 hari 100%!" %}
+    {% set membership_vip_benefits_text3 = "Penghantaran Ekspres Percuma!" %}
+    {% set membership_vip_benefits_text4 = "Penghantaran ekspres yang biasanya sampai dalam tempoh 1-2 hari bekerja!" %}
+    {% set membership_vip_benefits_text5 = "Hadiah Rawak Percuma sehingga Rm1000!" %}
+    {% set membership_vip_benefits_text6 = "Setiap pesanan yang anda buat datang dengan hadiah rawak dari kami! Bermula dari Rm1 - Rm1000!" %}
+    {% set membership_plan_1_text1 = "Rm25/bulan selepas percubaan" %}
+    {% set membership_plan_1_text2 = "Rm0.83 sehari selepas percubaan. Nikmati semua manfaat VIP!" %}
+    {% set membership_plan_1_text3 = "Cuba Pelan Ini" %}
+    {% set membership_plan_2_text1 = 'Rm17.82/bulan selepas percubaan <small style="font-size: 0.9rem;">(Untuk 12 Bulan)</small>' %}
+    {% set membership_plan_2_text2 = "Rm0.594 sehari selepas percubaan. Nikmati semua manfaat VIP!" %}
+    {% set membership_plan_2_text3 = "Cuba Pelan Ini" %}
+    {% set q_and_a_header = "Soalan & Jawapan" %}
+    {% set q_and_a_text1 = "Bolehkah saya membatalkan langganan keahlian jika saya tidak mahu lagi?" %}
+    {% set q_and_a_text2 = 'Ya tentu! Pergi sahaja ke "Profil" -> "Urus keahlian" -> klik "Batalkan langganan". Semuanya sudah diatur!' %}
+    {% set q_and_a_text3 = "Adakah benar kita boleh pulang dan mendapat bayaran balik 100% dalam masa 30 hari? Bagaimana?" %}
+    {% set q_and_a_text4 = "Ya! Anda boleh pulang dan mendapat bayaran balik 100% SEGERA untuk semua produk oleh penjual yang disahkan / rasmi. Hanya hantar balik kepada kami!" %}
+{% elif session.language == "cn" %}
+    {% set membership_vip_header = "新用户免费试用20天！" %}
+    {% set membership_vip_btn_text1 = "立即试用" %}
+    {% set membership_vip_intro_text1 = "试用结束后仅需每天Rm0.60。随时随地取消！" %}
+    {% set membership_vip_benefits_text1 = "保证30天免费退货！" %}
+    {% set membership_vip_benefits_text2 = "由已验证或官方卖家出售的任何产品都有权获得30天即时退货和全额退款！" %}
+    {% set membership_vip_benefits_text3 = "免费快递配送！" %}
+    {% set membership_vip_benefits_text4 = "快递通常在1-2个工作日内到达！" %}
+    {% set membership_vip_benefits_text5 = "高达Rm1000的免费随机礼物！" %}
+    {% set membership_vip_benefits_text6 = "您的每一个订单都会附带我们的随机礼物！从Rm1到Rm1000不等！" %}
+    {% set membership_plan_1_text1 = "试用后每月Rm25" %}
+    {% set membership_plan_1_text2 = "试用后每天Rm0.83。享受所有VIP福利！" %}
+    {% set membership_plan_1_text3 = "试用此计划" %}
+    {% set membership_plan_2_text1 = '试用后每月Rm17.82 <small style="font-size: 0.9rem;">（为期12个月）</small>' %}
+    {% set membership_plan_2_text2 = "试用后每天Rm0.594。享受所有VIP福利！" %}
+    {% set membership_plan_2_text3 = "试用此计划" %}
+    {% set q_and_a_header = "问题与答案" %}
+    {% set q_and_a_text1 = "如果我不再需要，我可以取消会员订阅吗？" %}
+    {% set q_and_a_text2 = '当然可以！只需前往“个人资料”->“管理会员资格”->点击“取消订阅”。就这么简单！' %}
+    {% set q_and_a_text3 = "真的可以在30天内退货并全额退款吗？怎么做？" %}
+    {% set q_and_a_text4 = "是的！您可以为所有由经过验证的/官方卖家出售的产品即时退货并全额退款。只需把它寄回给我们就行了！" %}
+{% else %}
+    {% set membership_vip_header = "Free 20 Days Trial for New User!" %}
+    {% set membership_vip_btn_text1 = "Try Now" %}
+    {% set membership_vip_intro_text1 = "As low as Rm0.60/day after trial. Cancel anytime anywhere!" %}
+    {% set membership_vip_benefits_text1 = "30 Days Free Return GUARANTEED!" %}
+    {% set membership_vip_benefits_text2 = "Any products sold by verified OR official sellers are eligible for 30 Days INSTANT return & refund 100%!" %}
+    {% set membership_vip_benefits_text3 = "Free Express Delivery!" %}
+    {% set membership_vip_benefits_text4 = "Express delivery that arrives normally within 1-2 business days!" %}
+    {% set membership_vip_benefits_text5 = "Free Random Gifts up to Rm1000!" %}
+    {% set membership_vip_benefits_text6 = "Every order you make comes with a random gift from us! Ranging from Rm1 - Rm1000!" %}
+    {% set membership_plan_1_text1 = "Rm25/month after trial" %}
+    {% set membership_plan_1_text2 = "Rm0.83 per day after trial. Enjoy all VIP benefits!" %}
+    {% set membership_plan_1_text3 = "Try This Plan" %}
+    {% set membership_plan_2_text1 = 'Rm17.82/month after trial <small style="font-size: 0.9rem;">(For 12 Months)</small>' %}
+    {% set membership_plan_2_text2 = "Rm0.594 per day after trial. Enjoy all VIP benefits!" %}
+    {% set membership_plan_2_text3 = "Try This Plan" %}
+    {% set q_and_a_header = "Question & Answer" %}
+    {% set q_and_a_text1 = "Can I cancel the membership subscription if I do not want it anymore?" %}
+    {% set q_and_a_text2 = 'Yes ofcourse! Just go to "Profile" -> "Manage membership" -> click "Cancel subscription". You are all set!' %}
+    {% set q_and_a_text3 = "Is it real that we can return and refund 100% in 30 days? How?" %}
+    {% set q_and_a_text4 = "Yes! You can return and refund 100% INSTANTLY for all products by verified / official sellers. Just ship it back to us!" %}
+{% endif %}
+    <div class="container">
+        <div class="row justify-content-center" style="color:white;">
+            <div class="col-12 text-center p-4">
+                <img src="{{vip_membership_logo}}" alt="Your Logo" class="logo">
+                <h1 class="header-text">{{membership_vip_header}}</h1>
+                <button type="button" class="activate-membership-btn btn btn-primary cta-button">{{membership_vip_btn_text1}}</button>
+
+                <p class="final-line">{{membership_vip_intro_text1}}</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="benefits-section">
+                    <div class="benefit-item text-center">
+                        <img src="/static/assets/aitanmall/images/membership/free_return.png" alt="Benefit Icon" class="benefit-icon">
+                        <p class="benefit-caption text-primary">{{membership_vip_benefits_text1}}</p>
+                        <p class="benefit-description">{{membership_vip_benefits_text2}}</p>
+                    </div>
+                    <div class="benefit-item text-center">
+                        <img src="/static/assets/aitanmall/images/membership/free_shipping.png" alt="Benefit Icon" class="benefit-icon">
+                        <p class="benefit-caption text-primary">{{membership_vip_benefits_text3}}</p>
+                        <p class="benefit-description">{{membership_vip_benefits_text4}}</p>
+                    </div>
+                    <div class="benefit-item text-center">
+                        <img src="/static/assets/aitanmall/images/membership/free_gifts.png" alt="Benefit Icon" class="benefit-icon">
+                        <p class="benefit-caption text-primary">{{membership_vip_benefits_text5}}</p>
+                        <p class="benefit-description">{{membership_vip_benefits_text6}}</p>
+                    </div>
+                    <!-- Add more benefit items here -->
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div class="pricing-section">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">{{membership_plan_1_text1}}</h5>
+                            <p class="card-text">{{membership_plan_1_text2}}</p>
+                            <a href="#" class="activate-membership-btn btn btn-primary">{{membership_plan_1_text3}}</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">{{membership_plan_2_text1 | safe }}</h5>
+                            <p class="card-text">{{membership_plan_2_text2}}</p>
+                            <a href="#" class="activate-membership-btn btn btn-primary">{{membership_plan_2_text3}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center" style="color:white;">
+            <div class="col-12 col-lg-10">
+                <div class="qa-section">
+                    <h3 class="text-center text-primary">{{q_and_a_header}}</h3>
+                    <div class="qa-item">
+                        <h5>
+                            {{q_and_a_text1}}
+                            <button class="btn btn-link float-right" data-toggle="collapse" data-target="#answer1" aria-expanded="false" aria-controls="answer1">+</button>
+                        </h5>
+                        <div class="collapse" id="answer1">
+                            <p>{{q_and_a_text2}}</p>
+                        </div>
+                    </div>
+                    <div class="qa-item">
+                        <h5>
+                            {{q_and_a_text3}}
+                            <button class="btn btn-link float-right" data-toggle="collapse" data-target="#answer2" aria-expanded="false" aria-controls="answer2">+</button>
+                        </h5>
+                        <div class="collapse" id="answer2">
+                            <p>{{q_and_a_text4}}</p>
+                        </div>
+                    </div>
+                    <!-- Add more Q&A items here -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modals %}
+{% if session.language == "my" %}
+  {% set membership_vip_modal_text1 = "Penghantaran express percuma!" %}
+  {% set membership_vip_modal_text2 = "Waranti tambahan 6 bulan percuma pada semua gadget!" %}
+  {% set membership_vip_modal_text3 = "Pulangan & Bayaran Balik dijamin dalam masa 30 hari!" %}
+  {% set membership_vip_modal_text4 = "Hadiah rawak RM1 - 1000 percuma!" %}
+  {% set membership_vip_modal_text5 = "Diskaun khas!" %}
+  {% set choose_plan_reminder_text = "Sila pilih satu" %}
+{% elif session.language == "cn" %}
+  {% set membership_vip_modal_text1 = "免费快递送货上门！" %}
+  {% set membership_vip_modal_text2 = "所有设备免费额外保修6个月！" %}
+  {% set membership_vip_modal_text3 = "30天保证退货和退款！" %}
+  {% set membership_vip_modal_text4 = "免费随机礼品，价值1 - 1000马币！" %}
+  {% set membership_vip_modal_text5 = "特别优惠！" %}
+  {% set choose_plan_reminder_text = "请选择一个" %}
+{% else %}
+    {% set membership_vip_modal_text1 = "Free express delivery!" %}
+    {% set membership_vip_modal_text2 = "Free extra 6 months warranty on all gadgets!" %}
+    {% set membership_vip_modal_text3 = "30 Days guaranteed Return & Refund!" %}
+    {% set membership_vip_modal_text4 = "Free random Rm1 - 1000 gift!" %}
+    {% set membership_vip_modal_text5 = "Special discounts!" %}
+    {% set choose_plan_reminder_text = "Please choose one" %}
+{% endif %}
+<!-- Membership Modal -->
+<form class="modal fade" id="membershipModal" role="dialog" aria-labelledby="membershipModalLabel" aria-hidden="true">
+  <div class="modal-dialog membership" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <!-- Logo -->
+            <div class="bg-dark mb-2">
+              <img src="/static/assets/aitanmall/images/membership/logo.svg" alt="Logo" width="100%">
+            </div>
+            <!-- <h5 class="modal-title" id="membershipModalLabel">Membership Plan</h5> -->
+          </div>
+          <div class="modal-body">
+              <!-- Benefits section -->
+              <ul class="list-unstyled mt-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ membership_vip_modal_text1 }}
+                  <span class="fa fa-check-circle text-success"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ membership_vip_modal_text2 }}
+                  <span class="fa fa-check-circle text-success"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ membership_vip_modal_text3 }}
+                  <span class="fa fa-check-circle text-success"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ membership_vip_modal_text4 }}
+                  <span class="fa fa-check-circle text-success"></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{ membership_vip_modal_text5 }}
+                  <span class="fa fa-check-circle text-success"></span>
+                </li>
+              </ul>
+
+              <!-- Prices section -->
+              <div class="prices mt-4">
+                  <div class="row">
+                    <div class="alert mb-2 mt-2 pt-0 pb-0 text-center d-none" data-target="membership_option">
+                      <span class="text-danger">{{choose_plan_reminder_text}}</span>
+                    </div>
+                    {% if session.language == "my" %}
+                      {% set membership_monthly_text = "Bulanan" %}
+                      {% set membership_month_text = "Bulan" %}
+                      {% set membership_annually_text = "Setahun sekali" %}
+                      {% set save_30_percent_text = "Jimat 30% setahun!" %}
+                    {% elif session.language == "cn" %}
+                      {% set membership_monthly_text = "每月的" %}
+                      {% set membership_month_text = "月" %}
+                      {% set membership_annually_text = "每年" %}
+                      {% set save_30_percent_text = "每年节省30%！" %}     
+                    {% else %}
+                      {% set membership_monthly_text = "Monthly" %}
+                      {% set membership_month_text = "Month" %}
+                      {% set membership_annually_text = "Annually" %}
+                      {% set save_30_percent_text = "Save 30% per year!" %}
+                    {% endif %}
+                        {% for membership_subscription_product_detail in membership_subscription_product_details%}
+                            {% set membership_subscription_product_id = membership_subscription_product_detail[1] %}
+                            {% set membership_subscription_product_name = membership_subscription_product_detail[2] %}
+                            {% set membership_subscription_product_nku = membership_subscription_product_detail[3] %}
+                            {% set membership_subscription_product_interval = membership_subscription_product_detail[4] %}
+                            {% set membership_subscription_product_count = membership_subscription_product_detail[5] %}
+                            {% set membership_subscription_product_trial_period = membership_subscription_product_detail[6] %}
+                            {% set subscription_product_price = membership_subscription_product_detail[7] | float  %}
+                            {% set stripe_product_id = membership_subscription_product_detail[8] %}
+                            {% set stripe_price_id = membership_subscription_product_detail[9] %}
+
+                            {% if session.language == "my" %}
+                                {% set membership_trial_days_text = "Cuba selama "+membership_subscription_product_trial_period|string+" hari secara percuma" %}
+                                {% set membership_payment_now_text = "Jumlah Sekarang: RM0.00" %}
+                                {% set membership_payment_after_text = "Jumlah selepas "+membership_subscription_product_trial_period|string+" hari: RM"+subscription_product_price|string %}                   
+                            {% elif session.language == "cn" %}
+                                {% set membership_trial_days_text = "试用"+membership_subscription_product_trial_period|string+"天免费" %}
+                                {% set membership_payment_now_text = "现在的总额：RM0.00" %}
+                                {% set membership_payment_after_text = membership_subscription_product_trial_period|string+"天后的总额：RM"+subscription_product_price|string %}                       
+                            {% else %}
+                                {% set membership_trial_days_text = "Try "+membership_subscription_product_trial_period|string+" days for free" %}
+                                {% set membership_payment_now_text = "Total Now: Rm0.00" %}
+                                {% set membership_payment_after_text = "Total lepas "+membership_subscription_product_trial_period|string+" hari: Rm"+subscription_product_price|string %}
+                            {% endif %}
+                        <div class="col">
+                          <div class="card membership_option" data-id="{{stripe_price_id}}">
+                              <div class="card-body">
+                                {% if membership_subscription_product_interval == "month" %}
+                                    <h5 class="card-title">{{membership_monthly_text}}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Rm{{subscription_product_price}}/{{membership_month_text|lower}}</h6>
+                                    <p class="card-text  mb-1" style="color: red;"><small>{{membership_trial_days_text}}</small></p>
+                                    <p class="card-text  mb-1">{{membership_payment_now_text}}</p>
+                                    <p class="card-text  mb-1"><small>{{membership_payment_after_text}}</small></p>
+                                {% elif membership_subscription_product_interval == "year" %}
+                                    <h5 class="card-title">{{membership_annually_text}}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">Rm{{ (subscription_product_price/12.00) | round(2,'ceil') }}/{{membership_month_text|lower}}</h6>
+                                    <p class="card-text mb-1" style="color: red;"><small>{{save_30_percent_text}}</small></p>
+                                    <p class="card-text mb-1" style="color: red;"><small>{{membership_trial_days_text}}</small></p>
+                                    <p class="card-text  mb-1">{{membership_payment_now_text}}</p>
+                                    <p class="card-text  mb-1"><small>{{membership_payment_after_text}}</small></p>
+                                {% endif %}
+                              </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Subscribe Now</button>
+          </div>
+          <input value="" type="text" name="option_id" hidden>
+      </div>
+  </div>
+</form>
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/user/membership.min.js') }}?version=1.0" defer></script>
+{% endblock %}

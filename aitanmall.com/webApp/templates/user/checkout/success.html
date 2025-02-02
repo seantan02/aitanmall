@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Shopping Cart{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block content %}
+{% set domain_name = "https://tmpmc.aitanmall.com" %}
+<div class="container">
+    <div class="py-5 text-center">
+        <i class="fa-regular fa-face-smile my-2" style="color:rgb(67, 110, 3); font-size: 72px;"></i>
+        <h2>Checkout successful</h2>
+        <p class="lead">Thank you for your order! Your transaction was successful and a receipt has been sent to your email.</p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 order-md-1 mb-2">
+            <h4 class="mb-3">Order details</h4>
+
+            <!-- You should dynamically populate this section based on the order details -->
+            <!-- <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$12</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>$20</strong>
+                </li>
+            </ul> -->
+
+            <a href="/" class="btn btn-primary btn-lg btn-block">Continue shopping</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+{% endblock %}

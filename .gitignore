@@ -1,0 +1,17 @@
+# aitanmall
+aitanmall.com/AI/data*
+aitanmall.com/AI/pytorch_tutorial/*
+!aitanmall.com/AI/pytorch_tutorial/chatbot.py
+aitanmall.com/AI/seq2seq/data/*
+aitanmall.com/AI/seq2seq/models/*
+aitanmall.com/backups/database/*
+aitanmall.com/private/data/*
+aitanmall.com/private/stripe/*
+aitanmall.com/socket/api_keys/*
+
+#cs.aitanmall
+cs.aitanmall.com/backups/database/*
+cs.aitanmall.com/private/data/*
+
+# general
+__pycache__

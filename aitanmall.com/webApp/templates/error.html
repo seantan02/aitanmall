@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Page not found</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #333;
+        text-align: center;
+        padding-top: 50px;
+      }
+      h1 {
+        font-size: 48px;
+        margin-bottom: 30px;
+      }
+      p {
+        font-size: 24px;
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Oops! Page not found</h1>
+    <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+    {% if msg is defined %}
+      <p>{{ msg }}</p>
+    {% endif %}
+  </body>
+</html>

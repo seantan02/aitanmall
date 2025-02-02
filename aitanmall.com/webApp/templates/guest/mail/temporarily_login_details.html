@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+{% if language == "my" %}
+    {% set first_line = "Yang Berhormat "+name %}
+    {% set second_line = "Terima kasih atas pesanan anda. Anda boleh log masuk dan mengesan pesanan anda. Berikut adalah butiran log masuk sementara anda:" %}
+    {% set third_line = "ID Pengguna: "+username+" (Nombor telefon anda)" %}
+    {% set fourth_line = "Kata Laluan Sementara: "+password+" (Sementara)" %}
+    {% set fifth_line = "Sila ubah kata laluan anda selepas log masuk pertama." %}
+    {% set log_in_text = "Log Masuk" %}
+{% elif language == "cn" %}
+    {% set first_line = "亲爱的 "+name+"：" %}
+    {% set second_line = "感谢您的订单。您可以登录并跟踪您的订单。以下是您的临时登录详情：" %}
+    {% set third_line = "用户ID："+username+"（您的电话号码）" %}
+    {% set fourth_line = "临时密码："+password+"（临时的）" %}
+    {% set fifth_line = "请在首次登录后更改您的密码。" %}
+    {% set log_in_text = "登录" %}
+{% else %}
+    {% set first_line = "Dear "+name %}
+    {% set second_line = "Thank you for your order. You can log in and track your orders. Here are your temporary login details:" %}
+    {% set third_line = "User ID: "+username+" (Your phone number)" %}
+    {% set fourth_line = "Temporary Password: "+password+" (Temporarily)" %}
+    {% set fifth_line = "Please change your password after your first login." %}
+    {% set log_in_text = "Log In" %}
+{% endif %}
+<body>
+    <p>{{first_line}},</p>
+
+    <p>{{second_line}}</p>
+
+    <p>{{third_line}}<br/>
+        {{fourth_line}}
+    </p>
+
+    <p>{{fifth_line}}</p>
+
+    <a href="https://www.aitanmall.com/user/login" class="button">{{log_in_text}}</a>
+</body>
+</html>

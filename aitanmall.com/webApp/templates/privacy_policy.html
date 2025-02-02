@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block content %}
+{% set website_domain = "www.aitanmall.com" %}
+<div class="container">
+    <style>
+        p{
+            font-size: 1rem;
+        }
+    </style>
+    {% set lang = session["language"] %}
+    {% if lang == "eng" %}
+    <div class="my-4">
+      <h1>AiTan SDN. BHD. Privacy Policy</h1>
+      <p>Last updated: May 24, 2023</p>
+      <p>
+        AiTan SDN. BHD. ("us", "we", or "our") operates the {{website_domain}} website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
+      </p>
+    </div>
+    <ol style="list-style-type: upper-roman;">
+        <li>
+            <h2>Information Collection and Use</h2>
+            <p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
+        </li>
+        <li>
+            <h2>
+                Types of Data Collected
+                <ol style="list-style-type: upper-alpha;">
+                    <li>
+                        <small><strong>Personal Data</strong></small>
+                        <p>While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you. Personally identifiable information may include, but is not limited to, your email address, name, phone number, address, and cookies and usage data.</p>
+                    </li>
+                    <li>
+                        <small><strong>Usage Data</strong></small>
+                        <p>We may also collect information about how the Service is accessed and used. This Usage Data may include information such as your computer's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
+                    </li>
+                </ol>
+            </h2>
+        </li>
+        <li>
+            <h2>Use of Data</h2>
+            <p>
+                AiTan SDN. BHD. uses the collected data for various purposes:
+                <ul style="list-style-type: disc;">
+                    <li>To provide and maintain the Service</li>
+                    <li>To notify you about changes to our Service</li>
+                    <li>To allow you to participate in interactive features of our Service when you choose to do so</li>
+                    <li>To provide customer care and support</li>
+                    <li>To provide analysis or valuable information so that we can improve the Service</li>
+                    <li>To monitor the usage of the Service</li>
+                    <li>To detect, prevent and address technical issues</li>
+                </ul>
+            </p>
+        </li>
+        <li>
+            <h2>Transfer of Data</h2>
+            <p>Your information, including Personal Data, may be transferred to and maintained on computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from your jurisdiction.</p>
+        </li>
+        <li>
+            <h2>Disclosure of Data</h2>
+            <p>We may disclose your Personal Data in the good faith belief that such action is necessary to comply with a legal obligation, protect and defend the rights or property of AiTan SDN. BHD., prevent or investigate possible wrongdoing in connection with the Service, protect the personal safety of users of the Service or the public, or protect against legal liability.</p>
+        </li>
+        <li>
+            <h2>Security of Data</h2>
+            <p>The security of your data is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.</p>
+        </li>
+        <li>
+            <h2>Service Providers</h2>
+            <p>We may employ third party companies and individuals to facilitate our Service, to provide the Service on our behalf, to perform Service-related services or to assist us in analyzing how our Service is used. These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.</p>
+        </li>
+        <li>
+            <h2>Payment Information</h2>
+            <p>
+                For the purposes of executing transactions on our Service, we partner with Stripe, a third-party payment processor. When you make a purchase on our platform, you will be providing payment information directly to Stripe under their privacy policy and terms of service. We do not collect or store any sensitive payment information, such as credit card numbers or bank account details, on our Service. However, we may receive some limited information, such as your billing address and the last four digits of your credit card, to help with customer service inquiries.
+            </p>
+            <p>
+                Please note that this policy could change in the future, and we advise you to regularly review this Privacy Policy for any updates or changes.
+            </p>
+        </li>
+        <li>
+            <h2>Changes to This Privacy Policy</h2>
+            <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes.</p>
+        </li>
+        <li>
+            <h2>Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us.</p>
+        </li>
+    </ol>
+    {% elif lang == "cn" %}
+    <div class="my-4">
+        <h1>AiTan SDN. BHD. 使用条款</h1>
+        <p>最后更新：2023年5月24日</p>
+        <p>AiTan SDN. BHD. (“我们”或“我们的”)运营着 {{website_domain}} 网站(“服务”)。本页面将告知您我们收集、使用、以及披露您在使用我们服务时的个人数据的政策以及您对这些数据的选择。</p>
+      </div>
+      <ol style="list-style-type: upper-roman;">
+        <li>
+            <h2>信息收集与使用</h2>
+            <p>我们收集几种不同类型的信息，用于为您提供并改善我们的服务.</p>
+        </li>
+        <li>
+            <h2>
+                收集的数据类型
+                <ol style="list-style-type: upper-alpha;">
+                    <li>
+                        <small><strong>个人数据</strong></small>
+                        <p>在使用我们的服务时，我们可能会要求您提供某些可以用于联系或识别您的个人可识别信息。个人可识别信息可能包括，但不限于，您的电子邮件地址、姓名、电话号码、地址，以及Cookie和使用数据。</p>
+                    </li>
+                    <li>
+                        <small><strong>使用数据</strong></small>
+                        <p>我们还可能收集有关如何访问和使用服务的信息。这些使用数据可能包括诸如您计算机的互联网协议地址（例如 IP 地址）、浏览器类型、浏览器版本、您访问我们服务的页面、您访问这些页面的日期和时间、在这些页面上花费的时间、唯一设备识别符和其他诊断数据等信息。</p>
+                    </li>
+                </ol>
+            </h2>
+        </li>
+        <li>
+            <h2>数据的使用</h2>
+            <p>
+                AiTan SDN. BHD. 使用所收集的数据进行各种目的：
+                <ul style="list-style-type: disc;">
+                    <li>提供并维护服务</li>
+                    <li>通知您我们服务的变化</li>
+                    <li>允许您在选择时参与我们服务的交互功能</li>
+                    <li>提供客户护理和支持</li>
+                    <li>提供分析或有价值的信息，以便我们可以改进服务</li>
+                    <li>监控服务的使用</li>
+                    <li>检测、预防和解决技术问题</li>
+                </ul>
+            </p>
+        </li>
+        <li>
+            <h2>数据转移</h2>
+            <p>您的信息，包括个人数据，可能会转移到并在您所在州、省、国家或其他政府管辖区之外的计算机上进行维护，那里的数据保护法可能与您所在的管辖区不同。</p>
+        </li>
+        <li>
+            <h2>数据披露</h2>
+            <p>我们可能会在以下情况下透露您的个人数据：以善意相信这样的行动是必要的以遵守法律义务，保护和捍卫AiTan SDN. BHD.的权利或财产，防止或调查服务可能的错误行为，保护服务用户或公众的个人安全，或防止法律责任。</p>
+        </li>
+        <li>
+            <h2>数据安全</h2>
+            <p>您的数据的安全对我们至关重要，但请记住，通过互联网传输或电子存储的任何方法都不是100%安全的。虽然我们努力使用商业上可接受的方法来保护您的个人数据，但我们无法保证其绝对安全。</p>
+        </li>
+        <li>
+            <h2>服务提供商</h2>
+            <p>我们可能会雇用第三方公司和个人来便利我们的服务，为我们提供服务，提供有关服务的服务，或帮助我们分析我们服务的使用方式。这些第三方只能为我们执行这些任务，并且被要求不透露或使用此类信息以进行任何其他目的。</p>
+        </li>
+        <li>
+            <h2>支付信息</h2>
+            <p>
+                为了在我们的服务上执行交易，我们与第三方支付处理器 Stripe 合作。当您在我们的平台上进行购买时，您将直接向 Stripe 提供支付信息，该信息受其隐私政策和服务条款的约束。我们不收集或存储任何敏感的支付信息，如信用卡号或银行账户详情。然而，我们可能会收到一些有限的信息，如您的账单地址和您信用卡的最后四位数字，以帮助处理客户服务查询。
+            </p>
+            <p>
+                请注意，这个策略可能在未来改变，我们建议您定期查看此隐私政策，以了解任何更新或更改。
+            </p>
+        </li>
+        <li>
+            <h2>隐私政策的更改</h2>
+            <p>我们可能会不时更新我们的隐私政策。我们将通过在此页面上发布新的隐私政策来通知您任何更改。您应定期查看此隐私政策以了解任何更改。</p>
+        </li>
+        <li>
+            <h2>联系我们</h2>
+            <p>如果您对此隐私政策有任何问题，请与我们联系。</p>
+        </li>
+    </ol>
+    {% elif lang == "my" %}
+    <div class="my-4">
+        <h1>Dasar Privasi AiTan SDN. BHD.</h1>
+        <p>Kemaskini terakhir: 24 Mei, 2023</p>
+        <p>AiTan SDN. BHD. ("kami", "kita", atau "milik kami") mengendalikan laman web {{website_domain}} ( "Perkhidmatan"). Halaman ini memberitahu anda tentang dasar kami berkaitan pengumpulan, penggunaan, dan pendedahan data peribadi apabila anda menggunakan Perkhidmatan kami dan pilihan yang anda ada berkaitan dengan data tersebut.</p>
+      </div>
+      <ol style="list-style-type: upper-roman;">
+        <li>
+            <h2>Pengumpulan dan Penggunaan Maklumat</h2>
+            <p>Kami mengumpul pelbagai jenis maklumat untuk pelbagai tujuan bagi menyediakan dan memperbaiki Perkhidmatan kami kepada anda.</p>
+        </li>
+        <li>
+            <h2>
+                Jenis Data yang Dikumpul
+                <ol style="list-style-type: upper-alpha;">
+                    <li>
+                        <small><strong>Data Peribadi</strong></small>
+                        <p>Semasa menggunakan Perkhidmatan kami, kami mungkin meminta anda untuk memberikan kami maklumat pengenalan peribadi tertentu yang boleh digunakan untuk menghubungi atau mengenal pasti anda. Maklumat pengenalan peribadi mungkin termasuk, tetapi tidak terhad kepada, alamat emel anda, nama, nombor telefon, alamat, dan data kuki dan penggunaan.</p>
+                    </li>
+                    <li>
+                        <small><strong>Data Penggunaan</strong></small>
+                        <p>Kami juga boleh mengumpul maklumat tentang bagaimana Perkhidmatan diakses dan digunakan. Data Penggunaan ini mungkin termasuk maklumat seperti alamat Protokol Internet komputer anda (mis. Alamat IP), jenis pelayar, versi pelayar, halaman Perkhidmatan kami yang anda lawati, masa dan tarikh lawatan anda, masa yang dihabiskan di halaman tersebut, pengecam peranti unik dan data diagnostik lain.</p>
+                    </li>
+                </ol>
+            </h2>
+        </li>
+        <li>
+            <h2>Penggunaan Data</h2>
+            <p>
+                AiTan SDN. BHD. menggunakan data yang dikumpul untuk pelbagai tujuan:
+                <ul style="list-style-type: disc;">
+                    <li>Untuk menyediakan dan mengekalkan Perkhidmatan</li>
+                    <li>Untuk memaklumkan anda tentang perubahan kepada Perkhidmatan kami</li>
+                    <li>Untuk membolehkan anda mengambil bahagian dalam ciri interaktif Perkhidmatan kami apabila anda memilih untuk berbuat demikian</li>
+                    <li>Untuk menyediakan khidmat pelanggan dan sokongan</li>
+                    <li>Untuk memberikan analisis atau maklumat bernilai supaya kami dapat memperbaiki Perkhidmatan</li>
+                    <li>Untuk memantau penggunaan Perkhidmatan</li>
+                    <li>Untuk mengesan, mencegah dan menangani isu teknikal</li>
+                </ul>
+            </p>
+        </li>
+        <li>
+            <h2>Pemindahan Data</h2>
+            <p>Maklumat anda, termasuk Data Peribadi, mungkin dipindahkan ke dan disimpan di komputer yang terletak di luar negeri, provinsi, negara atau bidang kuasa kerajaan lain di mana undang-undang perlindungan data mungkin berbeza daripada yang ada di bidang kuasa anda.</p>
+        </li>
+        <li>
+            <h2>Pendedahan Data</h2>
+            <p>Kami mungkin mendedahkan Data Peribadi anda dalam kepercayaan yang baik bahawa tindakan tersebut adalah perlu untuk mematuhi kewajipan undang-undang, melindungi dan mempertahankan hak atau harta AiTan SDN. BHD., mencegah atau menyiasat kemungkinan kesalahan dalam perkhidmatan, melindungi keselamatan peribadi pengguna Perkhidmatan atau orang awam, atau melindungi terhadap liabiliti undang-undang.</p>
+        </li>
+        <li>
+            <h2>Keselamatan Data</h2>
+            <p>Keselamatan data anda adalah penting bagi kami, tetapi ingat bahawa tiada kaedah penghantaran melalui Internet, atau kaedah penyimpanan elektronik adalah 100% selamat. Walaupun kami berusaha menggunakan cara yang dapat diterima secara komersial untuk melindungi Data Peribadi anda, kami tidak boleh menjamin keselamatan mutlaknya.</p>
+        </li>
+        <li>
+            <h2>Pemberi Perkhidmatan</h2>
+            <p>Kami mungkin menggunakan syarikat dan individu pihak ketiga untuk memudahkan Perkhidmatan kami, untuk menyediakan Perkhidmatan bagi pihak kami, untuk melaksanakan perkhidmatan berkaitan Perkhidmatan atau untuk membantu kami dalam menganalisis bagaimana Perkhidmatan kami digunakan. Pihak ketiga ini mempunyai akses kepada Data Peribadi anda hanya untuk melaksanakan tugas-tugas ini bagi pihak kami dan diwajibkan untuk tidak mendedahkan atau menggunakannya untuk tujuan lain.</p>
+        </li>
+        <li>
+            <h2>Maklumat Pembayaran</h2>
+            <p>
+                Untuk tujuan melaksanakan transaksi pada Perkhidmatan kami, kami berpartner dengan Stripe, pemproses pembayaran pihak ketiga. Apabila anda membuat pembelian di platform kami, anda akan memberikan maklumat pembayaran secara langsung kepada Stripe di bawah dasar privasi dan syarat perkhidmatan mereka. Kami tidak mengumpul atau menyimpan maklumat pembayaran sensitif apa pun, seperti nombor kad kredit atau butiran akaun bank, di Perkhidmatan kami. Walau bagaimanapun, kami mungkin menerima beberapa maklumat terhad, seperti alamat bil anda dan empat digit terakhir kad kredit anda, untuk membantu dengan pertanyaan perkhidmatan pelanggan.
+            </p>
+            <p>
+                Sila ambil perhatian bahawa dasar ini boleh berubah pada masa akan datang, dan kami menasihatkan anda untuk mengkaji semula Dasar Privasi ini secara berkala untuk sebarang kemas kini atau perubahan.
+            </p>
+        </li>
+        <li>
+            <h2>Perubahan kepada Dasar Privasi ini</h2>
+            <p>Kami boleh mengemas kini Dasar Privasi kami dari semasa ke semasa. Kami akan memaklumkan anda tentang sebarang perubahan dengan memposting Dasar Privasi baru di halaman ini. Anda dinasihatkan untuk mengkaji Dasar Privasi ini dari semasa ke semasa untuk sebarang perubahan.</p>
+        </li>
+        <li>
+            <h2>Hubungi Kami</h2>
+            <p>Jika anda mempunyai sebarang soalan tentang Dasar Privasi ini, sila hubungi kami.</p>
+        </li>
+    </ol>
+    {% endif %}
+    <!-- Rest of your sections go here -->
+</div>
+{% endblock %}

@@ -1,0 +1,797 @@
+{% extends "base.html" %}
+{% block title %}Shopping Cart{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/cart.min.css')}}?version=1.4">
+{% endblock %}
+{% block content %}
+{% set domain_name = "https://tmpmc.aitanmall.com" %}
+<!-- Announcement -->
+{% set announcement_link = "/user/membership" %}
+{% if session.language == "my" %}
+    {% set header = "Troli Belanja" %}
+    {% set sub_total_text = "Jumlah Keseluruhan: Rm" %}
+    {% set user_voucher_caption = '<span>Baucar Anda</span>' %}
+    {% if session.checkout_platform_voucher_discount_amount is defined %}
+        {% set fixed_voucher_discount_text = "RM"+session.checkout_platform_voucher_discount_amount+" DITOLAK" %}
+        {% set percentage_voucher_discount_text = "DISKAUN "+session.checkout_platform_voucher_discount_amount+"%" %}
+    {% endif %}
+    <!-- Announcement -->
+    {% if session.user_membership is not defined or session.user_membership != True %}
+        {% set announcement = "Dapatkan Penghantaran Percuma dengan Keahlian VIP!" %}
+        {% include 'announcement.html' %}
+    {% endif %}
+    {% set official_tag_text = "Rasmi" %}
+    {% set verified_tag_text = "Disahkan" %}
+    {% set shipping_text = "Syarikat Penghantaran: " %}
+    {% set shipping_delivery_days = "1-5 hari bekerja" %}
+    {% set shipping_express_delivery_days = "1-2 hari bekerja" %}
+    {% set nothing_in_cart_text = "Tiada apa-apa dalam troli" %}
+    {% set nothing_in_cart_text1 = "Tambah sesuatu ke dalam troli sila." %}
+    {% set get_free_shipping_text = "Dapatkan Penghantaran Percuma dengan keahlian VIP" %}
+    {% set shipping_fees_text = "Yuran Penghantaran: " %}
+    {% set free_shipping_text = "Penghantaran Percuma!" %}
+    {% set free_random_vip_gift_text = "Dapatkan HADIAH Rawak PERCUMA sehingga Rm1000 setiap kali anda membuat pesanan dengan Keahlian VIP!" %}
+    {% set place_order_text = "Tempah Pesanan" %}
+    {% set chooseText = "Pilih" %}
+    {% set addAddressText = "Tambahkan Alamat" %}
+{% elif session.language == "cn" %}
+    {% set header = "购物车" %}
+    {% set sub_total_text = "小计: Rm" %}
+    {% set user_voucher_caption = '<span>您的优惠券</span>' %}
+    {% if session.checkout_platform_voucher_discount_amount is defined %}
+        {% set fixed_voucher_discount_text = "减 RM"+session.checkout_platform_voucher_discount_amount %}
+        {% set percentage_voucher_discount_text = "折扣 "+session.checkout_platform_voucher_discount_amount+"%" %}
+    {% endif %}
+    <!-- Announcement -->
+    {% if session.user_membership is not defined or session.user_membership != True %}
+        {% set announcement = "立即加入会员获得免费运输!" %}
+        {% include 'announcement.html' %}
+    {% endif %}
+    {% set official_tag_text = "官方" %}
+    {% set verified_tag_text = "已验证" %}
+    {% set shipping_text = "运输公司: " %}
+    {% set shipping_delivery_days = "1-5个工作日" %}
+    {% set shipping_express_delivery_days = "1-2个工作日" %}
+    {% set nothing_in_cart_text = "购物车为空" %}
+    {% set nothing_in_cart_text1 = "请添加一些物品到购物车。" %}
+    {% set get_free_shipping_text = "VIP会员享受免费配送" %}
+    {% set shipping_fees_text = "运费: " %}
+    {% set free_shipping_text = "免费配送！" %}
+    {% set free_random_vip_gift_text = "每次使用VIP会员订单，您都可以获得价值高达Rm1000的随机免费礼物！" %}
+    {% set place_order_text = "下订单" %}
+    {% set chooseText = "选择" %}
+    {% set addAddressText = "添加地址" %}
+{% else %}
+    {% set header = "Shopping Cart" %}
+    {% set sub_total_text = "Sub Total: Rm" %}
+    {% set user_voucher_caption = '<span>Your Voucher</span>' %}
+    {% if session.checkout_platform_voucher_discount_amount is defined %}
+        {% set fixed_voucher_discount_text = "RM"+session.checkout_platform_voucher_discount_amount+" OFF" %}
+        {% set percentage_voucher_discount_text = session.checkout_platform_voucher_discount_amount+"% OFF" %}
+    {% endif %}
+    <!-- Announcement -->
+    {% if session.user_membership is not defined or session.user_membership != True %}
+        {% set announcement = "Join VIP now and get FREE Express Delivery!" %}
+        {% include 'announcement.html' %}
+    {% endif %}
+    {% set official_tag_text = "Official" %}
+    {% set verified_tag_text = "Verified" %}
+    {% set shipping_text = "Shipping Company: " %}
+    {% set shipping_delivery_days = "1-5 business days" %}
+    {% set shipping_express_delivery_days = "1-2 business days" %}
+    {% set nothing_in_cart_text = "Nothing in cart" %}
+    {% set nothing_in_cart_text1 = "Add something to cart please." %}
+    {% set get_free_shipping_text = "Get Free Shipping with VIP membership" %}
+    {% set shipping_fees_text = "Shipping Fees: " %}
+    {% set free_shipping_text = "Free Shipping!" %}
+    {% set free_random_vip_gift_text = "Get FREE Random Gift up to Rm1000 everytime you order with VIP Membership!" %}
+    {% set place_order_text = "Place Order" %}
+    {% set chooseText = "Choose" %}
+    {% set addAddressText = "Add Address" %}
+{% endif %}
+<!-- Alert Start -->
+<div class="alert alert-warning alert-dismissible fade show hide text-center" role="alert" style="width: 100%;">
+    <strong>Notice:</strong> <span id="top-page-warning-alert"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<!-- Alert ends -->
+<div id="user-checkout-wrapper" class="container user-cart-wrapper">
+    <h1 class="user-cart-title mb-1">{{header}}</h1>
+    <button class="place-order-btn btn btn-danger mb-2 d-md-none" style="width: 100%;">{{place_order_text}}</button>
+    <div id="checkout-bar" class="checkout-info-bar d-flex justify-content-between align-items-center">
+        <div class="d-flex flex-column text-truncate">
+            <span class="mb-1">
+                {% if session.user_membership is not defined or session.user_membership != True %}
+                    {{shipping_fees_text}}Rm{{ user_cart_shipping_fees | round(2) }} 
+                    <div class="marquee">
+                        <a href="/user/membership" style="color: red;"><p class="mb-0" style="font-size: 0.8rem;">{{get_free_shipping_text}}</p></a>
+                    </div>
+                {% else %}
+                    {{free_shipping_text}}
+                    <span class="verified-badge">VIP</span>
+                {% endif %}
+            </span>
+            {% if session.checkout_platform_voucher_discount is defined %}
+            {% set user_cart_sub_total = user_cart_sub_total-session.checkout_platform_voucher_discount %}
+            <span>Voucher Discount: Rm{{session.checkout_platform_voucher_discount}}</span>
+            {% endif %}
+            <!-- Final Total -->
+            {% if session.user_membership is not defined or session.user_membership != True %}
+            <span >Total: Rm{{ (user_cart_sub_total+session.user_checkout_shipping_fees) | round(2, 'ceil')}}</span>
+            {% else %}
+            <span >Total: Rm{{ (user_cart_sub_total) | round(2, 'ceil')}}</span>
+            {% endif %}
+        </div>
+        <button class="place-order-btn btn btn-danger d-none d-md-block" style="white-space: nowrap;">{{place_order_text}}</button>
+    </div>
+    {% if session.user_membership is not defined or session.user_membership != True %}
+    <div id="address-bar" class="checkout-info-bar d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#address-options">
+        <div class="marquee" style="max-width: 100%;">
+            <i class="bi bi-info-circle-fill mx-2"></i> <a href="/user/membership"><span>{{free_random_vip_gift_text}}</span></a>
+        </div>
+    </div>
+    {% endif %}
+    <!-- Address Bar -->
+    {% if user_address|length > 0 %}
+    {% for address in user_address %}
+        {% set id = address[0] %}
+        {% set user_address_unit_number = address[1] %}
+        {% set user_address_street = address[2] %}
+        {% set user_address_city = address[3] %}
+        {% set user_address_zip = address[4] %}
+        {% set user_address_state = address[5] %}
+        {% set user_address_country = address[6] %}
+        {% if session.user_checkout_address_id | string == id | string %}
+            <div id="address-bar" class="checkout-info-bar d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#address-options">
+                <div class="text-truncate" style="max-width: 100%; overflow:hidden;">
+                    <span>Shipping Address:</span>
+                    <p>{{ user_address_unit_number }} {{ user_address_street }}, {{ user_address_city }}, {{ user_address_state }}, {{ user_address_country }}</p>
+                </div>
+                <button class="btn btn-primary" data-toggle="collapse" data-target="#address-options" style="white-space: nowrap;">Change</button>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <div id="address-options" class="collapse">
+        {% for address in user_address %}
+            {% set id = address[0] %}
+            {% set user_address_unit_number = address[1] %}
+            {% set user_address_street = address[2] %}
+            {% set user_address_city = address[3] %}
+            {% set user_address_zip = address[4] %}
+            {% set user_address_state = address[5] %}
+            {% set user_address_country = address[6] %}
+            {% if session.user_checkout_address_id != id %}
+                <div class="card">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <small class="card-title text-truncate">{{ user_address_unit_number }} {{ user_address_street }}, {{ user_address_city }}, {{ user_address_state }}, {{ user_address_country }}</small>
+                        <button class="checkout-select-address-btn btn btn-primary" data-id="{{id}}">Select</button>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div id="address-bar" class="checkout-info-bar d-flex justify-content-between align-items-center">
+        <div></div>
+        <button class="btn btn-primary add-address-btn" style="white-space: nowrap;">{{addAddressText}}</button>
+    </div>
+    {% endif %}
+    <!-- Payment Method Bar -->
+    <div id="payment-method-bar" class="checkout-info-bar d-flex justify-content-between align-items-center" data-toggle="collapse" data-target="#payment-method-option">
+        <div class="text-truncate">
+            <span>Payment Method:</span>
+            <p>{{session.user_checkout_payment_method_name}}</p>
+        </div>
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#payment-method-option" style="white-space: nowrap;">Change</button>
+    </div>
+    {% if payment_method_options != None %}
+    <div id="payment-method-option" class="collapse">
+    {% for payment_method in payment_method_options %}
+        {% set id = payment_method[0] %}
+        {% set merchant_payment_method_option_id = payment_method[1] %}
+        {% set merchant_payment_method_option_name = payment_method[2] %}
+        {% set merchant_payment_method_option_nku = payment_method[3] %}
+        {% set merchant_payment_method_option_image = payment_method[4] %}
+        {% set merchant_payment_method_option_charge_fixed = payment_method[5] %}
+        {% set merchant_payment_method_option_charge_percent = payment_method[6] %}
+        {% set merchant_payment_method_option_status = payment_method[7] %}
+        {% if session.user_checkout_payment_method != merchant_payment_method_option_nku %}
+        {% if merchant_payment_method_option_nku !="cod" or user_cart_sub_total <= 500  %}
+        <div class="card">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <h5 class="card-title text-truncate">{{merchant_payment_method_option_name}}</h5>
+                <button class="checkout-select-payment-method-btn btn btn-primary" data-id="{{merchant_payment_method_option_nku}}">{{chooseText}}</button>
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+    </div>
+    {% endif %}
+    <!-- Payment Method Bar End -->
+    {% if user_vouchers is defined and user_vouchers | length > 0 %}
+    <div id="voucher-bar" class="checkout-info-bar d-flex justify-content-between align-items-center">
+        {% if session.checkout_platform_voucher_selected == True %}
+        <div class="d-flex align-items-center" id="voucher-info">
+            {% if session.checkout_platform_voucher_discount_type == "fixed" %}
+                {{fixed_voucher_discount_text}}
+            {% else %}
+                {{percentage_voucher_discount_text}}
+            {% endif %}
+            <span id="voucher-tick" style="color: rgb(14, 105, 0); margin-left: 5px;">&#10003;</span>
+        </div>
+        {% else %}
+        <div class="d-flex flex-column">
+            <span class="mb-1">{{user_voucher_caption | safe}}</span>
+        </div>
+        {% endif %}
+        <button class="btn btn-primary" data-toggle="collapse" data-target="#voucher-options" style="white-space: nowrap;">{{chooseText}}</button>
+    </div>
+    <div id="voucher-options" class="collapse">
+        {% for user_voucher in user_vouchers %}
+        {% set id = user_voucher[0] %}
+        {% set voucher_id = user_voucher[1] %}
+        {% set voucher_code = user_voucher[2] %}
+        {% set voucher_description = user_voucher[3] %}
+        {% set voucher_discount_amount = user_voucher[4] %}
+        {% set voucher_discount_type = user_voucher[5] %}
+        {% set voucher_created_date = user_voucher[6] %}
+        {% set voucher_expire_date = user_voucher[7] %}
+        {% set voucher_max_usage = user_voucher[8] %}
+        {% set voucher_usage_count = user_voucher[9] %}
+        {% set voucher_status = user_voucher[10] %}
+        <!-- Language settings -->
+        {% if session.language == "my" %}
+            {% set voucher_option_fixed_discount_text = "Rm"+voucher_discount_amount|string+" DISKAUN!" %}
+            {% set voucher_option_percentage_discount_text = voucher_discount_amount|string+"% DISKAUN!" %}
+            {% set selected_voucher_text = "Dipilih" %}
+            {% set select_voucher_text = "Memilihi" %}
+        {% elif session.language == "cn" %}
+            {% set voucher_option_fixed_discount_text = "Rm"+voucher_discount_amount|string+" 折扣！!" %}
+            {% set voucher_option_percentage_discount_text = voucher_discount_amount|string+"% 折扣!" %}
+            {% set selected_voucher_text = "已选" %}
+            {% set select_voucher_text = "选择" %}
+        {% else %}
+            {% set voucher_option_fixed_discount_text = "Rm"+voucher_discount_amount|string+" OFF!!" %}
+            {% set voucher_option_percentage_discount_text = voucher_discount_amount|string+"% OFF!" %}
+            {% set selected_voucher_text = "Selected" %}
+            {% set select_voucher_text = "Select" %}
+        {% endif %}
+        {% if session.checkout_platform_voucher_id == voucher_id %}
+        <div class="card option-card">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="card-title text-truncate">
+                        {% if voucher_discount_type == "fixed" %}
+                            {{voucher_option_fixed_discount_text}}
+                        {% else %}
+                            {{voucher_option_percentage_discount_text}}
+                        {% endif %}
+                    </p>
+                    <small><p>{{voucher_description}}</p></small>
+                </div>
+                <span class="checkout-voucher-selected-box">{{selected_voucher_text}}</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="card option-card">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="card-title text-truncate">
+                        {% if voucher_discount_type == "fixed" %}
+                        {{voucher_option_fixed_discount_text}}
+                        {% else %}
+                        {{voucher_option_percentage_discount_text}}
+                        {% endif %}
+                    </p>
+                    <small><p>{{voucher_description}}</p></small>
+                </div>
+                <button class="checkout-select-voucher-btn btn btn-primary" data-id="{{voucher_id}}">{{select_voucher_text}}</button>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    <!-- VOUCHER BAR ENDS -->
+    {% if user_cart_items is defined and user_cart_items | length > 0 %}
+    {% set ns = namespace(previous_merchant_id=None, merchant_shipping=None, merchant_name = None) %}
+        {% for user_cart_item in user_cart_items %}
+            {% set user_cart_item_id = user_cart_item[0] %}
+            {% set prd_id = user_cart_item[1] %}
+            {% set prd_name = user_cart_item[2] %}
+            {% set prd_img = user_cart_item[3] %}
+            {% set quantity = user_cart_item[4] %}
+            {% set prd_price = user_cart_item[5] %}
+            {% set prd_var_id = user_cart_item[6] %}
+            {% set prd_var_name = user_cart_item[7] %}
+            {% set prd_sku = user_cart_item[8] %}
+            {% set prd_var_img = user_cart_item[9] %}
+            {% set sub_total = user_cart_item[10] %}
+            {% set total = user_cart_item[11] %}
+            {% set merchant_id = user_cart_item[12] %}
+            {% set prd_warranty = product_warranties.get(merchant_id).get(prd_id)[1] %}
+            <!-- Product warranty-->
+            {% if session.user_membership is defined and session.user_membership == True %}
+                {% set prd_warranty = prd_warranty + 180 %}
+            {% endif %}
+            <!-- Language Settings -->
+            {% if session.language == "my" %}
+                {% set product_warranty_text = "Jaminan: "+prd_warranty|string+" Hari" %}
+                {% set product_quantity_text = "Kuantiti: "+quantity|string %}
+            {% elif session.language == "cn" %}
+                {% set product_warranty_text = "保家: "+prd_warranty|string+" 天" %}
+                {% set product_quantity_text = "数量: "+quantity|string %}
+            {% else %}
+                {% set product_warranty_text = "Warranty: "+prd_warranty|string+" Days" %}
+                {% set product_quantity_text = "Quantity: "+quantity|string %}
+            {% endif %}
+            {% if ns.previous_merchant_id != merchant_id %}
+                {% set ns.merchant_shipping = merchant_shipping_details.get(merchant_id) %}
+                {% set ns.merchant_name = merchant_names.get(merchant_id) %}
+                {% if ns.merchant_name %}
+                    {% set id = ns.merchant_name[0] %}
+                    {% set business_profile_name = ns.merchant_name[1] %}
+                    {% set business_profile_location = ns.merchant_name[2] %}
+                    {% set business_profile_address = ns.merchant_name[3] %}
+                    {% set business_profile_email = ns.merchant_name[4] %}
+                    {% set business_profile_phone_country_code = ns.merchant_name[5] %}
+                    {% set business_profile_phone_number = ns.merchant_name[6] %}
+                    {% set business_profile_shoppage = ns.merchant_name[7] %}
+                    {% set business_profile_shoptype = ns.merchant_name[8] %}
+                    {% set business_profile_shopimg = ns.merchant_name[9] %}
+                    {% set business_profile_shopdes = ns.merchant_name[10] %}
+                {% endif %}
+                {% if ns.previous_merchant_id != None %}
+                    </div> <!-- Close previous user-cart-seller-body and user-cart-seller -->
+                {% endif %}
+                <div class="user-cart-seller card">
+                    <div class="user-cart-seller-header card-header">
+                        <h2>{{ business_profile_name }}
+                        {% if business_profile_name|lower == "aitanmall" %}
+                        <span class="verified-badge">Official</span></h2>
+                        {% else %}
+                        <span class="verified-badge">Verified</span></h2>
+                        {% endif %}
+                    </div>
+                    <div class="user-cart-seller-body card-body">
+            {% endif %}
+                <!-- Your item display code here -->
+                <div class="row mb-3">
+                    <div class="user-cart-product-img col-4 col-md-3 col-lg-2">
+                        <img src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_img}}" class="img-fluid" alt="Product Image">
+                    </div>
+                    <div class="col-8 col-md-9 col-lg-10">
+                        <h5>{{prd_name}}</h5>
+                        <p class="my-0"><small>{{prd_var_name}}</small></p>
+                        <small>
+                            <strong>{{product_warranty_text}}</strong>
+                            {% if session.user_membership is defined and session.user_membership == True %}
+                                <span class="verified-badge">VIP</span>
+                            {% endif %}
+                        </small><br>
+                        <small>{{product_quantity_text}}</small><br>
+                        <small><strong>Rm{{total}}</strong></small><br>
+                    </div>
+                </div>
+            {% set ns.previous_merchant_id = merchant_id %}
+        {% endfor %}
+        {% if ns.previous_merchant_id != None %}
+                {% if ns.merchant_shipping %}
+                    {% set merchant_shipping_option_id = ns.merchant_shipping[1] %}
+                    {% set merchant_shipping_option_name = ns.merchant_shipping[2] %}
+                    {% set merchant_shipping_option_nku = ns.merchant_shipping[3] %}
+                    {% set merchant_shipping_option_image = ns.merchant_shipping[4] %}
+                    {% set merchant_shipping_option_charge_fixed = ns.merchant_shipping[5] %}
+                    {% set merchant_shipping_option_charge_percent = ns.merchant_shipping[6] %}
+                    {% set merchant_shipping_option_status = ns.merchant_shipping[7] %}
+                {% endif %}
+                <div class="card-footer bg-transparent">
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p>{{shipping_text}}<strong>{{merchant_shipping_option_name}}</strong></p>
+                        {% if session.user_membership is not defined or session.user_membership != True %}
+                            <p>{{shipping_delivery_days}}</p>
+                        {% else %}
+                            <p>{{shipping_express_delivery_days}} <span class="verified-badge">VIP</span></p>
+                        {% endif %}
+                        
+                    </div>
+                    <!-- <div>
+                        <button type="button" class="btn btn-primary">Change</button>
+                    </div> -->
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Close last user-cart-seller-body and user-cart-seller -->
+        {% endif %}
+    {% else %}
+    <div class="user-cart-seller card">
+        <div class="user-cart-seller-header card-header">
+            <h2>{{nothing_in_cart_text}}</h2>
+        </div>
+        <div class="user-cart-seller-body card-body">
+            <div class="row mb-3">
+                <h2>{{nothing_in_cart_text1}}</h2>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <button class="place-order-btn btn btn-danger mb-2 d-md-none" style="width: 100%;">{{place_order_text}}</button>
+</div>
+{% endblock %}
+{% block modals %}
+{% if session.language == "my" %}
+  {% set add_address_modal_header = "Tambah Alamat" %}
+  {% set add_address_modal_label1 = "Jalan" %}
+  {% set add_address_modal_label2 = "Nombor Unit (opsional)" %}
+  {% set add_address_modal_label3 = "Bandar" %}
+  {% set add_address_modal_label4 = "Negeri" %}
+  {% set add_address_modal_select1 = "Pilih Satu" %}
+  {% set add_address_modal_label5 = "Poskod" %}
+  {% set add_address_modal_label6 = "Negara" %}
+  {% set add_address_modal_btn1 = "Tutup" %}
+  {% set add_address_modal_btn2 = "Tambah" %}
+{% elif session.language == "cn" %}
+  {% set add_address_modal_header = "添加地址" %}
+  {% set add_address_modal_label1 = "街道" %}
+  {% set add_address_modal_label2 = "单位号码（可选）" %}
+  {% set add_address_modal_label3 = "城市" %}
+  {% set add_address_modal_label4 = "州" %}
+  {% set add_address_modal_select1 = "选择一个" %}
+  {% set add_address_modal_label5 = "邮编" %}
+  {% set add_address_modal_label6 = "国家" %}
+  {% set add_address_modal_btn1 = "关闭" %}
+  {% set add_address_modal_btn2 = "添加" %}
+{% else %}
+  {% set add_address_modal_header = "Add Address" %}
+  {% set add_address_modal_label1 = "Street" %}
+  {% set add_address_modal_label2 = "Unit Number (optional)" %}
+  {% set add_address_modal_label3 = "City" %}
+  {% set add_address_modal_label4 = "State" %}
+  {% set add_address_modal_select1 = "Select One" %}
+  {% set add_address_modal_label5 = "ZIP" %}
+  {% set add_address_modal_label6 = "Country" %}
+  {% set add_address_modal_btn1 = "Close" %}
+  {% set add_address_modal_btn2 = "Add" %}
+{% endif %}
+<form method="POST" id="addAddressForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addAddressFormLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5>{{add_address_modal_header}}</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="street">{{add_address_modal_label1}}</label>
+              <input name="street" type="text" class="form-control" id="street" required>
+            </div>
+            <div class="form-group">
+              <label for="unitNumber">{{add_address_modal_label2}}</label>
+              <input name="unitNumber" type="text" class="form-control" id="unitNumber">
+            </div>
+            <div class="form-group">
+              <label for="city">{{add_address_modal_label3}}</label>
+              <input name="city" type="text" class="form-control" id="city" required>
+            </div>
+            <div class="form-group">
+                <label for="zip">{{add_address_modal_label5}}</label>
+                <input name="zip" type="text" class="form-control" id="zip" required>
+              </div>
+            <div class="form-group">
+              <label for="state">{{add_address_modal_label4}}</label>
+              <select name="state" class="form-control" id="state" required>
+                <option value="" selected disabled>{{add_address_modal_select1}}</option>
+                <option value="negeri sembilan">Negeri Sembilan</option>
+                <option value="kadah">Kedah</option>
+                <option value="johor">Johor</option>
+                <option value="malaka">Malaka</option>
+                <option value="kuala lumpur">Kuala Lumpur</option>
+                <option value="kelantan">Kelantan</option>
+                <option value="terengganu">Terengganu</option>
+                <option value="perak">Perak</option>
+                <option value="pahang">Pahang</option>
+                <option value="penang">Penang</option>
+                <option value="perlis">Perlis</option>
+                <option value="sarawak">Sarawak</option>
+                <option value="selangor">Selangor</option>
+                <option value="sabah">Sabah</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="country">{{add_address_modal_label6}}</label>
+              <select name="country" class="form-control" id="country" required>
+                <option value="" selected disabled>{{add_address_modal_select1}}</option>
+                <option value="malaysia">Malaysia</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">{{add_address_modal_btn1}}</button>
+              <button type="submit" class="btn btn-primary mt-1">{{add_address_modal_btn2}}</button>
+          </div>
+          <input value="" type="text" name="option_id" hidden>
+      </div>
+  </div>
+</form>
+{% endblock %}
+{% block script %}
+<script defer>
+$(document).ready(function(){
+    let alertHTML = '<div class="alert alert-dismissible fade show text-center" role="alert" style="width: 100%;">\
+    <strong>Alert:</strong> <span class="alert-body-text"></span>\
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">\
+        <span aria-hidden="true">&times;</span>\
+    </button>\
+</div>';
+    //for adding address
+    $(document).on("click", ".add-address-btn", function(){
+        $("#addAddressForm").modal("show");
+    })
+    /* scrpit for address */
+    /* adding address */
+    $(document).on("submit", "#addAddressForm",function(e){
+        e.preventDefault()
+        showLoader();
+  
+        var thisForm = $(this)
+        var thisFormBtn = thisForm.find("button[name='submit']")
+        //check if this form is processing
+        if(thisFormBtn.data("requestRunning")){
+            return false;
+        }
+        thisFormBtn.data("requestRunning", true);
+          
+        //get values of inputs
+        var streetInput = thisForm.find("input[name='street']")
+        var unitNumberInput = thisForm.find("input[name='unitNumber']")
+        var cityInput = thisForm.find("input[name='city']")
+        var stateInput = thisForm.find("select[name='state']")
+        var zipInput = thisForm.find("input[name='zip']")
+        var countryInput = thisForm.find("select[name='country']")
+          
+        var streetInputValue = streetInput.val()
+        var unitNumberInputValue = unitNumberInput.val()
+        var cityInputValue = cityInput.val()
+        var stateInputValue = stateInput.val()
+        var zipInputValue = zipInput.val()
+        var countryInputValue = countryInput.val()
+  
+        var fd = new FormData()
+        fd.append("street", streetInputValue);
+        fd.append("unitNumber", unitNumberInputValue);
+        fd.append("city", cityInputValue);
+        fd.append("state", stateInputValue);
+        fd.append("zip", zipInputValue);
+        fd.append("country", countryInputValue);
+  
+        $.ajax({
+          contentType: false,
+          processData: false,
+          type: "POST",
+          url: "/api/user_add_address",
+          dataType: "json",
+          data: fd,
+          success: function(data){
+              var result = data;
+              if(result.passcheck == 1){
+                window.location.href = "";
+              }else if(result.passcheck == 4){
+                swal({
+                  title: "Attention",
+                  text: result.msg,
+                  icon: "info",
+                  buttons: true,
+                }).then(function(){
+                  window.location.href = result.redirect;
+                })
+              }else{
+                var clonedAlert = $(alertHTML).clone()
+                clonedAlert.addClass("alert-warning")
+                clonedAlert.find(".alert-body-text").text(result.msg)
+                $(".after-nav").prepend(clonedAlert)
+              }
+          },error:function(){
+          }
+        }).then(function(){
+          thisFormBtn.data("requestRunning", false);
+          hideLoader();
+        })
+    })
+
+    $(document).on("click", ".place-order-btn", function(){
+        var thisBtn = $(this);
+
+        var fd = new FormData();
+        
+        fd.append("action", "place_order")
+
+        if(thisBtn.data("requestRunning")){
+            return false;
+        }
+        showLoader();
+        thisBtn.data("requestRunning", true);
+        $.ajax({
+            url: '/api/user_place_order',
+            type: 'POST',
+            data: fd,
+            processData: false,  // Important!
+            contentType: false,  // Important!
+            dataType: "json",
+            success: function(result) {
+                if(result.passcheck == 1){
+                    var clonedAlert = $(alertHTML).clone()
+                    clonedAlert.addClass("alert-success")
+                    clonedAlert.find(".alert-body-text").text(result.msg)
+                    $(".after-nav").prepend(clonedAlert)
+                    $("#user-checkout-wrapper").load(location.href+" #user-checkout-wrapper>*");
+                }else if(result.passcheck == 4){
+                    alert(result.msg);
+                    window.location.href = result.redirect;
+                }else{
+                    var clonedAlert = $(alertHTML).clone()
+                    clonedAlert.addClass("alert-warning")
+                    clonedAlert.find(".alert-body-text").text(result.msg)
+                    $(".after-nav").prepend(clonedAlert)
+                }
+            },
+            error: function(error) {
+                alert(error);
+            },
+            complete: function () {
+                thisBtn.data("requestRunning", false);
+                hideLoader();
+            }
+        });
+    })
+    $(document).on("click", ".checkout-select-address-btn", function(){
+        var thisBtn = $(this);
+        var thisBtnAddressId = thisBtn.data("id")
+
+        var fd = new FormData();
+        
+        fd.append("action", "update_checkout_address")
+        fd.append("address_id", thisBtnAddressId)
+
+        if(thisBtn.data("requestRunning")){
+            return false;
+        }
+        showLoader();
+        thisBtn.data("requestRunning", true);
+        $.ajax({
+            url: '/api/update_checkout_address',
+            type: 'POST',
+            data: fd,
+            processData: false,  // Important!
+            contentType: false,  // Important!
+            dataType: "json",
+            success: function(result) {
+                if(result.passcheck == 1){
+                    $("#address-bar").load(location.href+" #address-bar>*");
+                    $("#address-options").load(location.href+" #address-options>*");
+                    var clonedAlert = $(alertHTML).clone()
+                    clonedAlert.addClass("alert-success")
+                    clonedAlert.find(".alert-body-text").text(result.msg)
+                    $(".after-nav").prepend(clonedAlert)
+                }else if(result.passcheck == 4){
+                    alert(result.msg);
+                    window.location.href = result.redirect;
+                }else{
+                    var clonedAlert = $(alertHTML).clone()
+                    clonedAlert.addClass("alert-warning")
+                    clonedAlert.find(".alert-body-text").text(result.msg)
+                    $(".after-nav").prepend(clonedAlert)
+                }
+            },
+            error: function(error) {
+                alert(error);
+            },
+            complete: function () {
+                thisBtn.data("requestRunning", false);
+                hideLoader();
+            }
+        });
+    })
+    $(document).on("click", ".checkout-select-payment-method-btn", function(){
+        var thisBtn = $(this);
+        var thisBtnPaymentMethodNku = thisBtn.data("id")
+
+        var fd = new FormData();
+        
+        fd.append("action", "update_checkout_payment_method")
+        fd.append("payment_method_nku", thisBtnPaymentMethodNku)
+
+        if(thisBtn.data("requestRunning")){
+            return false;
+        }
+        showLoader();
+        thisBtn.data("requestRunning", true);
+        $.ajax({
+            url: '/api/update_checkout_payment_method',
+            type: 'POST',
+            data: fd,
+            processData: false,  // Important!
+            contentType: false,  // Important!
+            dataType: "json",
+            success: function(result) {
+                if(result.passcheck == 1){
+                    $("#payment-method-bar").load(location.href+" #payment-method-bar>*");
+                    $("#payment-method-option").load(location.href+" #payment-method-option>*");
+                    var clonedAlert = $(alertHTML).clone()
+                    clonedAlert.addClass("alert-success")
+                    clonedAlert.find(".alert-body-text").text(result.msg)
+                    $(".after-nav").prepend(clonedAlert)
+                }else if(result.passcheck == 4){
+                    alert(result.msg);
+                    window.location.href = result.redirect;
+                }else{
+                    var clonedAlert = $(alertHTML).clone()
+                    clonedAlert.addClass("alert-warning")
+                    clonedAlert.find(".alert-body-text").text(result.msg)
+                    $(".after-nav").prepend(clonedAlert)
+                }
+            },
+            error: function(error) {
+                alert(error);
+            },
+            complete: function () {
+                thisBtn.data("requestRunning", false);
+                hideLoader();
+            }
+        });
+    })
+    $(document).on("click", ".checkout-select-voucher-btn", function(){
+        var thisBtn = $(this);
+        var thisBtnId = thisBtn.data("id")
+
+        var fd = new FormData();
+        
+        fd.append("action", "update_checkout_voucher")
+        fd.append("voucher_id", thisBtnId)
+
+        if(thisBtn.data("requestRunning")){
+            return false;
+        }
+        showLoader();
+        thisBtn.data("requestRunning", true);
+        $.ajax({
+            url: '/api/update_checkout_voucher',
+            type: 'POST',
+            data: fd,
+            processData: false,  // Important!
+            contentType: false,  // Important!
+            dataType: "json",
+            success: function(result) {
+                if(result.passcheck == 1){
+                    $("#voucher-bar").load(location.href+" #voucher-bar>*");
+                    $("#checkout-bar").load(location.href+" #checkout-bar>*");
+                    $("#voucher-options").load(location.href+" #voucher-options>*");
+                    var clonedAlert = $(alertHTML).clone()
+                    clonedAlert.addClass("alert-success")
+                    clonedAlert.find(".alert-body-text").text(result.msg)
+                    $(".after-nav").prepend(clonedAlert)
+                }else if(result.passcheck == 4){
+                    alert(result.msg);
+                    window.location.href = result.redirect;
+                }else{
+                    var clonedAlert = $(alertHTML).clone()
+                    clonedAlert.addClass("alert-warning")
+                    clonedAlert.find(".alert-body-text").text(result.msg)
+                    $(".after-nav").prepend(clonedAlert)
+                }
+            },
+            error: function(error) {
+                alert(error);
+            },
+            complete: function () {
+                thisBtn.data("requestRunning", false);
+                hideLoader();
+            }
+        });
+    })
+})
+</script>
+{% endblock %}

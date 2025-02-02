@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block meta_description %}Explore the best online electronics and gadgets at AiTanMall. Shop for the most trending electronics in Malaysia!{% endblock %}
+{% block title %}AiTanMall | Checkout{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block content %}
+{% set domain_name = "https://tmpmc.aitanmall.com" %}
+{% if session.language == "my" %}
+    {% set sign_in_option_text = "Log Masuk / Buat Akaun (20% Diskaun Voucher)" %}
+    {% set guest_option_text = "Teruskan ke Pembayaran" %}
+{% elif session.language == "cn" %}
+    {% set sign_in_option_text = "登入 / 创建账户 (20%优惠卷)" %}
+    {% set guest_option_text = "前往结账" %}
+{% else %}
+    {% set sign_in_option_text = "Sign In / Create Account (20% Discount Voucher)" %}
+    {% set guest_option_text = "Continue as guest" %}
+{% endif %}
+<div class="container h-100 d-flex flex-column justify-content-between">
+    <!-- Sign In / Create Account Button -->
+    <div class="d-flex justify-content-center align-items-start my-3 py-3">
+        <a href="/guest/create_account" class="btn btn-danger btn-lg" role="button">{{sign_in_option_text}}</a>
+    </div>
+
+    <!-- Continue as Guest Button -->
+    <div class="d-flex justify-content-center align-items-end my-3 py-3">
+        <a href="/guest/checkout" class="btn btn-primary btn-lg" role="button">{{guest_option_text}}</a>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script defer>
+    try {
+        $(document).ready(function(){
+        
+            var checkoutValue = "100"
+            checkoutValue = parseFloat(checkoutValue).toFixed(2)
+            //tiktok pixel
+            ttq.track('InitiateCheckout', {
+                "contents": [{
+                    "content_id": "1782389123", // string. ID of the product. Example: "1077218".
+                }],
+                "value": checkoutValue, // number. Value of the order or items sold. Example: 100.
+                "currency": "MYR", // string. The 4217 currency code. Example: "USD".
+            });
+
+            //facebook pixel
+            fbq('track', 'InitiateCheckout', {
+                content_name: 'Initiate Checkout',
+                value: checkoutValue,
+                currency: "MYR" 
+            });  
+        })
+    } catch (error) {
+        // handle or report the error
+        console.error("An error occurred: ", error);
+    }
+</script>
+{% endblock %}

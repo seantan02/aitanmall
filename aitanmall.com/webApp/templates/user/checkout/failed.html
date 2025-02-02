@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Shopping Cart{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block content %}
+{% set domain_name = "https://tmpmc.aitanmall.com" %}
+<div class="container">
+    <div class="py-5 text-center">
+        <i class="fa-regular fa-face-frown my-2" style="color:rgb(110, 3, 3); font-size: 72px;"></i>
+        <h2>Checkout failed</h2>
+        <p class="lead">You can try again later. <a href="{{payment_link}}">Payment link</a></p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 order-md-1 mb-2">
+            <a href="/" class="btn btn-primary btn-lg btn-block">Shop Again</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+{% endblock %}

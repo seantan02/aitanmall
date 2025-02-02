@@ -1,0 +1,330 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/profile.min.css')}}?version=1.1">
+{% endblock %}
+{% block content %}
+{% if session.language == "my" %}
+  {% if email_verified != True %}
+    {% set announcement_link = resend_email_verification_link %}
+    {% set email_verification_status = "Tidak Disahkan" %}
+    {% set announcement = "Sahkan emel anda sekarang" %}
+  {% else %}
+    {% set announcement_link = "/user/membership" %}
+    {% set email_verification_status = "Disahkan" %}
+    {% set announcement = "Sertai Keahlian VIP untuk Penghantaran Percuma!" %}
+  {% endif %}
+  <!--Language-->
+  {% set profile_language_text1 = "Bahasa" %}
+  {% set profile_language_text2 = "Inggeris" %}
+  {% set profile_language_text3 = "Cina" %}
+  {% set profile_language_text4 = "Melayu" %}
+  <!--Email-->
+  {% set profile_email_text1 = "Emel Anda" %}
+  <!--Address-->
+  {% set profile_address_text1 = "Alamat Anda" %}
+  {% set profile_address_default_text = "Asal" %}
+  {% set profile_address_backup_text = "Sandaran" %}
+  {% set profile_address_text2 = "Padam" %}
+  {% set profile_address_btn_text1 = "Layari Lebih Banyak Alamat" %}
+  {% set profile_address_btn_text2 = "Tambah Alamat" %}
+  <!--Payment methods-->
+  {% set profile_payment_method_text1 = "Kaedah Pembayaran Anda" %}
+  {% set profile_payment_method_default_text = "Asal" %}
+  {% set profile_payment_method_backup_text = "Sandaran" %}
+  {% set profile_payment_method_text2 = "Pemegang Kad" %}
+  {% set profile_payment_method_text3 = "Luput" %}
+  {% set profile_payment_method_btn_text1 = "Urus Kad" %}
+  {% set profile_payment_method_btn_text2 = "Layari Lebih Banyak Kaedah Pembayaran" %}
+  {% set profile_payment_method_btn_text3 = "Tambah Kaedah Pembayaran" %}
+  {% if session["user_membership"] == True %}
+  {% set profile_payment_method_btn_text4 = "Urus Keahlian" %}
+  {% else %}
+  {% set profile_payment_method_btn_text4 = "Aktifkan Keahlian" %}
+  {% endif %}
+{% elif session.language == "cn" %}
+  {% if email_verified != True %}
+    {% set announcement_link = resend_email_verification_link %}
+    {% set email_verification_status = "未验证" %}
+    {% set announcement = "现在验证您的电子邮件" %}
+  {% else %}
+    {% set announcement_link = "/user/membership" %}
+    {% set email_verification_status = "已验证" %}
+    {% set announcement = "加入VIP会员以免费获得配送!" %}
+  {% endif %}
+  <!--Language-->
+  {% set profile_language_text1 = "语言" %}
+  {% set profile_language_text2 = "英文" %}
+  {% set profile_language_text3 = "中文" %}
+  {% set profile_language_text4 = "马来语" %}
+  <!--Email-->
+  {% set profile_email_text1 = "您的电子邮件" %}
+  <!--Address-->
+  {% set profile_address_text1 = "您的地址" %}
+  {% set profile_address_default_text = "默认" %}
+  {% set profile_address_backup_text = "备用" %}
+  {% set profile_address_text2 = "删除" %}
+  {% set profile_address_btn_text1 = "浏览更多地址" %}
+  {% set profile_address_btn_text2 = "添加地址" %}
+  <!--Payment methods-->
+  {% set profile_payment_method_text1 = "您的付款方式" %}
+  {% set profile_payment_method_default_text = "默认" %}
+  {% set profile_payment_method_backup_text = "备用" %}
+  {% set profile_payment_method_text2 = "持卡人" %}
+  {% set profile_payment_method_text3 = "过期" %}
+  {% set profile_payment_method_btn_text1 = "管理卡" %}
+  {% set profile_payment_method_btn_text2 = "浏览更多付款方式" %}
+  {% set profile_payment_method_btn_text3 = "添加付款方式" %}
+  {% if session["user_membership"] == True %}
+  {% set profile_payment_method_btn_text4 = "管理会员资格" %}
+  {% else %}
+  {% set profile_payment_method_btn_text4 = "激活会员资格" %}
+  {% endif %}
+{% else %}
+  {% if email_verified != True %}
+    {% set announcement_link = resend_email_verification_link %}
+    {% set email_verification_status = "Not Verified" %}
+    {% set announcement = "Verify your email now"%}
+  {% else %}
+    {% set announcement_link = "/user/membership" %}
+    {% set email_verification_status = "Verified" %}
+    {% set announcement = "Join VIP Membership for FREE Shipping!" %}
+  {% endif %}
+  <!--Language-->
+  {% set profile_language_text1 = "Language" %}
+  {% set profile_language_text2 = "English" %}
+  {% set profile_language_text3 = "Chinese" %}
+  {% set profile_language_text4 = "Malay" %}
+  <!--Email-->
+  {% set profile_email_text1 = "Your Email" %}
+  <!--Address-->
+  {% set profile_address_text1 = "Your Addresses" %}
+  {% set profile_address_default_text = "Default" %}
+  {% set profile_address_backup_text = "Backup" %}
+  {% set profile_address_text2 = "Delete" %}
+  {% set profile_address_btn_text1 = "Browse More Addresses" %}
+  {% set profile_address_btn_text2 = "Add Addresses" %}
+  <!--Payment methods-->
+  {% set profile_payment_method_text1 = "Your Payment Methods" %}
+  {% set profile_payment_method_default_text = "Default" %}
+  {% set profile_payment_method_backup_text = "Backup" %}
+  {% set profile_payment_method_text2 = "Card Holder" %}
+  {% set profile_payment_method_text3 = "Expire" %}
+  {% set profile_payment_method_btn_text1 = "Manage Card" %}
+  {% set profile_payment_method_btn_text2 = "Browse More Payment Methods" %}
+  {% set profile_payment_method_btn_text3 = "Add Payment Method" %}
+  {% if session["user_membership"] == True %}
+    {% set profile_payment_method_btn_text4 = "Manage Membership" %}
+  {% else %}
+    {% set profile_payment_method_btn_text4 = "Activate Membership" %}
+  {% endif %}
+{% endif %}
+{% include 'announcement.html' %}
+  <div class="container pt-2 pb-2">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h1 class="d-flex align-items-center"><img src="/static/assets/aitanmall/images/user/unknown-user.jpg" alt="User Icon" style="height: 30px; width: 30px;">{{session.user_first_name}}</h1>
+
+        <div class="mt-3 mb-3">
+          <!-- Language Setting -->
+          <div class="dropdown mt-1 mb-1 py-2 px-2" style="border: 1px solid rgb(182, 179, 179);">
+            <h5 class="toggle dropdown-toggle" id="dropdownMenuButton" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{profile_language_text1}}
+            </h5>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item change-language-btn" data-language="eng">{{profile_language_text2}}</a>
+              <a class="dropdown-item change-language-btn" data-language="cn">{{profile_language_text3}}</a>
+              <a class="dropdown-item change-language-btn" data-language="my">{{profile_language_text4}}</a>
+            </div>
+          </div>
+          <!-- Email Address -->
+          <h5 class="toggle mt-2" data-target="#email">{{profile_email_text1}}</h5>
+          <ul id="email" class="list-group">
+            <li class="list-group-item email">
+							<a class="nav-link" href="#" role="button">
+								{{ session["user_email"] }} <span class="text-dark badge badge-primary">{{email_verification_status}}</span>
+							</a>
+						</li>
+          </ul>
+
+          <h5 class="toggle mt-3" data-target="#addresses">{{profile_address_text1}}</h5>
+          
+          <ul id="addresses" class="list-group">
+            {% if user_address | length > 0 %}
+            {% for address in user_address %}
+              {% set id = address[0] %}
+              {% set user_address_unit_number = address[1] %}
+              {% set user_address_street = address[2] %}
+              {% set user_address_city = address[3] %}
+              {% set user_address_zip = address[4] %}
+              {% set user_address_state = address[5] %}
+              {% set user_address_country = address[6] %}
+              {% set user_id = address[7] %}
+              {% if user_address_unit_number | length == 0 %}
+                {% set user_full_address = user_address_street + "," + user_address_city + "," + user_address_zip + "," + user_address_state + "," + user_address_country %}
+              {% else %}
+                {% set user_full_address = user_address_unit_number + "," + user_address_street + "," + user_address_city + "," + user_address_zip + "," + user_address_state + "," + user_address_country %}
+              {% endif %}
+            <li class="list-group-item dropdown address" data-address-id="{{id}}">
+							<a class="nav-link dropdown-toggle" href="#" id="addressDropdown{{loop.index0}}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<p class="text-truncate">{{ user_full_address }}</p> <span class="text-dark badge badge-primary">{{profile_address_default_text}}</span>
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="addressDropdown{{loop.index0}}">
+                  <a href="#" class="dropdown-item deleteAddressBtn">
+                      <span>{{profile_address_text2}}</span>
+                  </a>
+              </ul>
+						</li>
+            {% endfor %}
+            {% endif %}
+          </ul>
+          <button type="button" class="btn btn-primary mt-1">{{profile_address_btn_text1}}</button>
+          <button type="button" class="btn btn-primary mt-1" data-toggle="modal" data-target="#addAddressForm">{{profile_address_btn_text2}}</button>
+
+          <h5 class="toggle mt-3" data-target="#paymentMethods">{{profile_payment_method_text1}}</h5>
+          <ul id="paymentMethods" class="list-group">
+            {% if payment_methods != None %}
+              {% for payment_method in  payment_methods %}
+              {% set payment_method_type = payment_method[1] %}
+              {% set id = payment_method[2][0] %}
+              {% set user_payment_method_id = payment_method[2][1] %}
+              {% set card_brand = payment_method[2][2] %}
+              {% set card_last4 = payment_method[2][3] %}
+              {% set card_exp_month = payment_method[2][4] %}
+              {% set card_exp_year = payment_method[2][5] %}
+              {% set card_holder = payment_method[2][6] %}
+              {% set user_id = payment_method[2][7] %}
+              {% if payment_method[1] == "card" %}
+              <li class="list-group-item">
+                <div class="d-flex justify-content-center container text-white">
+                    <div class="card credit-card p-2 px-3 py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <img src="https://i.imgur.com/8ANWXql.png" width="20" height="20">
+                          {% if payment_method_type == "visa" %}
+                          <img src="https://i.imgur.com/SsTSozr.png" width="40">
+                          {% endif %}
+                        </div>
+                        <div class="mt-3"><span class="mr-3">****</span><span class="mr-3">****</span><span class="mr-3">****</span><span class="mr-2">{{ card_last4 }}</span></div>
+                        <div class="d-flex justify-content-between card-details mt-3 mb-3">
+                            <div class="d-flex flex-column"><span class="color-light">{{profile_payment_method_text2}}</span><span>{{ card_holder }}</span></div>
+                            <div class="d-flex flex-row">
+                                <div class="d-flex flex-column mr-3"><span class="color-light">{{profile_payment_method_text3}}</span><span>{{ card_exp_month }}/{{ card_exp_year }}</span></div>
+                                <div class="d-flex flex-column"><span class="color-light">CVV</span><span>***</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                    
+              </li>
+              {% endif %}
+              {% endfor %}
+              <button type="button" class="btn btn-primary mt-1 manage-card-btn">{{profile_payment_method_btn_text1}}</button>
+            {% endif %}
+          </ul>
+          <button type="button" class="btn btn-primary mt-1">{{profile_payment_method_btn_text2}}</button>
+          <button id="addPaymentMethodBtn" type="button" class="btn btn-primary mt-1">{{profile_payment_method_btn_text3}}</button>
+          <br>
+          <a href="membership"><button type="button" class="btn btn-primary mt-2">{{profile_payment_method_btn_text4}}</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block modals %}
+{% if session.language == "my" %}
+  {% set add_address_modal_header = "Tambah Alamat" %}
+  {% set add_address_modal_label1 = "Jalan" %}
+  {% set add_address_modal_label2 = "Nombor Unit (opsional)" %}
+  {% set add_address_modal_label3 = "Bandar" %}
+  {% set add_address_modal_label4 = "Negeri" %}
+  {% set add_address_modal_select1 = "Pilih Satu" %}
+  {% set add_address_modal_label5 = "Poskod" %}
+  {% set add_address_modal_label6 = "Negara" %}
+  {% set add_address_modal_btn1 = "Tutup" %}
+  {% set add_address_modal_btn2 = "Tambah" %}
+{% elif session.language == "cn" %}
+  {% set add_address_modal_header = "添加地址" %}
+  {% set add_address_modal_label1 = "街道" %}
+  {% set add_address_modal_label2 = "单位号码（可选）" %}
+  {% set add_address_modal_label3 = "城市" %}
+  {% set add_address_modal_label4 = "州" %}
+  {% set add_address_modal_select1 = "选择一个" %}
+  {% set add_address_modal_label5 = "邮编" %}
+  {% set add_address_modal_label6 = "国家" %}
+  {% set add_address_modal_btn1 = "关闭" %}
+  {% set add_address_modal_btn2 = "添加" %}
+{% else %}
+  {% set add_address_modal_header = "Add Address" %}
+  {% set add_address_modal_label1 = "Street" %}
+  {% set add_address_modal_label2 = "Unit Number (optional)" %}
+  {% set add_address_modal_label3 = "City" %}
+  {% set add_address_modal_label4 = "State" %}
+  {% set add_address_modal_select1 = "Select One" %}
+  {% set add_address_modal_label5 = "ZIP" %}
+  {% set add_address_modal_label6 = "Country" %}
+  {% set add_address_modal_btn1 = "Close" %}
+  {% set add_address_modal_btn2 = "Add" %}
+{% endif %}
+<form method="POST" id="addAddressForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addAddressFormLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5>{{add_address_modal_header}}</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="street">{{add_address_modal_label1}}</label>
+              <input name="street" type="text" class="form-control" id="street" required>
+            </div>
+            <div class="form-group">
+              <label for="unitNumber">{{add_address_modal_label2}}</label>
+              <input name="unitNumber" type="text" class="form-control" id="unitNumber">
+            </div>
+            <div class="form-group">
+              <label for="city">{{add_address_modal_label3}}</label>
+              <input name="city" type="text" class="form-control" id="city" required>
+            </div>
+            <div class="form-group">
+              <label for="zip">{{add_address_modal_label5}}</label>
+              <input name="zip" type="text" class="form-control" id="zip" required>
+            </div>
+            <div class="form-group">
+              <label for="state">{{add_address_modal_label4}}</label>
+              <select name="state" class="form-control" id="state" required>
+                <option value="" selected disabled>{{add_address_modal_select1}}</option>
+                <option value="negeri sembilan">Negeri Sembilan</option>
+                <option value="kedah">Kedah</option>
+                <option value="johor">Johor</option>
+                <option value="malaka">Malaka</option>
+                <option value="kuala lumpur">Kuala Lumpur</option>
+                <option value="kelantan">Kelantan</option>
+                <option value="terengganu">Terengganu</option>
+                <option value="perak">Perak</option>
+                <option value="pahang">Pahang</option>
+                <option value="penang">Penang</option>
+                <option value="perlis">Perlis</option>
+                <option value="sarawak">Sarawak</option>
+                <option value="selangor">Selangor</option>
+                <option value="sabah">Sabah</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="country">{{add_address_modal_label6}}</label>
+              <select name="country" class="form-control" id="country" required>
+                <option value="" selected disabled>{{add_address_modal_select1}}</option>
+                <option value="malaysia">Malaysia</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">{{add_address_modal_btn1}}</button>
+              <button type="submit" class="btn btn-primary mt-1">{{add_address_modal_btn2}}</button>
+          </div>
+          <input value="" type="text" name="option_id" hidden>
+      </div>
+  </div>
+</form>
+{% endblock %}
+{% block script %}
+<!-- Script for adding address and payment method -->
+<script src="{{ url_for('static', filename='js/user/profile.min.js') }}?version=1.0" defer></script>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.min.css')}}version=1.2">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shop.min.css')}}?version=1.5">
+{% endblock %}
+{% block content %}
+{% set announcement_link = "membership" %}
+{% set announcement = "Join VIP and get Rm100 to spend!" %}
+{% include 'announcement.html' %}
+
+{% if session.language == "my" %}
+  {% set no_result_text = "Kami tidak dapat mencari apa yang anda cari... Tetapi kami mempunyai beberapa cadangan!" %}
+  {% set tranding_product_header =  "Sedang Trending" %}
+{% elif session.language == "cn" %}
+  {% set no_result_text = "我们找不到您要找的内容... 但是我们有一些建议！" %}
+  {% set tranding_product_header =  "正在热卖" %}
+{% else %}
+  {% set no_result_text = "We can't find what you are looking for... But we have some recommendations!" %}
+  {% set tranding_product_header =  "Trending Now" %}
+{% endif %}
+{% set domain_name = "https://tmpmc.aitanmall.com" %}
+  <section class="shop-board shop-board-1">
+    <div class="container mt-5 product-container">
+      <h2 class="text-center mb-4">Closest Match</h2>
+      <div class="row">
+        {% if products | length > 0 %}
+        {% for product in products %}
+        {% set id = product[0] %}
+        {% set product_name = product[1] %}
+        {% set product_status = product[2] %}
+        {% set product_price = product[3] %}
+        {% set product_offer_price = product[4] %}
+        {% set product_image = product[5] %}
+        {% set product_quantity = product[6] %}
+        {% set product_sku = product[7] %}
+        {% set product_date = product[8] %}
+        {% set product_level = product[9] %}
+        {% set product_cost = product[10] %}
+        {% set product_preorders_status = product[11] %}
+        {% set product_id = product[12] %}
+        {% set merchant_id = product[13] %}
+        <div class="col-6 col-md-4 product">
+          <div class="card mb-4">
+            <a href="products/{{merchant_id}}/{{product_id}}" style="text-decoration: none;">
+              <img class="product-img card-img-top" src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{product_id}}/{{product_image}}" alt="Product 1">
+            </a>
+            <div class="card-body">
+              <h5 class="card-title text-dark">{{product_name}}</h5>
+              <p class="card-text text-dark">Rm{{product_offer_price}}</p>
+              <a href="products/{{merchant_id}}/{{product_id}}" class="btn btn-primary">View</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-12 product">
+          <span>{{ no_result_text }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <section class="shop-board shop-board-2">
+    <div class="container mt-5 product-container">
+      <h1 class="text-center mb-4 section-header">{{tranding_product_header}}</h1>
+      <div class="row">
+        {% for trending_product in trending_product_list %}
+        {% set trending_product_id = trending_product[0] %}
+        {% set trending_product_product_name = trending_product[1] %}
+        {% set trending_product_product_status = trending_product[2] %}
+        {% set trending_product_product_price = trending_product[3] %}
+        {% set trending_product_product_offer_price = trending_product[4] %}
+        {% set trending_product_product_image = trending_product[5] %}
+        {% set trending_product_product_quantity = trending_product[6] %}
+        {% set trending_product_product_sku = trending_product[7] %}
+        {% set trending_product_product_date = trending_product[8] %}
+        {% set trending_product_product_level = trending_product[9] %}
+        {% set trending_product_product_cost = trending_product[10] %}
+        {% set trending_product_product_preorders_status = trending_product[11] %}
+        {% set trending_product_product_id = trending_product[12] %}
+        {% set trending_product_merchant_id = trending_product[13] %}
+        <div class="col-6 col-md-4 product">
+          <div class="card mb-4">
+            <a href="products/{{trending_product_merchant_id}}/{{trending_product_product_id}}" style="text-decoration: none;">
+              <img class="product-img card-img-top lazyload" data-src="{{domain_name}}/static/assets/merchant/{{trending_product_merchant_id}}/product/{{trending_product_product_id}}/{{trending_product_product_image}}" alt="Product 1">
+            </a>
+            <div class="card-body">
+              <h5 class="card-title text-dark text-truncate" style="max-width: 100%; overflow-y: hidde; white-space: nowrap;">{{trending_product_product_name}}</h5>
+              {% if session.language == "my" %}
+              <a href="products/{{trending_product_merchant_id}}/{{trending_product_product_id}}" class="btn btn-primary">Lihatkan</a>
+              {% elif session.language == "cn" %}
+              <a href="products/{{trending_product_merchant_id}}/{{trending_product_product_id}}" class="btn btn-primary">了解</a>
+              {% else %}
+              <a href="products/{{trending_product_merchant_id}}/{{trending_product_product_id}}" class="btn btn-primary">View</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/announcement.js')}}" defer></script>
+{% endblock %}

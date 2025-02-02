@@ -1,0 +1,65 @@
+.modal-reset{
+    top:initial;
+    left:initial;
+    height: initial;
+    overflow-x:initial;
+    overflow-y: initial;
+    outline: initial;
+}
+.modal-scrollable{
+    max-height: 70vh; /* Adjust as needed */
+    overflow-y: auto;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.modal-scrollable::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.modal-scrollable {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.modal-bottom{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    margin-right: 0;
+    transform: translateY(100%);
+    animation: slideDown 0.5s forwards;
+}
+.modal-bottom.show{
+    animation: slideUp 0.5s forwards;
+}
+.image-expand-on-click {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.image-expand-on-click:active {
+    transform: scale(2);
+}
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+.modal-bottom .modal-slide-down {
+    animation: slideDown 0.5s forwards;
+}

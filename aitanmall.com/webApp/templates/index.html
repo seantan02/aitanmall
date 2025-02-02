@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+{% block meta_description %}Explore the best online electronics and gadgets at AiTanMall. Shop for the most trending electronics in Malaysia!{% endblock %}
+{% block title %}AiTanMall | Best Online Shopping for Gadgets{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.min.css')}}?version=1.4">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/shop.min.css')}}?version=1.8">
+{% endblock %}
+{% block content %}
+<!--This is the announcement html-->
+{% set announcement_link = "membership" %}
+{% if session.language == "my" %}
+{% set announcement = "Masukkan keahlian VIP dan dapatkan postage percuma!" %}
+{% elif session.language == "cn" %}
+{% set announcement = "加入VIP会员以享有免费运送!" %}
+{% else %}
+{% set announcement = "Join VIP and get Free Delivery!" %}
+{% endif %}
+{% include 'announcement.html' %}
+{% set domain_name = "https://tmpmc.aitanmall.com" %}
+{% if session.language == "my" %}
+  {% set carousel_caption_1 = "Sertai Keahlian VIP" %}
+  {% set carousel_sub_caption_1 = "Penghantaran Percuma, Jaminan Tambahan 6 Bulan Percuma, Hadiah Percuma!" %}
+  {% set carousel_caption_2 = "Buat Akaun untuk Baucer 50%!" %}
+  {% set carousel_sub_caption_2 = "Untuk semua pengguna baru, kami memberikan baucer potongan harga 50%!" %}
+  {% set carousel_caption_3 = "Kami jamin kami mempunyai barangan penting yang paling murah!" %}
+  {% set carousel_sub_caption_3 = "Beli dan nikmati bateri, kabel, penyesuai BERJENAMA yang paling murah di Malaysia!" %}
+  {% set product_section_header1 =  "Sedang Trending" %}
+  {% set product_section_header2 =   "Produk Baru" %}
+  {% set product_refund_guaranteed_text = "100% jaminan Pulangan & Bayaran Balik dalam masa 7 hari" %}
+  {% set load_more_btn_text = "Tunjukkan Lagi" %}
+  {% set highest_discount_section_header = "Diskaun Terbanyak" %}
+{% elif session.language == "cn" %}
+  {% set carousel_caption_1 = "加入VIP会员" %}
+  {% set carousel_sub_caption_1 = "免费送货，免费额外6个月保修，免费礼品！" %}
+  {% set carousel_caption_2 = "创建账户以获得50%的折扣券！" %}
+  {% set carousel_sub_caption_2 = "对所有新用户，我们提供50%的折扣券！" %}
+  {% set carousel_caption_3 = "我们保证我们拥有最便宜的必需品！" %}
+  {% set carousel_sub_caption_3 = "购物并享受马来西亚最便宜的品牌电池，线缆，适配器！" %}
+  {% set product_section_header1 =  "正在热卖" %}
+  {% set product_section_header2 =   "新产品" %}
+  {% set product_refund_guaranteed_text = "7天100%退货退款保证" %}
+  {% set load_more_btn_text = "查看更多" %}
+  {% set highest_discount_section_header = "最高折扣" %}
+{% else %}
+  {% set carousel_caption_1 = "Join VIP Membership" %}
+  {% set carousel_sub_caption_1 = "Free Delivery, Free 6 EXTRA Months Warranty, Free Gifts!" %}
+  {% set carousel_caption_2 = "Create Account for 50% Voucher!" %}
+  {% set carousel_sub_caption_2 = "For all new users, we are giving a 50% OFF voucher!" %}
+  {% set carousel_caption_3 = "We guarantee you we have the cheapest essentials!" %}
+  {% set carousel_sub_caption_3 = "Shop and enjoy the cheapest BRANDED batteries, cables, adapters in Malaysia!" %}
+  {% set product_section_header1 =  "Trending Now" %}
+  {% set product_section_header2 =  "New Products" %}
+  {% set product_refund_guaranteed_text = "7 days Return & Refund 100%" %}
+  {% set load_more_btn_text = "Show More" %}
+  {% set highest_discount_section_header = "Highest Discount" %}
+{% endif %}
+<style>
+  .load-more-button {
+    width: 150px; /* Adjust width as per your requirement */
+  }
+</style>
+  <section class="shop-board shop-board-1">
+    <div id="promotionsCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#promotionsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#promotionsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#promotionsCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <a href="/products/SAMYMRCT740070835027/SAMYPRD319980767">
+            {% if session.language == "my" %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1_my.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1_my.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1_square_my.jpg')}}" alt="First slide">
+            {% elif session.language == "cn" %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1_cn.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1_cn.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1_square_cn.jpg')}}" alt="First slide">
+            {% else %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_1_square.jpg')}}" alt="First slide">
+            {% endif %}
+          </a>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{carousel_caption_1}}</h5>
+            <p>{{carousel_sub_caption_1}}</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <a href="/user/login">
+            {% if session.language == "my" %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2_my.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2_my.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2_square_my.jpg')}}" alt="First slide">
+            {% elif session.language == "cn" %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2_cn.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2_cn.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2_square_cn.jpg')}}" alt="First slide">
+            {% else %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_2_square.jpg')}}" alt="First slide">
+            {% endif %}
+          </a>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{carousel_caption_2}}</h5>
+            <p>{{carousel_sub_caption_2}}</p>
+          </div>
+        </div>
+        <!-- <div class="carousel-item">
+          <a href="/products/SAMYMRCT740070835027/SAMYPRD296264134">
+            {% if session.language == "my" %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3_my.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3_my.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3_square_my.jpg')}}" alt="First slide">
+            {% elif session.language == "cn" %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3_cn.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3_cn.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3_square_cn.jpg')}}" alt="First slide">
+            {% else %}
+            <img class="d-block w-100" data-srcmid="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3.jpg')}}" data-scrlarge="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3.jpg')}}" src="{{ url_for('static', filename='assets/aitanmall/images/index/carousel_3_square.jpg')}}" alt="First slide">
+            {% endif %}
+          </a>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{carousel_caption_3}}</h5>
+            <p>{{carousel_sub_caption_3}}</p>
+          </div>
+        </div> -->
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#promotionsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#promotionsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+  <section id="trending-product-section" class="shop-board shop-board-1">
+    <div class="container mt-5 product-container">
+      <h1 class="text-center mb-4 section-header">{{product_section_header1}}</h1>
+      <div class="row products">
+        {% for trending_product in trending_product_list %}
+        {% set trending_product_id = trending_product[0] %}
+        {% set trending_product_product_name = trending_product[1] %}
+        {% set trending_product_product_status = trending_product[2] %}
+        {% set trending_product_product_price = trending_product[3] %}
+        {% set trending_product_product_offer_price = trending_product[4] %}
+        {% set trending_product_product_image = trending_product[5] %}
+        {% set trending_product_product_quantity = trending_product[6] %}
+        {% set trending_product_product_sku = trending_product[7] %}
+        {% set trending_product_product_date = trending_product[8] %}
+        {% set trending_product_product_level = trending_product[9] %}
+        {% set trending_product_product_cost = trending_product[10] %}
+        {% set trending_product_product_preorders_status = trending_product[11] %}
+        {% set trending_product_product_id = trending_product[12] %}
+        {% set trending_product_merchant_id = trending_product[13] %}
+        <div class="col-6 col-md-4 product">
+          <div class="card mb-4">
+            <a href="products/{{trending_product_merchant_id}}/{{trending_product_product_id}}" style="text-decoration: none;">
+              <img class="product-img card-img-top lazyload" data-src="{{domain_name}}/static/assets/merchant/{{trending_product_merchant_id}}/product/{{trending_product_product_id}}/{{trending_product_product_image}}" alt="Product 1">
+            </a>
+            <div class="card-body">
+              <h5 class="card-title text-dark text-truncate" style="max-width: 100%; overflow-y: hidde; white-space: nowrap;">{{trending_product_product_name}}</h5>
+              <p><small style="color: rgb(0, 38, 255);">{{ product_refund_guaranteed_text }}</small></p>
+              {% if session.language == "my" %}
+              <a href="products/{{trending_product_merchant_id}}/{{trending_product_product_id}}" class="btn btn-primary">Lihatkan</a>
+              {% elif session.language == "cn" %}
+              <a href="products/{{trending_product_merchant_id}}/{{trending_product_product_id}}" class="btn btn-primary">了解</a>
+              {% else %}
+              <a href="products/{{trending_product_merchant_id}}/{{trending_product_product_id}}" class="btn btn-primary">View</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row justify-content-center mt-1 mb-4">
+        <button class="btn btn-primary load-more-button" data-target="#trending-product-section" data-lastid="{{last_trending_product_index_id}}" data-type="trending_product">{{load_more_btn_text}}</button>
+      </div>
+    </div>
+  </section>
+  <section id="discount-product-section" class="shop-board shop-board-2">
+    <div class="container mt-5 product-container">
+      <h1 class="text-center mb-4 section-header">{{highest_discount_section_header}}</h1>
+      <div class="row products">
+        {% for highest_discount_product in highest_discount_product_list %}
+        {% set highest_discount_product_index = highest_discount_product[0] %}
+        {% set highest_discount_product_name = highest_discount_product[1] %}
+        {% set highest_discount_product_status = highest_discount_product[2] %}
+        {% set highest_discount_product_price = highest_discount_product[3] %}
+        {% set highest_discount_product_offer_price = highest_discount_product[4] %}
+        {% set highest_discount_product_image = highest_discount_product[5] %}
+        {% set highest_discount_product_quantity = highest_discount_product[6] %}
+        {% set highest_discount_product_sku = highest_discount_product[7] %}
+        {% set highest_discount_product_date = highest_discount_product[8] %}
+        {% set highest_discount_product_level = highest_discount_product[9] %}
+        {% set highest_discount_product_cost = highest_discount_product[10] %}
+        {% set highest_discount_product_preorders_status = highest_discount_product[11] %}
+        {% set highest_discount_product_id = highest_discount_product[12] %}
+        {% set highest_discount_product_merchant_id = highest_discount_product[13] %}
+        {% set discount_percentage = (highest_discount_product_price-highest_discount_product_offer_price)/highest_discount_product_price * 100 %}
+        <div class="col-6 col-md-4 product">
+          <div class="card mb-4">
+            <a href="products/{{highest_discount_product_merchant_id}}/{{highest_discount_product_id}}" style="text-decoration: none;">
+              <img class="product-img card-img-top lazyload" data-src="{{domain_name}}/static/assets/merchant/{{highest_discount_product_merchant_id}}/product/{{highest_discount_product_id}}/{{highest_discount_product_image}}" alt="Product 1">
+            </a>
+            <div class="card-body">
+              <h5 class="card-title text-dark text-truncate" style="max-width: 100%; overflow-y: hidde; white-space: nowrap;">{{trending_product_product_name}}</h5>
+              <p class="card-text text-danger product-discount-percentage">Discount {{ discount_percentage | int }}%!</p>
+              {% if session.language == "my" %}
+              <a href="products/{{highest_discount_product_merchant_id}}/{{highest_discount_product_id}}" class="btn btn-primary">Lihatkan</a>
+              {% elif session.language == "cn" %}
+              <a href="products/{{highest_discount_product_merchant_id}}/{{highest_discount_product_id}}" class="btn btn-primary">了解</a>
+              {% else %}
+              <a href="products/{{highest_discount_product_merchant_id}}/{{highest_discount_product_id}}" class="btn btn-primary">View</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row justify-content-center mt-1 mb-4">
+        <button class="btn btn-primary load-more-button" data-target="#discount-product-section" data-lastid="{{last_discount_product_index_id}}" data-type="discount_product">{{load_more_btn_text}}</button>
+      </div>
+    </div>
+  </section>
+  <section id="new-product-section" class="shop-board shop-board-3">
+    <div class="container mt-5 product-container">
+      <h1 class="text-center mb-4">{{product_section_header2}}</h1>
+      <div class="row products">
+        {% for product in products %}
+        {% set id = product[0] %}
+        {% set product_name = product[1] %}
+        {% set product_status = product[2] %}
+        {% set product_price = product[3] %}
+        {% set product_offer_price = product[4] %}
+        {% set product_image = product[5] %}
+        {% set product_quantity = product[6] %}
+        {% set product_sku = product[7] %}
+        {% set product_date = product[8] %}
+        {% set product_level = product[9] %}
+        {% set product_cost = product[10] %}
+        {% set product_preorders_status = product[11] %}
+        {% set product_id = product[12] %}
+        {% set merchant_id = product[13] %}
+        <div class="col-6 col-md-4 product">
+          <div class="card mb-4">
+            <a href="products/{{merchant_id}}/{{product_id}}" style="text-decoration: none;">
+              <img class="product-img card-img-top lazyload" data-src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{product_id}}/{{product_image}}" alt="Product 1">
+            </a>
+            <div class="card-body">
+              <h5 class="card-title text-dark text-truncate product-name" style="max-width: 100%; overflow-y: hidde; white-space: nowrap;">{{product_name}}</h5>
+              <p class="card-text text-dark product-price">Rm{{product_offer_price}}</p>
+              <p><small style="color: rgb(0, 38, 255);">{{ product_refund_guaranteed_text }}</small></p>
+              {% if session.language == "my" %}
+              <a href="products/{{merchant_id}}/{{product_id}}" class="btn btn-primary">Lihatkan</a>
+              {% elif session.language == "cn" %}
+              <a href="products/{{merchant_id}}/{{product_id}}" class="btn btn-primary">了解</a>
+              {% else %}
+              <a href="products/{{merchant_id}}/{{product_id}}" class="btn btn-primary">View</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row justify-content-center mt-1 mb-4">
+        <button class="btn btn-primary load-more-button" data-target="#new-product-section" data-lastid="{{last_new_product_index_id}}" data-type="new_product">{{load_more_btn_text}}</button>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/carousel.js') }}?version=1.1" defer></script>
+<script src="{{ url_for('static', filename='js/home_page_load_products.min.js') }}?version=1.3" defer></script>
+{% endblock %}

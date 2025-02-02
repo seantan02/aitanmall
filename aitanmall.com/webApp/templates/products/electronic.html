@@ -1,0 +1,409 @@
+{% extends 'base.html' %}
+<!-- Product details -->
+{% set domain_name = "https://tmpmc.aitanmall.com" %}
+{% set prd_name = product_details[1] %}
+{% set prd_status = product_details[2] %}
+{% set prd_price = product_details[3] %}
+{% set prd_offer_price = product_details[4] %}
+{% set prd_image = product_details[5] %}
+{% set prd_quantity = product_details[6] %}
+{% set prd_sku = product_details[7] %}
+{% set prd_date = product_details[8] %}
+{% set prd_level = product_details[9] %}
+{% set prd_cost = product_details[10] %}
+{% set prd_preorders_status = product_details[11] %}
+{% set prd_id = product_details[12] %}
+{% set merchant_id = product_details[13] %}
+
+{% block title %}AiTanMall | {{prd_name}} {% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/products/electronics/main.min.css')}}?version=2.1">
+{% endblock %}
+{% block content %}
+{% if session.language == "my" %}
+    {% set promotion_line = "Free Postage!" %}
+    {% set see_review_text = "Lihat Ulasan" %}
+    {% set sold_text = "dijual" %}
+    {% set you_save_text = "Anda Jimat" %}
+    {% set add_to_cart_text = "Tambah ke Troli" %}
+    {% set money_back_guaranteed_text = "Dalam 7 Hari Boleh Wassep 011-5775-3587 (Nadia) untuk buat refund!" %}
+{% elif session.language == "cn" %}
+    {% set promotion_line = "免邮费!" %}
+    {% set see_review_text = "查看评价" %}
+    {% set sold_text = "已卖出" %}
+    {% set you_save_text = "节省" %}
+    {% set add_to_cart_text = "加入购物车" %}
+    {% set money_back_guaranteed_text = "7天内可以Whatsapp 011-5775-3587要求退款!" %}
+{% else %}
+  {% set promotion_line = "Free Shipping!" %}
+  {% set see_review_text = "See Reviews" %}
+  {% set sold_text = "sold" %}
+  {% set you_save_text = "You Save" %}
+  {% set add_to_cart_text = "Add to Cart" %}
+  {% set money_back_guaranteed_text = "7-Days Money Back GUARANTEED! Whatsapp 011-5775-3587 to request." %}
+{% endif %}
+<!-- Header -->
+<div class="banner">
+    <i class="bi bi-info-circle-fill mx-2"></i>
+    <a href="#">{{money_back_guaranteed_text}}</a>
+</div>
+<style>
+.iframe{
+    width: 100%;
+    height:35vh;
+    border:none;
+}
+.video-container {
+  position: relative;
+  width: 100%;
+}
+
+.video-placeholder,
+#carouselVideo {
+  width: 100%;
+}
+
+.carousel-video-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2em; /* adjust as needed */
+  color: #fff; /* adjust as needed */
+  cursor: pointer;
+}
+
+.carousel-video-play-icon i {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 10px;
+}
+
+#product-variation-modal{
+    z-index: 1041;
+}
+</style>
+<div class="custom-container product-container pt-lg-4">
+    <div class="row">
+        <div class="col-lg-6 col-md-12" style="max-width: 350px; margin:0 auto;">
+            <!-- Product Carousel -->
+            <div id="productCarousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        {% if videos | length > 0 %}
+                        <div class="video-container">
+                            <img class="w-100 video-placeholder lazyload" data-src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_image}}" alt="Product Image 1">
+                            <div class="carousel-video-play-icon" data-target="#mainVideo" data-url="{{videos[0][1]}}">
+                              <i class="fas fa-play"></i>
+                            </div>
+                            <iframe class="d-none iframe" id="mainVideo" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="z-index: 5;"></iframe>
+                        </div>
+                        {% else %}
+                        <img src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_image}}" class="d-block w-100" alt="Product Image 1" data-toggle="modal" data-target="#imageModal" data-image-src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_image}}">
+                        {% endif %}
+                      </div>
+                    {% for gallery in product_gallery %}
+                        {% set id = gallery[0] %}
+                        {% set prd_image = gallery[1] %}
+                        {% set prd_lang = gallery[2] %}
+                        {% set prd_id = gallery[3] %}
+                        <div class="carousel-item" style="max-height: 35vh;">
+                            <img src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_image}}" class="d-block w-100" alt="Product Image 2" data-toggle="modal" data-target="#imageModal" data-image-src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_image}}">
+                        </div>
+                    {% endfor %}
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12">
+            <!-- Product Details -->
+            <h1 class="product-title">{{prd_name}}</h1>
+            {% if product_reviews|length > 0 %}
+                {% set num_of_reviews = product_reviews|length %}
+                {% if num_of_reviews >= 1000 %}
+                    {% set num_of_reviews = (num_of_reviews/1000)|string + "k" %}
+                {% endif %}
+            <div class="rating d-flex align-items-center">
+                <i class="bi bi-star-fill" style="margin: 0 5px 0 auto;"></i>
+                <h5 style="margin: 0 12px 0 0;">4.5/5 <a href="#review-wrapper">{{see_review_text}}</a></h5>
+                <h5 style="margin: 0 auto 0 0;">{{num_of_reviews}} {{sold_text}}</h5>
+            </div>
+            {% endif %}
+            <!-- Product offerlines -->
+            {% for offerline in offerlines %}
+                {% set id = offerline[0] %}
+                {% set prd_offerline = offerline[1] %}
+                {% set prd_offerline_order = offerline[2] %}
+                {% set prd_lang = offerline[3] %}
+                {% if prd_offerline_order == 1 %}
+            <small class="text-danger" style="font-size: 15px; font-family: 'Arial';">{{prd_offerline}}</small>
+            {% else %}
+            <h2 class="text-dark mt-2" style="font-size: 20px; font-family: 'Arial'; font-weight: bold;">{{prd_offerline}}</h2>
+            {% endif %}
+            {% endfor %}
+            <!-- Product Price -->
+            <div class="pricing">
+                {% if show_price_range == True %}
+                    <div class="d-flex align-items-end">
+                        <h4 class="discounted-price" style="margin-right:10px;">Rm{{ minimum_variation_price }} - {{maximum_variation_price}}</h4>
+                    </div>
+                {% else %}
+                    {% if prd_offer_price != prd_price %}
+                    <div class="d-flex align-items-end">
+                        <h4 class="discounted-price" style="margin-right:10px;">Rm{{ price_to_show }}</h4>
+                        <h5 class="original-price"><s>Rm{{ prd_price }}</s></h5>
+                    </div>
+                    <h5 class="savings">{{ you_save_text }}: {{ ((prd_price-price_to_show)/prd_price*100) | round(2) }}%!</h5>
+                    {% else %}
+                    <h4 class="discounted-price">Rm{{ price_to_show }}</h4>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <!-- Reminder -->
+            <div class="row my-1">
+                <div class="col">
+                    <p class="info-box d-flex align-items-center bg-light py-2 lead-btn">
+                        <i class="bi bi-info-circle-fill mx-2"></i>
+                        <span>{{ promotion_line }}</span>
+                    </p>
+                </div>
+            </div>
+            <!-- Action -->
+            <div class="row my-1">
+                <div class="col">
+                    {% if product_variations|length > 0 %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger w-100" data-toggle="modal" data-target="#product-variation-modal">
+                        {{add_to_cart_text}}
+                    </button>
+                    {% else %}
+                    <button type="button" class="add-to-cart btn btn-danger w-100" data-target="#product-form">{{add_to_cart_text}}</button>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Product description -->
+            {% if product_descriptions|length > 0 %}
+            <br>
+            <h5>Description</h5>
+            {% for description in product_descriptions %}
+                {% set id = description[0] %}
+                {% set prd_des = description[1] %}
+                {% set prd_id = description[2] %}
+                {% set prd_lang = description[3] %}
+            <p><small>{{prd_des}}</small></p>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- New Container -->
+<form id="product-form" class="custom-container product-container mt-4">
+    <div class="product-container-box">
+        <!-- Gallery -->
+        <div class="row my-2">
+            <div class="col">
+                <h5>Gallery</h5>
+                <span style="font-style: italic; color:red;">Click to expand</span>
+                <div class="row">
+                    {% for gallery in product_gallery %}
+                        {% set id = gallery[0] %}
+                        {% set prd_image = gallery[1] %}
+                        {% set prd_lang = gallery[2] %}
+                        {% set prd_id = gallery[3] %}
+                    <div class="col-md-4 mb-3">
+                        <img src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_image}}" alt="Image 1" class="gallery-img">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% if product_reviews|length > 0%}
+        <div class="row my-2" id="review-wrapper">
+            <h3 class="mb-4">Reviews</h3>
+            <div class="card mb-4">
+                
+                {% for review in product_reviews %}
+                    {% set review_id = review[0] %}
+                    {% set review_profile_img = review[1] %}
+                    {% set review = review[2] %}
+                    {% set review_img = review[3] %}
+                    {% set review_star = review[4] %}
+                    {% set cust_id = review[5] %}
+                    {% set ord_id = review[6] %}
+                    {% set prd_id = review[7] %}
+                    {% set prd_review_status = review[8] %}
+
+                <div class="row no-gutters">
+                    <div class="col-md-2">
+                        <img src="{{review[1]}}" class="img-fluid rounded-circle p-2" alt="Reviewer">  <!-- Replace "..." with actual image link -->
+                    </div>
+                    <div class="col-md-10">
+                        <div class="card-body">
+                            <h5 class="card-title">{{review_star}} <i class="bi bi-star-fill" style="margin: 0 5px 0 auto;"></i></h5>
+                            <p class="card-text">{{review}}</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% if product_variations|length > 0 %} 
+        <input type="text" name="prd_var_id" id="main_prd_var_id_input" data-name="Product variation" data-classname="product-variation-wrapper" data-type="modal" value="" required hidden>
+        {% endif %} 
+        <input type="text" name="prd_id" data-name="Product ID" value="{{prd_id}}" required hidden>
+        <input type="text" name="merchant_id" data-name="Merchant ID" value="{{merchant_id}}" required hidden>
+        <input type="text" name="action" value="add_to_cart" required hidden>
+    </div>
+</form>
+{% endblock %}
+{% block modals %}
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">View Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" class="img-fluid">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Closs</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% if product_variations|length > 0 %} 
+<!-- Variation Modal -->
+<div class="modal modal-reset modal-bottom fade" id="product-variation-modal" tabindex="-1" aria-labelledby="product-variation-modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="overflow-y: scroll;">
+            <div class="modal-header">
+                <h5 class="modal-title">Product Variations</h5><br>
+                <p class="text-danger" style="font-size: 0.8rem;">Click on image to zoom</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body product-variation-wrapper modal-scrollable">
+                <div class="row option-box-wrapper">
+                    {% for variation in product_variations %}
+                        {% set prd_var_id = variation[0] %}
+                        {% set prd_var = variation[1] %}
+                        {% set prd_var_des = variation[2] %}
+                        {% set prd_var_price = variation[3] %}
+                        {% set prd_var_quantity = variation[4] %}
+                        {% set prd_var_sku = variation[5] %}
+                        {% set prd_var_img = variation[6] if variation[6] != "" else prd_image %}
+                        {% set prd_var_cat_id = variation[7] %}
+                    <div class="col-4">
+                        <div class="option-box mx-2 my-1" data-data="{{prd_var_id}}" data-target="#main_prd_var_id_input">
+                            <img src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_var_img}}" class="d-block w-100" alt="Product Image 1" data-toggle="modal" data-target="#imageModal" data-image-src="{{domain_name}}/static/assets/merchant/{{merchant_id}}/product/{{prd_id}}/{{prd_var_img}}" alt="Variation 1" class="img-fluid expand-on-click"><br>
+                            {{ prd_var }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="add-to-cart btn btn-danger" data-target="#product-form">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block bottom_bar %}
+{% if session.language == "my" %}
+    {% set add_to_cart_text = "Tambah ke Troli" %}
+    {% set buy_now_text = "Beli Segera" %}
+{% elif session.language == "cn" %}
+    {% set add_to_cart_text = "加入购物车" %}
+    {% set buy_now_text = "立即购买" %}
+{% else %}
+  {% set add_to_cart_text = "Add to Cart" %}
+  {% set buy_now_text = "Buy Now" %}
+{% endif %}
+<div class="fixed-bottom bg-light p-2" style="z-index: 1;">
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-6">
+                <a href="https://api.whatsapp.com/send/?phone=601157753538&text=Salam. Saya nak minta info ${{ prd_name }}$" rel="noopener noreferrer" target="_blank"><button type="button" class="chat-box-btn btn btn-success w-100">Whatsapp</button></a>
+            </div>
+            <div class="col-6">
+                {% if product_variations|length > 0 %}
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger w-100" data-toggle="modal" data-target="#product-variation-modal">
+                    {{add_to_cart_text}}
+                </button>
+                {% else %}
+                <button type="button" class="add-to-cart btn btn-danger w-100" data-target="#product-form">{{add_to_cart_text}}</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Recommendation modal -->
+{% include '/products/recommendation-modal.html' %}
+{% endblock %}
+{% block script %}
+<script defer>
+$(document).ready(function(){
+    $(document).on("click", ".option-box", function(){
+        selectProductOption(this);
+    })
+    $(document).on("click",".chat-box-btn", function(){
+        $("#chat-icon").click();
+    })
+
+    $('#imageModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var imageSrc = button.data('image-src'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('#modalImage').attr("src", imageSrc);
+    });
+
+    $(document).on("click", ".carousel-video-play-icon", function(){
+        $("#productCarousel").carousel('pause');
+        var videoTarget = $(this).data("target");
+        var newSrc = $(this).data("url");
+        $(this).addClass("d-none");
+        $(this).closest(".video-container").find(".video-placeholder").addClass("d-none");
+        $("#mainVideo").attr('src', newSrc);
+        $("#mainVideo").removeClass("d-none");
+    })
+
+    $(document).on('hide.bs.modal', '#product-variation-modal', function () {
+        const $modal = $(this);
+        $modal.find('.modal-dialog').addClass('modal-slide-down');
+    });
+
+    $(document).on('hidden.bs.modal', '#product-variation-modal', function () {
+        const $modal = $(this);
+        $('body').removeClass('modal-open');
+        $modal.find('.modal-dialog').removeClass('modal-slide-down');
+    });
+    // Handle close button in the modal header
+    $(document).on('click', '#product-variation-modal .close', function () {
+        $('#product-variation-modal').trigger('hide.bs.modal');
+    });
+
+    // Handle close button in the modal footer
+    $(document).on('click', '#product-variation-modal .btn',function () {
+        $('#product-variation-modal').trigger('hide.bs.modal');
+    });
+
+    $(document).on("click", ".custom-trigger-btn", function(e){
+        var thisBtn = $(this);
+        var thisBtnTarget = thisBtn.data("target");
+        $(thisBtnTarget).click();
+    })
+})
+</script>
+{% endblock %}

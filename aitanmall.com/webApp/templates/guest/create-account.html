@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+{% set logo_svg_filename = '/static/assets/aitanmall/images/logo-dark.svg' %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, user-scalable=0, viewport-fit=cover">
+    <meta name="keywords"  content="Aitanmall, aitanmall">
+    <meta name="description" content="A Mall, But Online. Buy and Guarantee your Money back if seller violates. Or, Join us now as a seller." >
+    <meta property="og:description" content="eCommerce powered by Artificial Intelligence">
+    <meta property="og:title" content="AITanMall">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aitanmall.com/login">
+    <meta property="og:image" content="https://www.aitanmall.com/assets/aitanmall/images/facebook/comparison_long.jpg">
+    <title>It's A Mall But Online.</title>
+    <link rel="icon" href="{{logo_svg_filename}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-CuOF+2SnTUfTwSZjCXf01h7uYhfOBuxIhGKPbfEJ3+FqH/s6cIFN9bGr1HmAg4fQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create-account.min.css')}}?version=1.6">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.min.css')}}?version=1.2">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.min.css')}}?version=1.5">
+    <!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-BNK4T4DX8L"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-BNK4T4DX8L');
+	</script>
+</head>
+{% if session.language == "my" %}
+    {% set otp_header = "Sila masukkan kata laluan sekali sahaja untuk mengesahkan akaun anda" %}
+    {% set otp_text1 = "Kod telah dihantar ke" %}
+    {% set otp_btn_text1 = "Teruskan" %}
+    {% set otp_btn_text2 = "Hantar Semula OTP" %}
+    {% set create_account_header = "Buat Akaun" %}
+    {% set create_account_input_text1 = "Nama Depan:" %}
+    {% set create_account_input_text2 = "Nama Belakang:" %}
+    {% set create_account_input_text3 = "Emel:" %}
+    {% set create_account_input_text4 = "Nombor Telefon:" %}
+    {% set create_account_input_text5 = "Kata Laluan:" %}
+    {% set create_account_input_text6 = "Sahkan Kata Laluan:" %}
+    {% set create_account_sub_text1 = 'Dengan menggunakan perkhidmatan kami, anda bersetuju dengan <a href="/terms_and_conditions">Terma Perkhidmatan</a> kami.' %}
+    {% set create_account_sub_text2 = 'Anda boleh membaca dasar privasi kami <a href="/privacy_policy">di sini</a>.' %}
+    {% set create_account_sub_text3 = 'Sudah ada akaun? <a href="/user/login">Log masuk di sini</a>.' %}
+    {% set create_account_submit_btn_text = "Teruskan" %}
+{% elif session.language == "cn" %}
+    {% set otp_header = "请输入一次性密码以验证您的帐户" %}
+    {% set otp_text1 = "已向您发送了一个代码" %}
+    {% set otp_btn_text1 = "继续" %}
+    {% set otp_btn_text2 = "重新发送OTP" %}
+    {% set create_account_header = "创建帐户" %}
+    {% set create_account_input_text1 = "名字：" %}
+    {% set create_account_input_text2 = "姓氏：" %}
+    {% set create_account_input_text3 = "电邮：" %}
+    {% set create_account_input_text4 = "电话号码：" %}
+    {% set create_account_input_text5 = "密码：" %}
+    {% set create_account_input_text6 = "确认密码：" %}
+    {% set create_account_sub_text1 = '使用我们的服务，即表示您同意我们的<a href="/terms_and_conditions">服务条款</a>。' %}
+    {% set create_account_sub_text2 = '您可以<a href="/privacy_policy">在此</a>阅读我们的隐私政策。' %}
+    {% set create_account_sub_text3 = '已经有账户了吗？<a href="/user/login">在此登录</a>。' %}
+    {% set create_account_submit_btn_text = "继续" %}
+{% else %}
+    {% set otp_header = "Please enter the one time password to verify your account" %}
+    {% set otp_text1 = "A code has been sent to" %}
+    {% set otp_btn_text1 = "Continue" %}
+    {% set otp_btn_text2 = "Resent OTP" %}
+    {% set create_account_header = "Create Account" %}
+    {% set create_account_input_text1 = "First Name:" %}
+    {% set create_account_input_text2 = "Last Name:" %}
+    {% set create_account_input_text3 = "Email:" %}
+    {% set create_account_input_text4 = "Phone Number:" %}
+    {% set create_account_input_text5 = "Password:" %}
+    {% set create_account_input_text6 = "Confirm Password:" %}
+    {% set create_account_sub_text1 = 'By using our service, you agree to our <a href="/terms_and_conditions">Terms of Service</a>.' %}
+    {% set create_account_sub_text2 = 'You can read our privacy policy <a href="/privacy_policy">here</a>.' %}
+    {% set create_account_sub_text3 = 'Already have an account? <a href="/user/login">Log in here</a>.' %}
+    {% set create_account_submit_btn_text = "Continue" %}
+{% endif %}
+<body style="background-color:rgba(15,45,80,0.5);">
+    <div class="display">
+        <div class="loader-wrapper pre-loader" id="loader-wrapper">
+            <div class="loader">Loading...</div>
+            <div class="loader-sub"><span>Our Webpage Workers Are Working Hard...</span></div>
+        </div>
+        <div id="mask-overlay" class="mask-overlay"></div>
+        <div id="pagebody" class="pagebody hide">
+            <div class="otp-form-wrapper container height-100 d-flex justify-content-center align-items-center hide" style="z-index:5;">
+                <div class="position-relative">
+                    <div class="card p-2 text-center">
+                        <h6 style="color:red;">{{otp_header}}</h6>
+                        <div> <span>{{otp_text1}}</span> <small class="otp-phone-number">*******9897</small> <input name="phone-number" val="" required hidden readonly></div>
+                        <div id="otp" class="otp-number-inputs d-flex flex-row justify-content-center mt-2">
+                            {% for i in range(7) %}
+                            <input class="otp-number-input m-2 text-center form-control rounded" type="number" id="input-{{i}}" maxlength="1"/>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-4"> 
+                            <button class="verify-otp-btn btn btn-danger px-4 validate">{{otp_btn_text1}}</button> 
+                            <button class="resend-otp-btn btn btn-primary px-4 validate">{{otp_btn_text2}}</button> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div  class="container login-form-wrapper" style="overflow-y: scroll;">
+                <div class="justify-content-center login-form">
+                    <div class="bg-white p-4 rounded shadow">
+                        <h2 class="text-center">{{create_account_header}}</h2>
+                        <form id="create-account-form" class="create-account-form" action="" method="POST">
+                            <div class="form-group">
+                                <label for="first_name" style="color:black">{{create_account_input_text1}}</label>
+                                <input type="text" class="form-control" name="first_name" placeholder="Adib" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name" style="color:black">{{create_account_input_text2}}</label>
+                                <input type="text" class="form-control" name="last_name" placeholder="Azri" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" style="color:black">{{create_account_input_text3}}</label>
+                                <input type="email" class="form-control" name="email" placeholder="belidariaitanmall@gmail.com" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPhoneNumber">{{create_account_input_text4}}</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="phonePrefix">+60</span>
+                                    </div>
+                                    <input type="number" class="form-control" name="phone-number" placeholder="123456789" required="required" aria-describedby="phonePrefix">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass" style="color:black">{{create_account_input_text5}}</label><br>
+                                <input type="password" class="form-control" name="password" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="pass2" style="color:black">{{create_account_input_text6}}</label><br>
+                                <input type="password" class="form-control" name="password2" required="required">
+                            </div>
+                            <div class="mt-2 text-center">
+                                <button class="g-recaptcha btn btn-primary" data-sitekey="6Le5uQwkAAAAAGwbjfaxng7WdTXGRlviqS_NIbXW" data-callback="onSubmit" data-action="submit" type="button" style="margin:0 auto;">{{create_account_submit_btn_text}}</button>
+                                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                            </div>
+                            <p class="mt-3">
+                                {{create_account_sub_text3 | safe}}
+                            </p>
+                            <p>
+                                {{create_account_sub_text2 | safe}}
+                            </p>
+                            <p>
+                                {{create_account_sub_text1 | safe}}
+                            </p>
+                            <div class="mt-4 text-center">
+                                <svg xmlns="{{logo_svg_filename}}" width="40" height="40" fill="currentColor" class="bi bi-bootstrap" viewBox="0 0 16 16">
+                                    <path d="M5.062 15h4.025a2.7 2.7 0 0 0 2.675-2.492l.89-9.342A1.6 1.6 0 0 0 11.168 1H4.732A1.6 1.6 0 0 0 3.13 3.166L4.02 12.508A2.7 2.7 0 0 0 6.694 15zm1.154-4.98H7.92v1.557h-1.65V10.02h.003zm2.44 0v1.54c0 .386-.312.694-.694.716a.707.707 0 0 1-.038-.003H6.22V8.441h1.708c.373 0 .677.282.699.656a.703.703 0 0 1-.007.062v.86h.006zM8 7H7V6h1v1z"/>
+                                </svg>
+                                <p>AiTan SDN. BHD.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/sweetalert.min.js')}}" defer></script>
+<script src="{{ url_for('static', filename='js/important.min.js')}}?version=1.6"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Le5uQwkAAAAAGwbjfaxng7WdTXGRlviqS_NIbXW" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" defer></script>
+<script defer>
+//script for recaptcha v3
+function onSubmit(token) {
+    $("#create-account-form").submit()
+}
+function onClick(e) {
+    e.preventDefault();
+    grecaptcha.ready(function() {
+    grecaptcha.execute('6Le5uQwkAAAAAGwbjfaxng7WdTXGRlviqS_NIbXW', {action: 'submit'}).then(function(token){
+            $("#g-recaptcha-response").val(token);
+        })
+    });
+}
+</script>
+<script defer>
+$(document).ready(function(){
+    hideLoader();
+    /* script for creating account */
+    /*script for OTP pop-up*/
+    $(document).on("submit","#create-account-form",function(e){
+        e.preventDefault()
+        var thisForm = $(this);
+        var thisFormGResponse = thisForm.find("#g-recaptcha-response")
+        var thisFormGResponseValue = thisFormGResponse.val()
+        //check if this form is processing
+        if(thisFormGResponseValue.length == 0){
+            alert("You are a bot")
+            return false;
+        }
+        if(thisForm.data("requestRunning")){
+            return false;
+        }
+        thisForm.data("requestRunning", true);
+        showLoader();
+        
+        //get values of inputs
+        var firstNameInput = thisForm.find("input[name='first_name']")
+        var lastNamelInput = thisForm.find("input[name='last_name']")
+        var emailInput = thisForm.find("input[name='email']")
+        var phoneNumberInput = thisForm.find("input[name='phone-number']")
+        var passwordInput = thisForm.find("input[name='password']")
+        var password2Input = thisForm.find("input[name='password2']")
+        
+        var firstNameInputValue = firstNameInput.val()
+        var lastNamelInputValue = lastNamelInput.val()
+        var emailInputValue = emailInput.val()
+        var phoneNumberInputValue = phoneNumberInput.val()
+        var passwordInputValue = passwordInput.val()
+        var password2InputValue = password2Input.val()
+        
+        if(emailInputValue.length > 0 && phoneNumberInputValue.length > 0 && passwordInputValue.length > 0){
+            if($.isNumeric(phoneNumberInputValue)){
+                var testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+                if (testEmail.test(emailInputValue)){
+                    var fd = new FormData()
+                    fd.append("first_name", firstNameInputValue);
+                    fd.append("last_name", lastNamelInputValue);
+                    fd.append("email", emailInputValue);
+                    fd.append("phone_number", phoneNumberInputValue);
+                    fd.append("password", passwordInputValue);
+                    fd.append("g-response", thisFormGResponse.val());
+                    fd.append("password2", password2InputValue);
+                    
+                    $.ajax({
+                        contentType: false,
+                        processData: false,
+                        type: "POST",
+                        url: "/api/request_otp_create_account",
+                        data: fd,
+                        dataType: "json",
+                        success: function(data){
+                            var result = data;
+                            if(result.passcheck==1){
+                                $.cookie('otp_request_exp_datetime', result.otp_request_exp_datetime, { expires: 1/1440 });
+                                swal({
+                                    title: "Successfully Requested OTP",
+                                    text: result.msg,
+                                    icon: "success",
+                                    buttons: true,
+                                })
+                            }else{
+                                if(result.passcheck==3){
+                                    swal({
+                                        title: "Error",
+                                        text: result.msg,
+                                        icon: "info",
+                                        buttons: true,
+                                    })
+                                }else{
+                                    swal({
+                                        title: "Error",
+                                        text: result.msg,
+                                        icon: "error",
+                                        buttons: true,
+                                    }).then(function(){
+                                        thisForm.data("requestRunning", false);
+                                        hideLoader();
+                                    })
+                                }
+                            }
+                            //show otp
+                            if(openMaskOverlay()==true){
+                                //change OTP number displayed and show OTP modal
+                                $("#pagebody .otp-form-wrapper input[name='phone-number']").val(phoneNumberInputValue);
+                                $("#pagebody .otp-form-wrapper .otp-phone-number").text("60*****"+phoneNumberInputValue.substr(phoneNumberInputValue.length - 4))
+                                $("#pagebody .otp-form-wrapper").removeClass("hide");
+                                thisForm.data("requestRunning", false);
+                                hideLoader();
+                            }else{
+                                window.location.reload();
+                            }
+                        },error:function(){
+                            swal({
+                                title: "Server Error",
+                                text: "Please refresh and reload the page",
+                                icon: "error",
+                                buttons: true,
+                            }).then(function(){
+                                thisForm.data("requestRunning", false);
+                                hideLoader();
+                            })
+                        }
+                    })
+                }else{
+                    swal({
+                        title: "Email ERROR",
+                        text: "Please input a proper email",
+                        icon: "error",
+                        buttons: true,
+                    }).then(function(){
+                        thisForm.data("requestRunning", false);
+                        hideLoader();
+                    })
+                }
+            }else{
+                swal({
+                    title: "Information Error",
+                    text: "Only numbers are allowed for phone number",
+                    icon: "error",
+                    buttons: true,
+                }).then(function(){
+                    thisForm.data("requestRunning", false);
+                    hideLoader();
+                })
+            }
+        }else{
+            swal({
+                title: "All information fields are required",
+                text: "Please fill up all the information asked",
+                icon: "error",
+                buttons: true,
+            }).then(function(){
+                thisForm.data("requestRunning", false);
+                hideLoader();
+            })
+        }
+    });
+    
+    // script for resending OTP number
+    $(document).on("click", ".pagebody .otp-form-wrapper .resend-otp-btn", function(){
+        var thisResendOTPBtn = $(this);
+        var thisResendOTPBtnOriginalText = thisResendOTPBtn.text();
+        if(thisResendOTPBtn.data("requestRunning") == true){
+            return false
+        }
+        thisResendOTPBtn.data("requestRunning", true);
+        thisResendOTPBtn.text("Loading...");
+        thisResendOTPBtn.attr("disabled", true);
+        //show loader
+        showLoader();
+        //create form data for AJAX
+        var phoneNumberInput = thisResendOTPBtn.closest(".otp-form-wrapper").find("input[name='phone-number']");
+        var phoneNumberInputValue = phoneNumberInput.val();
+        
+        var fd = new FormData();
+        fd.append("phone_number",phoneNumberInputValue);
+        //call AJAX
+        $.ajax({
+            contentType: false,
+            processData: false,
+            type: "POST",
+            url: "/api/resend_user_otp",
+            dataType: "json",
+            data: fd,
+            success: function(data){
+                var result = data;
+                if(result.passcheck==1){
+                    swal(result.msg);
+                }else{
+                    if(result.passcheck==3){
+                        swal({
+                            title:"ERROR",
+                            text:result.msg,
+                            icon:"danger",
+                            buttons: true,
+                        }).then(function(){
+                            window.location.reload();
+                        })
+                    }else{
+                        swal(result.msg);
+                    }
+                }
+            },error:function(){
+                swal({
+                    title: "Server Error",
+                    text: "Please refresh and reload the page",
+                    icon: "error",
+                    buttons: true,
+                });
+            },complete: function() {
+                thisResendOTPBtn.text(thisResendOTPBtnOriginalText);
+                thisResendOTPBtn.attr("disabled", false);
+                thisResendOTPBtn.data("requestRunning", false);
+                hideLoader();
+            }
+        })
+    })
+    //OTP validation ajax
+    $(document).on("click",".pagebody .otp-form-wrapper .verify-otp-btn",function(){
+        var thisVerifyOTPBtn = $(this);
+        var thisOTPFormWrapper = thisVerifyOTPBtn.closest(".otp-form-wrapper");
+        var thisVerifyOTPBtnOriginalText = thisVerifyOTPBtn.text();
+        if(thisVerifyOTPBtn.data("requestRunning") == true){
+            return false
+        }
+        thisVerifyOTPBtn.data("requestRunning", true);
+        thisVerifyOTPBtn.text("Loading...");
+        thisVerifyOTPBtn.attr("disabled", true);
+        //show loader
+        showLoader();
+        //create form data for AJAX
+        var phoneNumberInput = thisOTPFormWrapper.find("input[name='phone-number']");
+        var phoneNumberInputValue = phoneNumberInput.val();
+        //get each OTP numbers
+        var allOTPNumberInput = thisOTPFormWrapper.find(".otp-number-inputs input");
+        var OTPSubmittedValue = "";
+        allOTPNumberInput.each(function(){
+            var OTPNumberValue = $(this).val();
+            OTPSubmittedValue+=OTPNumberValue;
+        })
+        
+        var fd = new FormData();
+        fd.append("phone_number",phoneNumberInputValue);
+        fd.append("otp",OTPSubmittedValue)
+        //call AJAX
+        $.ajax({
+            contentType: false,
+            processData: false,
+            type: "POST",
+            url: "/api/verify_user_otp",
+            dataType: "json",
+            data: fd,
+            success: function(data){
+                var result = data;
+                if(result.passcheck==1){
+                    swal({
+                        title:"Successfully Verified!",
+                        text: result.msg,
+                        icon:"success",
+                        buttons:true,
+                    }).then(function(){
+                        if(closeMaskOverlay()==true){
+                            //change OTP number displayed and show OTP modal
+                            $("#pagebody .otp-form-wrapper").addClass("hide");
+                            $("body #create-account-form").trigger("readyToSubmit");
+                        }else{
+                            window.location.reload();
+                        }
+                    })
+                }else{
+                    if(result.passcheck==3){
+                        swal({
+                            title:"ERROR",
+                            text:result.msg,
+                            icon:"danger",
+                            buttons: true,
+                        }).then(function(){
+                            window.location.reload();
+                        })
+                    }else{
+                        swal(result.msg);
+                    }
+                }
+            },error:function(){
+                swal({
+                    title: "Server Error",
+                    text: "Please refresh and reload the page",
+                    icon: "error",
+                    buttons: true,
+                });
+            },complete: function() {
+                thisVerifyOTPBtn.text(thisVerifyOTPBtnOriginalText);
+                thisVerifyOTPBtn.attr("disabled", false);
+                thisVerifyOTPBtn.data("requestRunning", false);
+                hideLoader();
+            }
+        })
+    })
+    
+    $(document).on("readyToSubmit", "body #create-account-form", function(){
+        var thisForm = $(this);
+        if(thisForm.data("requestRunning") == true){
+            return false
+        }
+        thisForm.data("requestRunning", true);
+        //show loader
+        showLoader();
+        //get form value
+        var firstNameInput = thisForm.find("input[name='first_name']")
+        var lastNamelInput = thisForm.find("input[name='last_name']")
+        var emailInput = thisForm.find("input[name='email']")
+        var phoneNumberInput = thisForm.find("input[name='phone-number']")
+        var passwordInput = thisForm.find("input[name='password']")
+        var password2Input = thisForm.find("input[name='password2']")
+        
+        var firstNameInputValue = firstNameInput.val()
+        var lastNamelInputValue = lastNamelInput.val()
+        var emailInputValue = emailInput.val()
+        var phoneNumberInputValue = phoneNumberInput.val()
+        var passwordInputValue = passwordInput.val()
+        var password2InputValue = password2Input.val()
+
+        //create form data for AJAX
+        var fd = new FormData();
+        
+        fd.append("first_name", firstNameInputValue);
+        fd.append("last_name", lastNamelInputValue);
+        fd.append("email", emailInputValue);
+        fd.append("phone_number", phoneNumberInputValue);
+        fd.append("password", passwordInputValue);
+        fd.append("password2", password2InputValue);
+        //call AJAX to create account for user
+        $.ajax({
+            contentType: false,
+            processData: false,
+            type: "POST",
+            url: "/api/create_user_account",
+            dataType: "json",
+            data: fd,
+            success: function(data){
+                var result = data;
+                if(result.passcheck==1){
+                    swal({
+                        title:"Successfully Verified!",
+                        text: result.msg,
+                        icon:"success",
+                        buttons:true,
+                    }).then(function(){
+                        window.location.href = "/"
+                    })
+                }else{
+                    if(result.passcheck==3){
+                        swal({
+                            title:"ERROR",
+                            text:result.msg,
+                            icon:"danger",
+                            buttons: true,
+                        }).then(function(){
+                            window.location.reload();
+                        })
+                    }else{
+                        swal(result.msg);
+                    }
+                }
+            },error:function(){
+                swal({
+                    title: "Server Error",
+                    text: "Please refresh and reload the page",
+                    icon: "error",
+                    buttons: true,
+                });
+            },complete: function() {
+                thisForm.data("requestRunning", false);
+            }
+        }).then(function(){
+            hideLoader();
+        })
+    })
+    $(document).on("input", ".otp-number-input", function() {
+        var inputValue = $(this).val();
+        if(inputValue.length == 1){
+            $(this).next().focus();
+        }
+    });
+
+    $(document).on("keyup", ".otp-number-input", function(e) {
+        var key = e.which;
+        if(key == 8 || key == 46){
+            $(this).prev().focus();
+        }
+    });
+})
+</script>
+</html>

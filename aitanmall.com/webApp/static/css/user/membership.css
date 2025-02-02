@@ -1,0 +1,64 @@
+body {
+    background-color: #00014e;
+}
+.logo {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+.header-text {
+    font-size: 2em;
+    margin-top: 20px;
+}
+.cta-button {
+    margin-top: 20px;
+}
+.final-line {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+.benefits-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+.benefit-icon {
+    max-width: 50px;
+}
+.benefit-caption {
+    font-size: 1.2em;
+    color: #333;
+    margin-top: 10px;
+}
+.benefit-description {
+    margin-top: 10px;
+}
+.pricing-section {
+    background-color: #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+.card {
+    margin: 10px;
+}
+.qa-section {
+    margin-top: 30px;
+}
+.qa-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+.qa-item:last-child {
+    border-bottom: none;
+}
+@media (min-width: 768px) {
+    .benefits-section {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .benefit-item {
+        flex: 1;
+    }
+}

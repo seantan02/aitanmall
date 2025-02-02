@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            margin: auto;
+            width: 60%;
+            border: 2px solid #ccc;
+            padding: 20px;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to Our Site, {{ name }}!</h2>
+        <p>
+            Thank you for signing up. We're excited to have you on board.
+            Please verify your email to activate your account.
+        </p>
+        <a href="{{ url }}" class="button">Verify Email</a>
+        <p>
+            If you did not sign up for this account, you can ignore this email safely.
+        </p>
+    </div>
+</body>
+</html>

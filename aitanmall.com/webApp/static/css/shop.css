@@ -1,0 +1,22 @@
+.after-nav .shop-board .product-container .product .product-img{
+  max-width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: contain;  /* To keep aspect ratio while resizing */
+}
+.after-nav .shop-board .product-container .section-header {
+  text-decoration: underline;
+  font-style: italic;
+  font-weight: bold;
+  color: #ff0000;  /* Adjust the color as needed */
+}
+@media (min-width: 576px) { 
+    .product-img {
+      max-height: 250px;
+    }
+}
+@media (min-width: 976px) { 
+  .product-img {
+    max-height: 350px;
+  }
+}

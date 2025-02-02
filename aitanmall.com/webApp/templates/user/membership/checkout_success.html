@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Congratulations!</h1>
+        <p class="lead">Your VIP-membership has been activated.</p>
+        <hr class="my-4">
+        <p>Start Date: <span id="startDate">{{ session["user_membership_start_date"] }}</span></p>
+        <p>End Date: <span id="endDate">{{ session["user_membership_end_date"] }}</span></p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button" id="manageMembership">Manage Membership</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script defer>
+$(document).ready(function(){
+    //ajax for membership confirmation
+    $(document).on("click", "#manageMembership",function(e){
+    e.preventDefault();
+    var thisBtn = $(this);
+    //check if this form is processing
+    if(thisBtn.data("requestRunning")){
+        return false;
+    }
+    thisBtn.data("requestRunning", true);
+    showLoader();
+
+    var fd = new FormData()
+    fd.append("action", "create_portal_session");
+        
+    $.ajax({
+    contentType: false,
+    processData: false,
+    type: "POST",
+    url: "/api/user_create_stripe_portal_session",
+    dataType: "json",
+    data: fd,
+    success: function(data){
+        var result = data;
+        if(result.passcheck == 1){
+        swal({
+            title: "Success",
+            text: result.msg,
+            icon: "success",
+            buttons: true,
+        })
+        }else if(result.passcheck == 4){
+                swal({
+                title: "Attention",
+                text: result.msg,
+                icon: "info",
+                buttons: true,
+                }).then(function(){
+                window.location.href = result.redirect;
+                })
+            }
+        },error:function(){
+        }
+    })
+    hideLoader();
+    thisBtn.data("requestRunning", false);
+    })
+})
+</script>
+{% endblock %}

@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Georama:wght@300&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+  }
+.display{
+    width: 100%;
+    max-width: 100%;
+}
+#display.masked{
+    pointer-events: none;
+}
+.display .merchant-register-wrapper{
+    width: 100%;
+}
+.display .merchant-register-wrapper .merchant-register{
+    width: 100%;
+    max-width:600px;
+    margin: 72px auto 0 auto;
+}
+.merchant-register .board1{
+    width: 100%;
+    border-radius: 5px;
+    border: solid 1px black;
+    box-shadow: 3px 3px 3px 1px grey;
+}
+.merchant-register .board1 .indicator{
+    width: 100%;
+    text-align: center;
+    padding: 7px 0;
+    font-family: 'Georama', sans-serif;
+}
+.merchant-register .board1 .indicator label{
+    font-size: 0.9;
+    color: rgb(78, 76, 76);
+}
+.merchant-register .board1 .header, .subheader{
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    width: 100%;
+}
+.merchant-register .board1 .header label{
+    font-size: 1.1rem;
+}
+.merchant-register .board1 .header{
+    padding-top: 25px;
+}
+.merchant-register .board1 .subheader{
+    padding-bottom: 25px;
+}
+.merchant-register .board1 .subheader label{
+    color: rgb(68, 66, 66);
+}
+.merchant-register .board1 .form-wrapper{
+    width: 100%;
+}.merchant-register .board1 .form-wrapper .form-body{
+    width: 90%;
+    margin: 0 auto;
+    font-family: 'Mukta', sans-serif;
+}
+.merchant-register .board1 .form-wrapper .form-body .input-group{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+.merchant-register .board1 .form-wrapper .form-body .input-group label{
+    font-weight: bold;
+    margin: 5px 0;
+
+}
+.merchant-register .board1 .form-wrapper .form-body .input-group .input-labeled{
+    display: flex;
+}
+.merchant-register .board1 .form-wrapper .form-body .input-group .input-labeled .input-label{
+    padding:10px;
+    border-radius: 5px;
+    background-color: blue;
+    color: white;
+}
+.merchant-register .board1 .form-wrapper .form-body .input-group .input-labeled .input-label span{
+    font-size: 1.1rem;
+}
+.merchant-register .board1 .form-wrapper .form-body .input-group input{
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+.merchant-register .board1 .form-wrapper .form-body .input-group .reminder label{
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+.merchant-register .board1 .form-wrapper .form-footer{
+    width: 100%;
+}
+.merchant-register .board1 .form-wrapper .form-footer .button-wrapper{
+    margin-top:15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.merchant-register .board1 .form-wrapper .form-footer .button-wrapper .button{
+    padding: 5px;
+}
+.merchant-register .board1 .form-wrapper .form-footer .button-wrapper .button button{
+    padding: 17px 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(6, 75, 0);
+    color: white;
+    cursor: pointer;
+}
+@media (max-width:343.10px){
+    .display .merchant-register-wrapper .merchant-register{
+        margin-top: 18px;
+    }
+}

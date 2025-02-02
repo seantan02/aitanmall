@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.chat-message {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.sent-message {
+    background-color: #4CAF50;
+    color: white;
+    align-self: flex-end;
+}
+.reply-message {
+    background-color: #007BFF;
+    color: white;
+    align-self: flex-start;
+}
+@media screen and (min-width: 579.1px) {
+  #live-chat-box {
+    transform: none;
+    bottom: 20px;
+    right: 20px;
+    width: 85%;
+  }
+}
+</style>
+
+<div id="user-live-chat" class="container-fluid mt-3">
+    <div id="live-chat-header" class="row">
+        <center><p></p></center>
+    </div>
+    <div class="row">
+        <!-- User list -->
+        <div id="user-chat-list-wrapper" class="col-12 col-md-4" id="chat-list">
+            <ul class="list-group user-chats">
+            </ul>
+        </div>
+    
+        <!-- Chat box -->
+        <div id="chat-box-wrapper" class="col-12 col-md-8 d-none">
+            <div id="chat-box" class="card bg-light">
+                <div class="card-header text-white bg-primary">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <img src="https://aitanmall.com/static/assets/aitanmall/images/agent/man.webp" alt="Agent" class="rounded-circle mr-2" width="30" height="30">
+                            <div id="chat-box-name" class="font-weight-bold"></div>
+                        </div>
+                        <button id="close-chat-box" class="btn btn-danger btn-sm">X</button>
+                    </div>
+                </div>
+                <div class="card-body chat-content">
+                </div>
+                <div class="card-footer">
+                    <form id="chat-form" method="POST" class="d-flex">
+                        <input name="message" type="text" class="form-control" placeholder="Type a message...">
+                        <button type="submit" class="btn btn-primary ml-2">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{%  block script %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    function showUserChat(element){
+        thisUserItem = $(element)
+        thisUserItem.addClass("active");
+        thisUserId = thisUserItem.data("userid")
+        var userName = thisUserItem.text();
+        $("#chat-box-name").text(userName);
+        $("#chat-"+thisUserId).removeClass("d-none")
+        $("#chat-"+thisUserId).addClass("active")
+    }
+    function hideAllUserChat(){
+        allLiveUserItem = $("#user-live-chat").find(".user-item")
+        allLiveUserItem.each(function(){
+            if($(this).hasClass("active")){
+                $(this).removeClass("active")
+                thisUserId = $(this).data("userid")
+                $("#chat-"+thisUserId).addClass("d-none")
+                $("#chat-"+thisUserId).removeClass("active")
+            }
+        })
+    }
+    $(document).ready(function() {
+        var screenWidth = screen.width;
+        if (screenWidth < 768) {
+            $('#chat-box-wrapper').addClass('d-none');
+        }
+        
+        $(document).on("click", ".user-item", function(){
+            hideAllUserChat()
+            showUserChat(this)
+            if (screenWidth < 768) {
+                $('#user-chat-list-wrapper').addClass('d-none');
+            }
+            $('#chat-box-wrapper').removeClass('d-none');
+            
+        })
+
+        $(document).on('click', '#close-chat-box', function() {
+        // When the close button is clicked in mobile view, hide the chat box and show the user list
+            if (screenWidth < 768) {
+                $('#user-chat-list-wrapper').removeClass('d-none');
+                $('#chat-box-wrapper').addClass('d-none');
+            }
+        });
+
+    });
+    
+</script>
+<script>
+//script for customer service
+function connectWebsocket(socket, reconnectionInterval) {
+        socket = new WebSocket("wss://socket.aitanmall.com:59001");
+
+        socket.addEventListener("open", function(event){
+            var data = {
+                api_key: "{{session['websocket_api_key']}}"
+            };
+            socket.send(JSON.stringify(data));
+        })
+
+        socket.addEventListener("close",function(event) {
+            console.log("WebSocket is closed. Reconnect will be attempted in " + (reconnectInterval / 1000) + " seconds.");
+            setTimeout(function() {
+                console.log("Reconnecting...");
+                connectWebsocket();
+            }, reconnectionInterval);
+        });
+
+        socket.addEventListener("close",function(err) {
+            console.error("WebSocket encountered error: ", err.message, "Closing socket");
+            socket.close();
+        });
+    return socket;
+}
+$(document).ready(function(){
+    let socket;
+    let reconnectInterval = 5000;
+    const csId = '{{session["cs_id"]}}';
+    var chat = $("#user-live-chat")
+    let chatHeader = $("#live-chat-header center p")
+
+    chatHeader.text("Waiting for user chats")
+
+    socket = connectWebsocket(socket,reconnectInterval);
+
+    socket.onmessage = function(event) {
+      var data = JSON.parse(event.data);
+      if(data.event_type == "connected"){
+          chat.data("connected", true);
+      }
+
+      if(data.event_type == "message"){
+        if(data.message.startsWith("User")){
+            var userId = data.message.slice(5,21)
+            console.log(data)
+            var data = {
+                name: "CS "+csId,
+                to_name: "USER "+ userId,
+                room_id: userId,
+                message: "Agent "+csId+" joined. You can now chat with her/him."
+            };
+            if($("#chat-"+userId).length == 0){
+                var userChatHtml = '<li class="list-group-item user-item" data-userid="'+userId+'">User '+userId+'</li>'
+                var userChatBoxHtml = '<div id="chat-'+userId+'" data-userid="'+userId+'" class="user-chat d-none"><div class="chat-message reply-message">'+data.message+'</div></div>'
+                chatHeader.text("")
+                chat.find(".user-chats").append(userChatHtml)
+                chat.find(".chat-content").append(userChatBoxHtml)
+                socket.send(JSON.stringify(data));
+            }else{
+                $("#chat-"+userId).text('');
+                $("#chat-"+userId).append('<div class="chat-message reply-message">'+data.message+'</div>');
+                socket.send(JSON.stringify(data));
+            }
+        }else{
+            //if it is message from other websocket we style it as reply message
+            //else, it is our message
+            var userId = data.from_room_id;
+            if(data.from_others == true){
+                $("#chat-"+userId).append('<div class="chat-message reply-message">'+data.message+'</div>');
+            }
+        }
+      }
+    };
+    socket.onclose = function(event) {
+        $("live-chat-header center p").text('You disconnected');
+    };
+
+    socket.onerror = function(error) {
+        $("live-chat-header center p").text('You disconnected');
+    };
+
+    $(document).on("submit", "#chat-form", function(e){
+      e.preventDefault();
+      var thisForm = $(this)
+      var targetUserChat = chat.find(".user-chat.active")
+      var user_room_id = targetUserChat.data("userid")
+      if(thisForm.data("requestRunning")){
+        return false;
+      }
+      if(!chat.data("connected")){
+        return false
+      }
+      thisForm.data("requestRunning", true)
+
+      var chatMessageInput = thisForm.find("input[name='message']")
+      var chatMessage = chatMessageInput.val()
+      var data = {
+        name: "CS "+csId,
+        to_name: "USER "+ user_room_id,
+        room_id: user_room_id,
+        message: chatMessage,
+        webhook_address: "https://aitanmall.com/webhooks/chat"
+      };
+      socket.send(JSON.stringify(data));
+      targetUserChat.append('<div class="chat-message sent-message">'+chatMessage+'</div>');
+      chatMessageInput.text("")
+      chatMessageInput.val("")
+      thisForm.data("requestRunning", false)
+    })
+
+  })
+</script>
+{% endblock %}

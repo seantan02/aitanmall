@@ -1,0 +1,85 @@
+.product-container #productCarousel{
+    max-width: 600px;
+    margin: 0 auto 0 auto;
+}
+.product-container #productCarousel .carousel-inner img {
+    object-fit: contain;
+    max-height: 100%;
+    width: auto;
+    margin: 0 auto;
+}
+.product-container .product-container-box{
+    border: 1px solid #ccc;
+    padding: 15px;
+    background-color: #eff1f1;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+.product-container .product-container-box:hover {
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.15);
+}
+
+/* .pricing {
+    display: inline-block;
+} */
+
+
+
+.product-container .product-title {
+    color: #333;
+    font-weight: bold;
+}
+
+.option-box-wrapper .option-box {
+    border: 1px solid #807e7e;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    background: #ffffff;
+}
+
+.option-box-wrapper .option-box.selected {
+    border-color: #007bff;
+    background: #007bff;
+    color: #fff;
+}
+.product-container .rating i{
+    color: #ffc107;
+}
+.product-container .rating{
+    margin: 10px 0;
+    font-size: 1.2rem;
+}
+
+.product-container .contact-agent {
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+.product-container .image-container {
+    width: 100%; /* You can adjust this */
+    max-width: 300px;
+    max-height: 300px;
+    position: relative; /* This allows the image to be absolutely positioned within it */
+    overflow: hidden; /* This will cut off any part of the image that falls outside the box */
+}
+
+.product-container .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* This makes the image cover the box */
+    object-position: center; /* This centers the image within the box */
+}
+.product-container .original-price {
+    text-decoration: line-through;
+    color: #777;
+    font-size: 1.7rem;
+    margin-right: 10px;
+}
+.product-container .discounted-price {
+    font-weight: bold;
+}
+.product-container .savings {
+    color: #ff0000;
+    font-size: 16px;
+}

@@ -1,0 +1,35 @@
+.dropdown-item{
+    position: relative;
+}
+.dropdown-item a{
+    text-decoration: none;
+    color: black;
+}
+.dropdown-item-alert {
+    position: absolute;
+    right: 10px;
+    top:50%;
+    transform: translate(50%, -50%);
+}
+.red-border {
+    border: 1px solid red;
+}
+.selected {
+    border: 2px solid blue;
+}
+.credit-card {
+    position: relative;
+    display: flex;
+    width: 395px;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #23406f;
+    background-clip: border-box;
+    border: 1px solid #23406f;
+    border-radius: 7px;
+}
+.color-light {
+  color: #7d7979;
+  font-size: 11px;
+}

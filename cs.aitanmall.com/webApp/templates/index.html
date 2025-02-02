@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, user-scalable=0, viewport-fit=cover">
+    <title>Login Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <style>
+        .login-container {
+            width: 300px;
+            margin: 0 auto;
+            margin-top: 100px;
+        }
+        .logo {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo bg-dark">
+            <img src="https://aitanmall.com/static/assets/aitanmall/images/logo.svg" alt="logo" width="100">
+        </div>
+        <h5 class="text-center">AiTanMall Customer Service</h5>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input name="username" type="text" class="form-control" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input name="password" type="password" class="form-control" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#login-form').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/login',
+                    dataType: 'json',
+                    data: {
+                        username: $('#username').val(),
+                        password: $('#password').val(),
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        var result = data;
+                        if(data.passcheck == 1){
+                            $("body").trigger("sendTemporarilyKeyRequest", [result.temporarily_key, result.cs_id]);
+                            setTimeout(function(){}, 5000);
+                            window.location.href = '/dashboard';
+                        }else{
+                            alert(data.msg)
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        alert(error)
+                    }
+                });
+            });
+            $(document).on("sendTemporarilyKeyRequest", "body", function(event, temporarily_key, cs_id){
+        
+                var fd = new FormData()
+                fd.append("temporarily_key", temporarily_key);
+                fd.append("customer_service_id", cs_id);
+                
+                $.ajax({
+                    contentType: false,
+                    processData: false,
+                    type: "POST",
+                    url: "/api/create_cs_temporarily_key",
+                    dataType: "json",
+                    data: fd
+                })
+            })
+        });
+    </script>
+</body>
+</html>

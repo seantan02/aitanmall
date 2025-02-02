@@ -1,0 +1,22 @@
+<div class="fixed-bottom bg-light p-2">
+    <div class="container">
+        <div class="row g-2">
+            <div class="col-6 col-md-4">
+                <button type="button" class="chat-box-btn btn btn-primary w-100">Ask Question</button>
+            </div>
+            <div class="col-6 col-md-4">
+                <button type="button" class="add-to-cart btn btn-danger w-100">Add To Cart</button>
+            </div>
+            <div class="col-6 col-md-4 d-none d-md-block">
+                <button type="button" class="btn btn-primary w-100">Buy Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script defer>
+$(document).ready(function(){
+    $(document).on("click",".chat-box-btn", function(){
+        $("#chat-icon").click();
+    })
+})
+</script>

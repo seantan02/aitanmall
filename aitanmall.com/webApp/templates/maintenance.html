@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Site Maintenance</title>
+    <style>
+        body {
+            background: #f9f9f9;
+            color: #333;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .maintenance-container {
+            text-align: center;
+            max-width: 600px;
+            width: 80%; /* Update for responsiveness */
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .maintenance-container h1 {
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .maintenance-container p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .maintenance-container hr {
+            margin: 30px 0;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        .maintenance-container small {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+            .maintenance-container {
+                width: 95%; /* Increase width on smaller screens */
+                box-shadow: none; /* Remove shadow on smaller screens */
+            }
+            .maintenance-container h1 {
+                font-size: 2rem;
+            }
+            .maintenance-container p {
+                font-size: 1rem;
+            }
+            .maintenance-container small {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="maintenance-container">
+        <h1>We're Currently Undergoing Maintenance</h1>
+        <p>We're making some improvements to the site and will be back online shortly. Thank you for your patience.</p>
+        <hr>
+        <small style="font-size: 0.2rem;">{{ip}}</small>
+        <small>© 2023 Your Company. All rights reserved.</small>
+    </div>
+</body>
+</html>
