@@ -15,4 +15,4 @@ cs.aitanmall.com/private/data/*
 
 # general
 __pycache__
-.DS_STORE
+.DS_Store
